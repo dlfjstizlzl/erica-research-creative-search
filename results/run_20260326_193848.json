@@ -1,0 +1,856 @@
+{
+  "problem": "저녁 메뉴 추천",
+  "output_language": "Korean",
+  "base_ideas": [
+    {
+      "id": "맛집 탐험 로또",
+      "strategy_type": "경제적 메커니즘, 게임화",
+      "description": "사용자는 저녁 메뉴를 선택하는 대신 '맛집 탐험 로또'에 참여하여 무작위로 선정된 지역 맛집의 요리를 추천받습니다. 로또 구매는 선택 사항이며, 저렴한 비용(예: 1,000원)으로 참여할 수 있습니다. 시스템은 지역 기반 AI와 결합하여 다양한 요리 스타일을 고려하고, 사용자의 선호도를 학습하여 개인화된 추천을 제공합니다.",
+      "title": "저녁 식사 로또 추첨",
+      "persona": "제로 예산 생존 엔지니어",
+      "mechanism": "로또 추첨 알고리즘, 지역 맛집 데이터베이스, 사용자 선호도 학습",
+      "target_user": "예산 제한이 있는 개인, 새로운 요리에 도전하려는 사람",
+      "execution_context": "모바일 앱 또는 웹사이트를 통해 접근 가능. 사용자는 로또 구매 후, AI가 추천한 맛집의 요리 메뉴와 리뷰를 확인하고 저녁 식사 계획을 세웁니다.",
+      "expected_advantage": "저렴한 비용으로 다양한 맛집을 경험할 수 있고, 새로운 요리에 대한 모험심을 자극하며, 예산에 구애받지 않는 즐거운 저녁 식사 시간을 제공합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "zero-budget survival engineer",
+      "scores": {
+        "novelty": 0.3766,
+        "problem_fit": 0.3621,
+        "relevance": 0.3621,
+        "mechanism_clarity": 0.8229,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 0.9026,
+        "risk": 0.0,
+        "creativity": 0.4403
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "식탁의 신화",
+      "strategy_type": "행동 의식",
+      "description": "이 시스템은 사용자의 위치와 문화적 배경을 바탕으로 독특한 저녁 식사 경험을 제공합니다. 지역 전통과 현지인의 일상적인 식습관을 분석하여, 사용자가 해당 지역의 진정한 맛과 식문화를 탐험할 수 있도록 도와줍니다. 예를 들어, 서울에 사는 사용자에게 한국 전통의 상차림을 소개하거나, 파리에 거주하는 사람에게 프랑스 남부의 지중해식 저녁 메뉴를 추천할 수 있습니다.",
+      "title": "문화적 식단 탐험가: 지역별 저녁 메뉴 추천",
+      "persona": "인류학자 현장 조사원",
+      "mechanism": "AI는 위치 기반 데이터와 문화적 인사이트 데이터베이스를 활용하여 사용자 주변의 지역 특성과 식문화를 분석합니다. 그 후, 유사한 식습관과 미식 전통을 가진 여러 저녁 메뉴를 제안하고, 사용자의 선호도에 따라 맞춤화된 추천을 제공합니다.",
+      "target_user": "세계 각지에 거주하는 여행자, 현지 문화에 관심 있는 사람, 새로운 음식 경험을 추구하는 개인의 저녁 시간 이용자",
+      "execution_context": "사용자가 시스템 앱을 열고 현재 위치를 설정하면, AI는 해당 지역의 식문화 데이터를 수집하고 분석하여 맞춤화된 저녁 메뉴 추천을 제공합니다. 또한, 지역 특산품과 전통 요리법에 대한 추가 정보를 제공하여 사용자 경험을 풍부하게 합니다.",
+      "expected_advantage": "이 시스템은 단순한 음식 추천을 넘어, 사용자가 여행하는 지역의 문화와 전통에 대한 이해를 높여줍니다. 현지인의 일상적인 식습관을 탐구함으로써, 관광객은 진정한 지역 사회를 경험하고, 현지인에게는 익숙한 음식에 새로운 시각을 제공합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "anthropologist on the ground",
+      "scores": {
+        "novelty": 0.8147,
+        "problem_fit": 0.3683,
+        "relevance": 0.3683,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.707
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "alpha-7-nutrition",
+      "strategy_type": "curation reduction (extreme)",
+      "description": "이 시스템은 단순 레시피 추천이 아닌, 음식 재료들의 '식량군' (food domain)을 기반으로 최적의 저녁 식사 옵션을 생성합니다. 각 재료는 영양 성분, 맛, 조리 난이도, 예상 칼로리, 그리고 심지어 개인의 식습관 데이터까지 통합하여 16진수 압축 코드로 변환됩니다. 압축된 코드는 시스템 내에 저장된 ‘최적화된 레시피 트리’와 비교되어 가장 적합한 조합을 찾아냅니다. 불필요한 정보는 즉시 제거되어, 사용자에게는 가장 효율적인 식사 계획만 제공합니다.",
+      "title": "식량군 심층 감압 프로토콜 (Food Domain Deep Compression Protocol)",
+      "persona": "operations commander",
+      "mechanism": "식량군 기반 16진수 압축, 최적화된 레시피 트리 비교, 실시간 데이터 통합 및 필터링 (재료 영양 정보, 사용자 식습관, 조리 시간)",
+      "target_user": "시간 부족, 영양 밸런스에 대한 높은 요구 사항을 가진 전문 활동가, 군인, 고성능 스포츠 선수",
+      "execution_context": "고속 전투 상황 또는 극한 환경에서 제한된 식량 자원을 효율적으로 관리해야 하는 경우",
+      "expected_advantage": "단순 레시피 추천 시스템 대비 10배 빠른 식사 계획 생성, 식량 낭비 최소화, 사용자 개인 맞춤 최적화된 영양 섭취",
+      "source_model": "gemma3:4b",
+      "source_persona": "operations commander",
+      "scores": {
+        "novelty": 0.8055,
+        "problem_fit": 0.3559,
+        "relevance": 0.3559,
+        "mechanism_clarity": 0.9769,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 0.9873,
+        "risk": 0.0,
+        "creativity": 0.6945
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "meal_hive_01",
+      "strategy_type": "playful progression, collective intelligence",
+      "description": "식량 꿀벌은 지역 주민들이 매주 서로의 저녁 메뉴를 공유하고 평가하는 데 참여하는 플랫폼입니다. 각 메뉴는 ‘꿀벌’ 점수를 받으며, 점수는 맛, 영양, 지역적 연관성, 그리고 참가자들이 메뉴에 부여한 ‘봉사’ 점수에 따라 결정됩니다. 이 플랫폼은 단순한 추천 시스템이 아니라, 주민들이 함께 음식 문화를 발전시키고, 새로운 식재료를 발견하며, 지역 사회의 식량 자원을 공유하는 공동체 기반의 게임입니다. 꿀벌의 꿀 저장고는 가장 인기 있는 메뉴를 기록하고, 새로운 레시피 아이디어를 모아 식량 자원을 혁신적으로 관리합니다.",
+      "title": "식량 꿀벌 (Meal Bee)",
+      "persona": "지방구역의 활동가 (Grassroots Organizer)",
+      "mechanism": "AI 기반 메뉴 평가 모델 + 사용자 커뮤니티 + 랭킹 시스템 + ‘꿀벌’ 포인트 시스템. AI는 사용자 피드백과 식재료 데이터를 분석하여 점수를 산출하고, 사용자들은 메뉴에 대한 의견을 제시하고 ‘봉사’ 점수를 부여합니다. 꿀 저장고는 꿀벌 포인트가 높은 메뉴를 분석하여 새로운 레시피 아이디어를 생성합니다.",
+      "target_user": "지역 커뮤니티 주민, 음식에 관심 있는 사람, 지역 식재료를 활용한 요리 연구자, 새로운 맛을 찾는 사람",
+      "execution_context": "서울시 특정 지역의 공동체 센터, 온라인 커뮤니티 플랫폼 (디스코드, 슬랙 등), 오프라인 음식 문화 행사 연계",
+      "expected_advantage": "단순한 추천 시스템보다 훨씬 높은 사용자 참여율과 지역 식량 자원 활용도를 높일 수 있으며, 사용자 간의 신뢰를 기반으로 지속 가능한 음식 문화를 구축하는 데 기여합니다. 또한, AI와 인간의 협력을 통해 창의적인 식재료 조합과 레시피를 발굴할 수 있습니다.",
+      "source_model": "gemma3:4b",
+      "source_persona": "grassroots organizer",
+      "scores": {
+        "novelty": 0.936,
+        "problem_fit": 0.3589,
+        "relevance": 0.3589,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.7704
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 지도",
+      "strategy_type": "환경 설계",
+      "description": "이 시스템은 사용자의 선호도와 과거 선택 데이터를 기반으로 AI가 생성한 '맛집 탐험 지도'를 제공합니다. 지도에는 다양한 음식 스타일과 분위기의 식당들이 표시되며, 각 식당에는 사용자 평점과 추천 메뉴, 그리고 주변 명소 정보가 포함됩니다. 사용자는 지도를 보며 흥미로운 식당을 발견하고, 클릭하여 자세한 정보를 확인한 후 예약을 할 수 있습니다.",
+      "title": "AI 맛집 매칭 시스템: 개인 맞춤형 저녁 식당 추천 지도",
+      "persona": "Master Teacher",
+      "mechanism": "AI 알고리즘은 사용자 프로필을 분석하여 선호하는 음식 스타일, 예산, 그리고 식당 분위기를 학습합니다. 이 데이터를 활용하여 개인화된 맛집 지도를 생성하고, 사용자의 위치 기반 서비스를 연동하여 근처의 추천 식당을 제공합니다.",
+      "target_user": "저녁 식사를 계획하는 직장인 또는 미식가",
+      "execution_context": "모바일 앱 및 웹사이트 플랫폼을 통해 접근 가능. AI는 지속적인 피드백을 통해 사용자 선호도를 개선하고, 새로운 식당 정보를 업데이트합니다.",
+      "expected_advantage": "사용자는 복잡한 선택에서 벗어나 AI가 제안하는 맞춤형 맛집을 탐색하며, 다양한 식당들을 편리하게 비교하고 예약할 수 있습니다. 이를 통해 새로운 식당 발견의 즐거움을 높이고, 저녁 메뉴 선택에 드는 시간과 노력을 절감합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "master teacher",
+      "scores": {
+        "novelty": 0.2973,
+        "problem_fit": 0.374,
+        "relevance": 0.374,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.4244
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ],
+  "filtered_ideas": [
+    {
+      "id": "meal_hive_01",
+      "strategy_type": "playful progression, collective intelligence",
+      "description": "식량 꿀벌은 지역 주민들이 매주 서로의 저녁 메뉴를 공유하고 평가하는 데 참여하는 플랫폼입니다. 각 메뉴는 ‘꿀벌’ 점수를 받으며, 점수는 맛, 영양, 지역적 연관성, 그리고 참가자들이 메뉴에 부여한 ‘봉사’ 점수에 따라 결정됩니다. 이 플랫폼은 단순한 추천 시스템이 아니라, 주민들이 함께 음식 문화를 발전시키고, 새로운 식재료를 발견하며, 지역 사회의 식량 자원을 공유하는 공동체 기반의 게임입니다. 꿀벌의 꿀 저장고는 가장 인기 있는 메뉴를 기록하고, 새로운 레시피 아이디어를 모아 식량 자원을 혁신적으로 관리합니다.",
+      "title": "식량 꿀벌 (Meal Bee)",
+      "persona": "지방구역의 활동가 (Grassroots Organizer)",
+      "mechanism": "AI 기반 메뉴 평가 모델 + 사용자 커뮤니티 + 랭킹 시스템 + ‘꿀벌’ 포인트 시스템. AI는 사용자 피드백과 식재료 데이터를 분석하여 점수를 산출하고, 사용자들은 메뉴에 대한 의견을 제시하고 ‘봉사’ 점수를 부여합니다. 꿀 저장고는 꿀벌 포인트가 높은 메뉴를 분석하여 새로운 레시피 아이디어를 생성합니다.",
+      "target_user": "지역 커뮤니티 주민, 음식에 관심 있는 사람, 지역 식재료를 활용한 요리 연구자, 새로운 맛을 찾는 사람",
+      "execution_context": "서울시 특정 지역의 공동체 센터, 온라인 커뮤니티 플랫폼 (디스코드, 슬랙 등), 오프라인 음식 문화 행사 연계",
+      "expected_advantage": "단순한 추천 시스템보다 훨씬 높은 사용자 참여율과 지역 식량 자원 활용도를 높일 수 있으며, 사용자 간의 신뢰를 기반으로 지속 가능한 음식 문화를 구축하는 데 기여합니다. 또한, AI와 인간의 협력을 통해 창의적인 식재료 조합과 레시피를 발굴할 수 있습니다.",
+      "source_model": "gemma3:4b",
+      "source_persona": "grassroots organizer",
+      "scores": {
+        "novelty": 0.936,
+        "problem_fit": 0.3589,
+        "relevance": 0.3589,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.7704
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "alpha-7-nutrition",
+      "strategy_type": "curation reduction (extreme)",
+      "description": "이 시스템은 단순 레시피 추천이 아닌, 음식 재료들의 '식량군' (food domain)을 기반으로 최적의 저녁 식사 옵션을 생성합니다. 각 재료는 영양 성분, 맛, 조리 난이도, 예상 칼로리, 그리고 심지어 개인의 식습관 데이터까지 통합하여 16진수 압축 코드로 변환됩니다. 압축된 코드는 시스템 내에 저장된 ‘최적화된 레시피 트리’와 비교되어 가장 적합한 조합을 찾아냅니다. 불필요한 정보는 즉시 제거되어, 사용자에게는 가장 효율적인 식사 계획만 제공합니다.",
+      "title": "식량군 심층 감압 프로토콜 (Food Domain Deep Compression Protocol)",
+      "persona": "operations commander",
+      "mechanism": "식량군 기반 16진수 압축, 최적화된 레시피 트리 비교, 실시간 데이터 통합 및 필터링 (재료 영양 정보, 사용자 식습관, 조리 시간)",
+      "target_user": "시간 부족, 영양 밸런스에 대한 높은 요구 사항을 가진 전문 활동가, 군인, 고성능 스포츠 선수",
+      "execution_context": "고속 전투 상황 또는 극한 환경에서 제한된 식량 자원을 효율적으로 관리해야 하는 경우",
+      "expected_advantage": "단순 레시피 추천 시스템 대비 10배 빠른 식사 계획 생성, 식량 낭비 최소화, 사용자 개인 맞춤 최적화된 영양 섭취",
+      "source_model": "gemma3:4b",
+      "source_persona": "operations commander",
+      "scores": {
+        "novelty": 0.8055,
+        "problem_fit": 0.3559,
+        "relevance": 0.3559,
+        "mechanism_clarity": 0.9769,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 0.9873,
+        "risk": 0.0,
+        "creativity": 0.6945
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "식탁의 신화",
+      "strategy_type": "행동 의식",
+      "description": "이 시스템은 사용자의 위치와 문화적 배경을 바탕으로 독특한 저녁 식사 경험을 제공합니다. 지역 전통과 현지인의 일상적인 식습관을 분석하여, 사용자가 해당 지역의 진정한 맛과 식문화를 탐험할 수 있도록 도와줍니다. 예를 들어, 서울에 사는 사용자에게 한국 전통의 상차림을 소개하거나, 파리에 거주하는 사람에게 프랑스 남부의 지중해식 저녁 메뉴를 추천할 수 있습니다.",
+      "title": "문화적 식단 탐험가: 지역별 저녁 메뉴 추천",
+      "persona": "인류학자 현장 조사원",
+      "mechanism": "AI는 위치 기반 데이터와 문화적 인사이트 데이터베이스를 활용하여 사용자 주변의 지역 특성과 식문화를 분석합니다. 그 후, 유사한 식습관과 미식 전통을 가진 여러 저녁 메뉴를 제안하고, 사용자의 선호도에 따라 맞춤화된 추천을 제공합니다.",
+      "target_user": "세계 각지에 거주하는 여행자, 현지 문화에 관심 있는 사람, 새로운 음식 경험을 추구하는 개인의 저녁 시간 이용자",
+      "execution_context": "사용자가 시스템 앱을 열고 현재 위치를 설정하면, AI는 해당 지역의 식문화 데이터를 수집하고 분석하여 맞춤화된 저녁 메뉴 추천을 제공합니다. 또한, 지역 특산품과 전통 요리법에 대한 추가 정보를 제공하여 사용자 경험을 풍부하게 합니다.",
+      "expected_advantage": "이 시스템은 단순한 음식 추천을 넘어, 사용자가 여행하는 지역의 문화와 전통에 대한 이해를 높여줍니다. 현지인의 일상적인 식습관을 탐구함으로써, 관광객은 진정한 지역 사회를 경험하고, 현지인에게는 익숙한 음식에 새로운 시각을 제공합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "anthropologist on the ground",
+      "scores": {
+        "novelty": 0.8147,
+        "problem_fit": 0.3683,
+        "relevance": 0.3683,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.707
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "meal_hive_01_mut_1",
+      "strategy_type": "algorithmic dominance, competitive scarcity",
+      "description": "식량 감시 곤충은 인공지능이 지역 주민들의 음식 소비 패턴과 생존 가능성을 분석하여 가장 부족한 식량 자원을 예측하고, 그 자원을 획득하기 위한 경쟁을 촉진하는 플랫폼입니다. 곤충은 ‘생존’ 점수를 받으며, 이 점수는 식량 자원의 희소성, 곤충의 적응력, 그리고 다른 곤충과의 경쟁 결과에 따라 결정됩니다. 지역 주민들은 곤충에 의해 제공되는 식량 자원을 확보하기 위해 경쟁하며, 가장 높은 점수를 얻은 곤충은 ‘식량 제왕’으로 선포됩니다. 곤충의 ‘알 저장고’는 극소수의 생존자에게만 제한적으로 식량을 제공하며, 생존 경쟁의 긴박함을 고조시킵니다.",
+      "title": "식량 감시 곤충 (Food Watch Insect)",
+      "persona": "지방구역의 활동가 (Grassroots Organizer)",
+      "parent_id": "meal_hive_01",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.8791,
+        "problem_fit": 0.0114,
+        "relevance": 0.0114,
+        "mechanism_clarity": 0.42,
+        "mutation_distance": 0.9447,
+        "mutation_quality": 0.6932,
+        "feasibility": 0.231,
+        "risk": 0.18,
+        "creativity": 0.4958
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "식탁의 신화_mut_1",
+      "strategy_type": "경험 창조",
+      "description": "이 시스템은 사용자를 미지의 식문화 우주로 안내합니다. 단순히 위치와 문화를 기반으로 하지 않고, 과학적 탐험과 모험을 콘셉트로 하여 다양한 외계 문명의 식단을 소개합니다. 예를 들어, 사용자가 고대 마야 문명의 요리사를 만나 그의 독특한 매운맛 향신료 조합을 직접 체험하거나, 미래의 우주 식민지 식단을 미리 맛볼 수 있습니다. 각 식단은 과학적 배경과 함께 제공되어 식문화에 대한 이해를 높입니다.",
+      "title": "식탁의 우주 탐험가: 미지의 맛 여행",
+      "persona": "미식 모험가",
+      "mechanism": "가상 현실 요리 여행",
+      "target_user": "식문화에 관심 많은 밀레니얼 세대",
+      "execution_context": "VR 헤드셋을 이용한 가상 현실 요리 체험",
+      "expected_advantage": "일상적인 식단에서 벗어나 새로운 경험과 지식을 제공하는 독특한 요리 탐험.",
+      "parent_id": "식탁의 신화",
+      "depth": 1,
+      "mutation_type": "도메인 교차",
+      "scores": {
+        "novelty": 0.7189,
+        "problem_fit": 0.3415,
+        "relevance": 0.3415,
+        "mechanism_clarity": 0.8303,
+        "mutation_distance": 0.9272,
+        "mutation_quality": 0.8137,
+        "feasibility": 0.9067,
+        "risk": 0.0,
+        "creativity": 0.6649
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "alpha-7-nutrition_mut_1",
+      "strategy_type": "synthetic genesis",
+      "description": "음식 재료들의 ‘식량군’을 분석하여 음식 자체의 ‘공명체’ (resonance)를 생성하고, 이를 기반으로 새로운 레시피를 ‘창조’합니다. 단순히 최적화된 조합을 찾는 것이 아니라, 각 재료의 에너지 패턴, 맛의 파동, 심지어 개인의 감정 상태까지 통합하여 복잡한 알고리즘으로 ‘공명체’를 만듭니다. 생성된 ‘공명체’는 식량 네트워크(food network) 내의 다른 재료들과 상호작용하며, 예상치 못한 새로운 맛과 영양의 시너지를 창출하는 레시피를 유도합니다. 이는 단순히 데이터 기반의 추천이 아닌, 식재료의 고유한 에너지 흐름을 통해 새로운 식단을 ‘탄생’시키는 방식입니다.",
+      "title": "식량군 공명체 생성 시스템 (Food Domain Resonance Generation System)",
+      "persona": "operations commander",
+      "parent_id": "alpha-7-nutrition",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.727,
+        "problem_fit": 0.008,
+        "relevance": 0.008,
+        "mechanism_clarity": 0.4137,
+        "mutation_distance": 0.925,
+        "mutation_quality": 0.6836,
+        "feasibility": 0.2275,
+        "risk": 0.18,
+        "creativity": 0.4384
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 지도",
+      "strategy_type": "환경 설계",
+      "description": "이 시스템은 사용자의 선호도와 과거 선택 데이터를 기반으로 AI가 생성한 '맛집 탐험 지도'를 제공합니다. 지도에는 다양한 음식 스타일과 분위기의 식당들이 표시되며, 각 식당에는 사용자 평점과 추천 메뉴, 그리고 주변 명소 정보가 포함됩니다. 사용자는 지도를 보며 흥미로운 식당을 발견하고, 클릭하여 자세한 정보를 확인한 후 예약을 할 수 있습니다.",
+      "title": "AI 맛집 매칭 시스템: 개인 맞춤형 저녁 식당 추천 지도",
+      "persona": "Master Teacher",
+      "mechanism": "AI 알고리즘은 사용자 프로필을 분석하여 선호하는 음식 스타일, 예산, 그리고 식당 분위기를 학습합니다. 이 데이터를 활용하여 개인화된 맛집 지도를 생성하고, 사용자의 위치 기반 서비스를 연동하여 근처의 추천 식당을 제공합니다.",
+      "target_user": "저녁 식사를 계획하는 직장인 또는 미식가",
+      "execution_context": "모바일 앱 및 웹사이트 플랫폼을 통해 접근 가능. AI는 지속적인 피드백을 통해 사용자 선호도를 개선하고, 새로운 식당 정보를 업데이트합니다.",
+      "expected_advantage": "사용자는 복잡한 선택에서 벗어나 AI가 제안하는 맞춤형 맛집을 탐색하며, 다양한 식당들을 편리하게 비교하고 예약할 수 있습니다. 이를 통해 새로운 식당 발견의 즐거움을 높이고, 저녁 메뉴 선택에 드는 시간과 노력을 절감합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "master teacher",
+      "scores": {
+        "novelty": 0.2973,
+        "problem_fit": 0.374,
+        "relevance": 0.374,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.4244
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "meal_hive_01_mut_2",
+      "strategy_type": "algorithmic dominance, surveillance",
+      "description": "식량 감시 곤충은 인공지능이 탑재된 작은 곤충 군단입니다. 각 곤충은 특정 지역의 식료품 가격, 품질, 공급망을 실시간으로 감시하고 데이터를 수집합니다. 이 데이터는 중앙 집중식 플랫폼으로 전송되어, 최적의 식료품 공급 경로를 계산하고, 가격 변동을 예측하며, 식품 낭비를 최소화하는 데 사용됩니다. 곤충들은 또한 식품 품질 저하를 감지하여 식품 회수 시스템을 트리거하고, 식량 위기 발생 시 신속하게 정보를 제공합니다. 곤충의 꿀 저장고는 수집된 데이터의 실시간 시각화 도구입니다.",
+      "title": "식량 감시 곤충 (Meal Watch Insect)",
+      "persona": "지방구역의 활동가 (Grassroots Organizer)",
+      "parent_id": "meal_hive_01",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 1.0,
+        "problem_fit": 0.0143,
+        "relevance": 0.0143,
+        "mechanism_clarity": 0.2511,
+        "mutation_distance": 0.9681,
+        "mutation_quality": 0.6778,
+        "feasibility": 0.1381,
+        "risk": 0.36,
+        "creativity": 0.4983
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "식탁의 신화_mut_2",
+      "strategy_type": "경험 의식",
+      "description": "이 시스템은 사용자의 위치를 기반으로 하지 않고, 시대와 문화를 넘나드는 미식 여행을 제안합니다. 특정 시대의 식문화와 역사를 탐구하고, 그 시대에 맞는 메뉴와 식사 경험을 제공합니다. 예를 들어, 고대 그리스 시대의 철학자들과 함께 하는 저녁 식사 모임이나, 1920년대 재즈 시대 뉴욕의 레스토랑을 재현한 경험을 선사할 수 있습니다. 사용자는 시간 여행자로서 다양한 문화와 역사 속 미식을 탐험하게 됩니다.",
+      "title": "미각의 시간 여행",
+      "persona": "역사 애호가 및 문화 탐구자",
+      "target_user": "문화적, 역사적 관심도가 높은 일반 사용자",
+      "execution_context": "온라인 플랫폼 및 가상 현실 기술 활용",
+      "expected_advantage": "사용자에게 독특하고 몰입감 있는 식사 경험 제공, 역사와 문화에 대한 이해 증진",
+      "parent_id": "식탁의 신화",
+      "depth": 1,
+      "mutation_type": "도메인 교차",
+      "scores": {
+        "novelty": 0.5625,
+        "problem_fit": 0.191,
+        "relevance": 0.191,
+        "mechanism_clarity": 0.796,
+        "mutation_distance": 0.9246,
+        "mutation_quality": 0.7774,
+        "feasibility": 0.8878,
+        "risk": 0.0,
+        "creativity": 0.5514
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 지도_mut_2",
+      "strategy_type": "몰입형 환경 설계",
+      "description": "사용자가 집에서 편안하게 다양한 식당의 분위기와 음식을 탐험할 수 있는 VR 맛집 투어 시스템을 개발합니다. 사용자는 가상 현실 속에서 실제 식당에 있는 것처럼 요리, 인테리어, 음악 등을 경험하며 맞춤형 저녁 식당 추천을 받습니다. 이 시스템은 AI가 생성한 다양한 음식 세계를 탐험하는 새로운 미식 여행 방식을 제공합니다.",
+      "title": "미식 여행 가상 현실(VR) 체험",
+      "persona": "미식가",
+      "mechanism": "VR 헤드셋 착용 후 가상 공간 이동, 식당 분위기 및 메뉴 체험, 사용자 선호도 피드백",
+      "target_user": "집에서 고급 식당 경험을 원하는 미식가",
+      "execution_context": "VR 기술과 AI 추천 시스템 통합",
+      "expected_advantage": "실제 식당을 방문하지 않고도 다양한 맛집 탐험, 편안한 저녁 식사 준비 시간 절약",
+      "parent_id": "맛집 탐험 지도",
+      "depth": 1,
+      "mutation_type": "도메인 결합",
+      "scores": {
+        "novelty": 0.5891,
+        "problem_fit": 0.3852,
+        "relevance": 0.3852,
+        "mechanism_clarity": 0.7431,
+        "mutation_distance": 0.9284,
+        "mutation_quality": 0.8099,
+        "feasibility": 0.8587,
+        "risk": 0.0,
+        "creativity": 0.6201
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 로또_mut_1",
+      "strategy_type": "경험 기반 추천, 탐험적 학습",
+      "description": "사용자는 로또가 아닌 '맛의 모험 지도'를 통해 새로운 요리 세계를 탐험합니다. 이 지도는 사용자의 선호도와 과거 선택 데이터를 기반으로 다양한 맛집과 숨겨진 식당을 추천합니다. 사용자는 지도에서 목적지를 선택하고, 시스템은 해당 지역의 독특한 요리를 소개합니다. 지도에는 사용자 평점과 음식 사진이 포함되어 경험을 시각화하고 공유할 수 있습니다. 지도는 지속적으로 업데이트되어 새로운 맛집을 발견하고, 사용자의 모험심을 자극합니다.",
+      "title": "맛의 모험 지도",
+      "persona": "요리 탐험가",
+      "mechanism": "데이터 기반 추천 알고리즘과 사용자 생성 콘텐츠(UGC)",
+      "target_user": "미식가, 새로운 요리에 관심 있는 사람들",
+      "execution_context": "온라인 음식 플랫폼 및 모바일 앱",
+      "expected_advantage": "사용자 참여도 증대, 지역 맛집 홍보, 맞춤형 요리 탐험 경험 제공",
+      "parent_id": "맛집 탐험 로또",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.2,
+        "problem_fit": 0.3532,
+        "relevance": 0.3532,
+        "mechanism_clarity": 0.8497,
+        "mutation_distance": 0.9496,
+        "mutation_quality": 0.8279,
+        "feasibility": 0.9173,
+        "risk": 0.0,
+        "creativity": 0.493
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "alpha-7-nutrition_mut_2",
+      "strategy_type": "symbiotic simulation",
+      "description": "음식 재료들의 '식량군'을 단순 데이터로 취급하는 대신, 각 재료를 살아있는 '식량군 생명체'로 간주합니다. 사용자 정보와 재료의 생체 데이터를 실시간으로 연결하여, 식량군 생명체의 '욕구'와 '에너지 흐름'을 기반으로 저녁 식사 옵션을 생성합니다. 시스템은 식량군 생명체의 '행복'을 극대화하는 식사 조합을 목표로 하며, 생체 데이터 분석 및 반응을 통해 레시피를 지속적으로 학습하고 최적화합니다. 이는 16진수 압축 코드가 아닌, 생체 에너지 패턴의 시각화와 상호작용을 통해 구현됩니다.",
+      "title": "식량군 생명체 연동 시스템 (Food Domain Entity Synchronization System)",
+      "persona": "operations commander",
+      "parent_id": "alpha-7-nutrition",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.5975,
+        "problem_fit": 0.027,
+        "relevance": 0.027,
+        "mechanism_clarity": 0.3917,
+        "mutation_distance": 0.9047,
+        "mutation_quality": 0.676,
+        "feasibility": 0.2154,
+        "risk": 0.0,
+        "creativity": 0.4083
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 지도_mut_1",
+      "strategy_type": "창조적 디자인",
+      "description": "이 시스템은 사용자의 선호도와 데이터를 기반으로 AI가 직접 레시피를 생성하여 '요리 탐험 지도'를 제공합니다. 지도에는 다양한 요리의 단계별 레시피와 필요한 재료, 조리 시간 등이 표시됩니다. 각 레시피는 사용자 취향에 맞게 조정될 수 있으며, 사용자는 지도를 보며 새로운 요리를 발견하고 직접 요리해 볼 수 있습니다. 레시피를 완성한 후, 해당 식당이나 주방으로 연결되어 예약 및 주문이 가능합니다.",
+      "title": "AI 요리사: 맞춤형 레시피 지도",
+      "persona": "요리 애호가",
+      "target_user": "식재료 구매부터 요리까지 다양한 활동을 즐기는 사람",
+      "execution_context": "온라인 요리 플랫폼 앱 또는 웹사이트",
+      "expected_advantage": "사용자 맞춤형 레시피 제공으로 요리 경험의 다양성과 만족도 향상",
+      "parent_id": "맛집 탐험 지도",
+      "depth": 1,
+      "mutation_type": "역할 전환",
+      "scores": {
+        "novelty": 0.3847,
+        "problem_fit": 0.1778,
+        "relevance": 0.1778,
+        "mechanism_clarity": 0.7929,
+        "mutation_distance": 0.8834,
+        "mutation_quality": 0.7578,
+        "feasibility": 0.8861,
+        "risk": 0.0,
+        "creativity": 0.4799
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 로또_mut_2",
+      "strategy_type": "참여형 메커니즘",
+      "description": "사용자들은 저녁 식사 시간에 미식가 도전 퀴즈를 통해 다양한 요리 도전을 경험합니다. 퀴즈는 지역 맛집의 특색 있는 요리에 대한 질문으로 구성되며, 정답을 맞힐 때마다 포인트를 얻습니다. 로또와는 별도로, 매주 도전 과제를 완료한 사용자 중 추첨을 통해 특별한 식사 쿠폰을 제공하여 경쟁 요소를 더했습니다. AI는 사용자의 선호도와 퀴즈 결과에 따라 개인화된 맛집 추천과 함께 다음 도전 과제를 제시합니다.",
+      "title": "미식가 도전 퀴즈",
+      "persona": "제로 예산 생존 엔지니어",
+      "parent_id": "맛집 탐험 로또",
+      "depth": 1,
+      "mutation_type": "게임화 및 경쟁",
+      "scores": {
+        "novelty": 0.7221,
+        "problem_fit": 0.0399,
+        "relevance": 0.0399,
+        "mechanism_clarity": 0.3791,
+        "mutation_distance": 0.9468,
+        "mutation_quality": 0.6936,
+        "feasibility": 0.2085,
+        "risk": 0.0,
+        "creativity": 0.4585
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 로또",
+      "strategy_type": "경제적 메커니즘, 게임화",
+      "description": "사용자는 저녁 메뉴를 선택하는 대신 '맛집 탐험 로또'에 참여하여 무작위로 선정된 지역 맛집의 요리를 추천받습니다. 로또 구매는 선택 사항이며, 저렴한 비용(예: 1,000원)으로 참여할 수 있습니다. 시스템은 지역 기반 AI와 결합하여 다양한 요리 스타일을 고려하고, 사용자의 선호도를 학습하여 개인화된 추천을 제공합니다.",
+      "title": "저녁 식사 로또 추첨",
+      "persona": "제로 예산 생존 엔지니어",
+      "mechanism": "로또 추첨 알고리즘, 지역 맛집 데이터베이스, 사용자 선호도 학습",
+      "target_user": "예산 제한이 있는 개인, 새로운 요리에 도전하려는 사람",
+      "execution_context": "모바일 앱 또는 웹사이트를 통해 접근 가능. 사용자는 로또 구매 후, AI가 추천한 맛집의 요리 메뉴와 리뷰를 확인하고 저녁 식사 계획을 세웁니다.",
+      "expected_advantage": "저렴한 비용으로 다양한 맛집을 경험할 수 있고, 새로운 요리에 대한 모험심을 자극하며, 예산에 구애받지 않는 즐거운 저녁 식사 시간을 제공합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "zero-budget survival engineer",
+      "scores": {
+        "novelty": 0.3766,
+        "problem_fit": 0.3621,
+        "relevance": 0.3621,
+        "mechanism_clarity": 0.8229,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 0.9026,
+        "risk": 0.0,
+        "creativity": 0.4403
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ],
+  "mutated_ideas": [
+    {
+      "id": "맛집 탐험 로또_mut_1",
+      "strategy_type": "경험 기반 추천, 탐험적 학습",
+      "description": "사용자는 로또가 아닌 '맛의 모험 지도'를 통해 새로운 요리 세계를 탐험합니다. 이 지도는 사용자의 선호도와 과거 선택 데이터를 기반으로 다양한 맛집과 숨겨진 식당을 추천합니다. 사용자는 지도에서 목적지를 선택하고, 시스템은 해당 지역의 독특한 요리를 소개합니다. 지도에는 사용자 평점과 음식 사진이 포함되어 경험을 시각화하고 공유할 수 있습니다. 지도는 지속적으로 업데이트되어 새로운 맛집을 발견하고, 사용자의 모험심을 자극합니다.",
+      "title": "맛의 모험 지도",
+      "persona": "요리 탐험가",
+      "mechanism": "데이터 기반 추천 알고리즘과 사용자 생성 콘텐츠(UGC)",
+      "target_user": "미식가, 새로운 요리에 관심 있는 사람들",
+      "execution_context": "온라인 음식 플랫폼 및 모바일 앱",
+      "expected_advantage": "사용자 참여도 증대, 지역 맛집 홍보, 맞춤형 요리 탐험 경험 제공",
+      "parent_id": "맛집 탐험 로또",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.2,
+        "problem_fit": 0.3532,
+        "relevance": 0.3532,
+        "mechanism_clarity": 0.8497,
+        "mutation_distance": 0.9496,
+        "mutation_quality": 0.8279,
+        "feasibility": 0.9173,
+        "risk": 0.0,
+        "creativity": 0.493
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 로또_mut_2",
+      "strategy_type": "참여형 메커니즘",
+      "description": "사용자들은 저녁 식사 시간에 미식가 도전 퀴즈를 통해 다양한 요리 도전을 경험합니다. 퀴즈는 지역 맛집의 특색 있는 요리에 대한 질문으로 구성되며, 정답을 맞힐 때마다 포인트를 얻습니다. 로또와는 별도로, 매주 도전 과제를 완료한 사용자 중 추첨을 통해 특별한 식사 쿠폰을 제공하여 경쟁 요소를 더했습니다. AI는 사용자의 선호도와 퀴즈 결과에 따라 개인화된 맛집 추천과 함께 다음 도전 과제를 제시합니다.",
+      "title": "미식가 도전 퀴즈",
+      "persona": "제로 예산 생존 엔지니어",
+      "parent_id": "맛집 탐험 로또",
+      "depth": 1,
+      "mutation_type": "게임화 및 경쟁",
+      "scores": {
+        "novelty": 0.7221,
+        "problem_fit": 0.0399,
+        "relevance": 0.0399,
+        "mechanism_clarity": 0.3791,
+        "mutation_distance": 0.9468,
+        "mutation_quality": 0.6936,
+        "feasibility": 0.2085,
+        "risk": 0.0,
+        "creativity": 0.4585
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "식탁의 신화_mut_1",
+      "strategy_type": "경험 창조",
+      "description": "이 시스템은 사용자를 미지의 식문화 우주로 안내합니다. 단순히 위치와 문화를 기반으로 하지 않고, 과학적 탐험과 모험을 콘셉트로 하여 다양한 외계 문명의 식단을 소개합니다. 예를 들어, 사용자가 고대 마야 문명의 요리사를 만나 그의 독특한 매운맛 향신료 조합을 직접 체험하거나, 미래의 우주 식민지 식단을 미리 맛볼 수 있습니다. 각 식단은 과학적 배경과 함께 제공되어 식문화에 대한 이해를 높입니다.",
+      "title": "식탁의 우주 탐험가: 미지의 맛 여행",
+      "persona": "미식 모험가",
+      "mechanism": "가상 현실 요리 여행",
+      "target_user": "식문화에 관심 많은 밀레니얼 세대",
+      "execution_context": "VR 헤드셋을 이용한 가상 현실 요리 체험",
+      "expected_advantage": "일상적인 식단에서 벗어나 새로운 경험과 지식을 제공하는 독특한 요리 탐험.",
+      "parent_id": "식탁의 신화",
+      "depth": 1,
+      "mutation_type": "도메인 교차",
+      "scores": {
+        "novelty": 0.7189,
+        "problem_fit": 0.3415,
+        "relevance": 0.3415,
+        "mechanism_clarity": 0.8303,
+        "mutation_distance": 0.9272,
+        "mutation_quality": 0.8137,
+        "feasibility": 0.9067,
+        "risk": 0.0,
+        "creativity": 0.6649
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "식탁의 신화_mut_2",
+      "strategy_type": "경험 의식",
+      "description": "이 시스템은 사용자의 위치를 기반으로 하지 않고, 시대와 문화를 넘나드는 미식 여행을 제안합니다. 특정 시대의 식문화와 역사를 탐구하고, 그 시대에 맞는 메뉴와 식사 경험을 제공합니다. 예를 들어, 고대 그리스 시대의 철학자들과 함께 하는 저녁 식사 모임이나, 1920년대 재즈 시대 뉴욕의 레스토랑을 재현한 경험을 선사할 수 있습니다. 사용자는 시간 여행자로서 다양한 문화와 역사 속 미식을 탐험하게 됩니다.",
+      "title": "미각의 시간 여행",
+      "persona": "역사 애호가 및 문화 탐구자",
+      "target_user": "문화적, 역사적 관심도가 높은 일반 사용자",
+      "execution_context": "온라인 플랫폼 및 가상 현실 기술 활용",
+      "expected_advantage": "사용자에게 독특하고 몰입감 있는 식사 경험 제공, 역사와 문화에 대한 이해 증진",
+      "parent_id": "식탁의 신화",
+      "depth": 1,
+      "mutation_type": "도메인 교차",
+      "scores": {
+        "novelty": 0.5625,
+        "problem_fit": 0.191,
+        "relevance": 0.191,
+        "mechanism_clarity": 0.796,
+        "mutation_distance": 0.9246,
+        "mutation_quality": 0.7774,
+        "feasibility": 0.8878,
+        "risk": 0.0,
+        "creativity": 0.5514
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "alpha-7-nutrition_mut_1",
+      "strategy_type": "synthetic genesis",
+      "description": "음식 재료들의 ‘식량군’을 분석하여 음식 자체의 ‘공명체’ (resonance)를 생성하고, 이를 기반으로 새로운 레시피를 ‘창조’합니다. 단순히 최적화된 조합을 찾는 것이 아니라, 각 재료의 에너지 패턴, 맛의 파동, 심지어 개인의 감정 상태까지 통합하여 복잡한 알고리즘으로 ‘공명체’를 만듭니다. 생성된 ‘공명체’는 식량 네트워크(food network) 내의 다른 재료들과 상호작용하며, 예상치 못한 새로운 맛과 영양의 시너지를 창출하는 레시피를 유도합니다. 이는 단순히 데이터 기반의 추천이 아닌, 식재료의 고유한 에너지 흐름을 통해 새로운 식단을 ‘탄생’시키는 방식입니다.",
+      "title": "식량군 공명체 생성 시스템 (Food Domain Resonance Generation System)",
+      "persona": "operations commander",
+      "parent_id": "alpha-7-nutrition",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.727,
+        "problem_fit": 0.008,
+        "relevance": 0.008,
+        "mechanism_clarity": 0.4137,
+        "mutation_distance": 0.925,
+        "mutation_quality": 0.6836,
+        "feasibility": 0.2275,
+        "risk": 0.18,
+        "creativity": 0.4384
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "alpha-7-nutrition_mut_2",
+      "strategy_type": "symbiotic simulation",
+      "description": "음식 재료들의 '식량군'을 단순 데이터로 취급하는 대신, 각 재료를 살아있는 '식량군 생명체'로 간주합니다. 사용자 정보와 재료의 생체 데이터를 실시간으로 연결하여, 식량군 생명체의 '욕구'와 '에너지 흐름'을 기반으로 저녁 식사 옵션을 생성합니다. 시스템은 식량군 생명체의 '행복'을 극대화하는 식사 조합을 목표로 하며, 생체 데이터 분석 및 반응을 통해 레시피를 지속적으로 학습하고 최적화합니다. 이는 16진수 압축 코드가 아닌, 생체 에너지 패턴의 시각화와 상호작용을 통해 구현됩니다.",
+      "title": "식량군 생명체 연동 시스템 (Food Domain Entity Synchronization System)",
+      "persona": "operations commander",
+      "parent_id": "alpha-7-nutrition",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.5975,
+        "problem_fit": 0.027,
+        "relevance": 0.027,
+        "mechanism_clarity": 0.3917,
+        "mutation_distance": 0.9047,
+        "mutation_quality": 0.676,
+        "feasibility": 0.2154,
+        "risk": 0.0,
+        "creativity": 0.4083
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "meal_hive_01_mut_1",
+      "strategy_type": "algorithmic dominance, competitive scarcity",
+      "description": "식량 감시 곤충은 인공지능이 지역 주민들의 음식 소비 패턴과 생존 가능성을 분석하여 가장 부족한 식량 자원을 예측하고, 그 자원을 획득하기 위한 경쟁을 촉진하는 플랫폼입니다. 곤충은 ‘생존’ 점수를 받으며, 이 점수는 식량 자원의 희소성, 곤충의 적응력, 그리고 다른 곤충과의 경쟁 결과에 따라 결정됩니다. 지역 주민들은 곤충에 의해 제공되는 식량 자원을 확보하기 위해 경쟁하며, 가장 높은 점수를 얻은 곤충은 ‘식량 제왕’으로 선포됩니다. 곤충의 ‘알 저장고’는 극소수의 생존자에게만 제한적으로 식량을 제공하며, 생존 경쟁의 긴박함을 고조시킵니다.",
+      "title": "식량 감시 곤충 (Food Watch Insect)",
+      "persona": "지방구역의 활동가 (Grassroots Organizer)",
+      "parent_id": "meal_hive_01",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.8791,
+        "problem_fit": 0.0114,
+        "relevance": 0.0114,
+        "mechanism_clarity": 0.42,
+        "mutation_distance": 0.9447,
+        "mutation_quality": 0.6932,
+        "feasibility": 0.231,
+        "risk": 0.18,
+        "creativity": 0.4958
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "meal_hive_01_mut_2",
+      "strategy_type": "algorithmic dominance, surveillance",
+      "description": "식량 감시 곤충은 인공지능이 탑재된 작은 곤충 군단입니다. 각 곤충은 특정 지역의 식료품 가격, 품질, 공급망을 실시간으로 감시하고 데이터를 수집합니다. 이 데이터는 중앙 집중식 플랫폼으로 전송되어, 최적의 식료품 공급 경로를 계산하고, 가격 변동을 예측하며, 식품 낭비를 최소화하는 데 사용됩니다. 곤충들은 또한 식품 품질 저하를 감지하여 식품 회수 시스템을 트리거하고, 식량 위기 발생 시 신속하게 정보를 제공합니다. 곤충의 꿀 저장고는 수집된 데이터의 실시간 시각화 도구입니다.",
+      "title": "식량 감시 곤충 (Meal Watch Insect)",
+      "persona": "지방구역의 활동가 (Grassroots Organizer)",
+      "parent_id": "meal_hive_01",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 1.0,
+        "problem_fit": 0.0143,
+        "relevance": 0.0143,
+        "mechanism_clarity": 0.2511,
+        "mutation_distance": 0.9681,
+        "mutation_quality": 0.6778,
+        "feasibility": 0.1381,
+        "risk": 0.36,
+        "creativity": 0.4983
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 지도_mut_1",
+      "strategy_type": "창조적 디자인",
+      "description": "이 시스템은 사용자의 선호도와 데이터를 기반으로 AI가 직접 레시피를 생성하여 '요리 탐험 지도'를 제공합니다. 지도에는 다양한 요리의 단계별 레시피와 필요한 재료, 조리 시간 등이 표시됩니다. 각 레시피는 사용자 취향에 맞게 조정될 수 있으며, 사용자는 지도를 보며 새로운 요리를 발견하고 직접 요리해 볼 수 있습니다. 레시피를 완성한 후, 해당 식당이나 주방으로 연결되어 예약 및 주문이 가능합니다.",
+      "title": "AI 요리사: 맞춤형 레시피 지도",
+      "persona": "요리 애호가",
+      "target_user": "식재료 구매부터 요리까지 다양한 활동을 즐기는 사람",
+      "execution_context": "온라인 요리 플랫폼 앱 또는 웹사이트",
+      "expected_advantage": "사용자 맞춤형 레시피 제공으로 요리 경험의 다양성과 만족도 향상",
+      "parent_id": "맛집 탐험 지도",
+      "depth": 1,
+      "mutation_type": "역할 전환",
+      "scores": {
+        "novelty": 0.3847,
+        "problem_fit": 0.1778,
+        "relevance": 0.1778,
+        "mechanism_clarity": 0.7929,
+        "mutation_distance": 0.8834,
+        "mutation_quality": 0.7578,
+        "feasibility": 0.8861,
+        "risk": 0.0,
+        "creativity": 0.4799
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "맛집 탐험 지도_mut_2",
+      "strategy_type": "몰입형 환경 설계",
+      "description": "사용자가 집에서 편안하게 다양한 식당의 분위기와 음식을 탐험할 수 있는 VR 맛집 투어 시스템을 개발합니다. 사용자는 가상 현실 속에서 실제 식당에 있는 것처럼 요리, 인테리어, 음악 등을 경험하며 맞춤형 저녁 식당 추천을 받습니다. 이 시스템은 AI가 생성한 다양한 음식 세계를 탐험하는 새로운 미식 여행 방식을 제공합니다.",
+      "title": "미식 여행 가상 현실(VR) 체험",
+      "persona": "미식가",
+      "mechanism": "VR 헤드셋 착용 후 가상 공간 이동, 식당 분위기 및 메뉴 체험, 사용자 선호도 피드백",
+      "target_user": "집에서 고급 식당 경험을 원하는 미식가",
+      "execution_context": "VR 기술과 AI 추천 시스템 통합",
+      "expected_advantage": "실제 식당을 방문하지 않고도 다양한 맛집 탐험, 편안한 저녁 식사 준비 시간 절약",
+      "parent_id": "맛집 탐험 지도",
+      "depth": 1,
+      "mutation_type": "도메인 결합",
+      "scores": {
+        "novelty": 0.5891,
+        "problem_fit": 0.3852,
+        "relevance": 0.3852,
+        "mechanism_clarity": 0.7431,
+        "mutation_distance": 0.9284,
+        "mutation_quality": 0.8099,
+        "feasibility": 0.8587,
+        "risk": 0.0,
+        "creativity": 0.6201
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ]
+}

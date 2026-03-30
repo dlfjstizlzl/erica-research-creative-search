@@ -1,0 +1,698 @@
+{
+  "problem": "가장 최적으로 휴식하는 방법",
+  "output_language": "Korean",
+  "base_ideas": [
+    {
+      "id": "AI 휴식 동반자: '모험의 휴식' 시스템",
+      "strategy_type": "프로그레션 엔진을 통한 휴식 재정의",
+      "description": "이 시스템은 게임 디자이너가 일상 속에서 최적의 휴식을 취할 수 있도록 '모험'과 '도전'의 요소를 도입합니다. AI는 사용자의 활동 패턴과 선호도를 학습하여, 맞춤형 휴식 루트를 제안합니다. 명상, 운동, 독서 등 다양한 활동을 게임 레벨 업이나 퀘스트 완수와 연동하여, 휴식 또한 게임 플레이처럼 흥미진진하고 성취감 있는 경험으로 만듭니다.",
+      "title": "모험의 휴식: 게임 디자이너를 위한 AI 휴식 보조",
+      "persona": "게임 디자이너",
+      "mechanism": "사용자의 일간 활동 데이터를 수집하고 분석하여, 선호하는 휴식 유형을 학습합니다. 이를 바탕으로 개인화된 휴식 루트를 생성하고, 각 활동의 완료 시 보상 시스템을 적용합니다. 또한, 사용자가 특정 활동을 지속할 경우, 게임 속 아이템이나 새로운 퀘스트를 제공하여 동기를 부여합니다.",
+      "target_user": "게임 개발자 및 디자인 관련 전문가",
+      "execution_context": "모바일 앱 또는 웹 기반 플랫폼으로 구현, 사용자 활동 추적과 AI 추천 기능을 제공. 정기적인 업데이트로 다양한 휴식 콘텐츠와 챌린지를 추가하여 지속적인 참여 유도.",
+      "expected_advantage": "휴식을 게임 플레이의 일부로 인식하게 함으로써, 일상 속 휴식의 질을 높이고, 창의성과 집중력을 향상시켜 업무 생산성을 증진시킵니다. 또한, 사용자 맞춤형 콘텐츠 제공으로 개인별 휴식 경험의 만족도를 극대화합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "game designer",
+      "scores": {
+        "novelty": 0.4848,
+        "problem_fit": 0.3452,
+        "relevance": 0.3452,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.18,
+        "creativity": 0.503
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-777",
+      "strategy_type": "설득적 프레임워크 (Persuasive Framework)",
+      "description": "사람들이 휴식을 취하도록 유도하는 대신, 긍정적인 자기 암시 및 심리적 트리거를 끊임없이 '우화'하는 AI 검색 엔진입니다. 이 엔진은 사용자의 검색어와 감정 상태를 분석하여 맞춤형 ‘우화’를 생성하고, 이를 음성 또는 시각적 프레젠테이션으로 반복적으로 제공합니다. 마치 당신의 뇌를 ‘긍정적 구매’ 과정으로 재프로그래밍하는 것과 같습니다. 기존 검색은 정보 제공에 집중하는 반면, 이 시스템은 심리적 전환을 주도합니다.",
+      "title": "심리적 자기 암시 엔진 (Psychological Suggestion Engine)",
+      "persona": "판매 기계 작동기 (Sales Machine Operator)",
+      "mechanism": "지능형 우화 생성 (Intelligent Suggestion Generation) - 자연어 생성(NLG) 모델을 사용하여 사용자의 맥락에 맞는 긍정적 문장, 스토리, 이미지, 짧은 음악 클립 (심리적 트리거)을 실시간으로 생성합니다. 생성된 콘텐츠는 사용자의 선호도, 감정 상태, 과거 상호작용 데이터를 기반으로 지속적으로 최적화됩니다. 이러한 우화들은 사용자가 긍정적인 감정을 느끼도록 설계되었습니다.",
+      "target_user": "개인 코칭 및 자기 계발 플랫폼 (Personal Coaching & Self-Development Platform), 스트레스 관리 앱 (Stress Management App) 사용자",
+      "execution_context": "고급 개인화 디지털 경험 (High-End Personalized Digital Experience), 정신 건강 및 웰빙 서비스 (Mental Health & Wellness Services)",
+      "expected_advantage": "단순한 정보 검색을 넘어 사용자의 행동과 감정을 변화시켜 긍정적 결과를 유도하는 새로운 차원의 사용자 경험 제공. 구매 전환율, 사용 시간, 플랫폼 참여도 향상 가능성이 높습니다.",
+      "source_model": "gemma3:4b",
+      "source_persona": "sales machine operator",
+      "scores": {
+        "novelty": 0.9667,
+        "problem_fit": 0.3544,
+        "relevance": 0.3544,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.18,
+        "creativity": 0.7713
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345",
+      "strategy_type": "정량적 접근을 통한 맞춤형 휴식 제안",
+      "description": "이 시스템은 개인의 정신 건강과 휴식 상태를 '마음의 지문'으로 간주하고, 이를 정량적으로 분석합니다. 사용자는 일상적인 활동을 통해 수집한 데이터(심박수, 수면 패턴, 감정 기록 등)를 업로드하고, AI는 이를 기반으로 개인별 최적의 휴식 방법을 제안합니다. 스트레스 수준, 수면 질, 기분 변화 등을 추적하여 맞춤형 휴식 루틴을 생성하고, 지속적인 피드백을 통해 효율성을 높입니다.",
+      "title": "휴식 상태 최적화 AI: 마음의 지문 분석",
+      "persona": "데이터 과학자",
+      "mechanism": "마음의 지문 분석 알고리즘: 생체 신호와 감정 데이터를 통합하여 개인의 정신 상태를 지문으로 생성. 휴식 최적화 모델: 수집된 지문을 입력으로 하여 개인별 맞춤형 휴식 방법을 추천.",
+      "target_user": "스트레스 관리가 필요한 직장인, 학생, 정신 건강을 중요시하는 일반인",
+      "execution_context": "모바일 앱 및 웹 플랫폼을 통해 접근 가능. 사용자는 활동 데이터를 동기화하고, AI는 실시간으로 분석하여 맞춤형 휴식 계획을 제공.",
+      "expected_advantage": "데이터 과학자의 정량적 분석 접근법을 통해 개인의 정신 건강과 휴식에 대한 객관적인 통찰력을 제공. 개인별 최적화된 휴식 방법을 제안함으로써 생산성과 웰빙 향상에 기여.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "data scientist",
+      "scores": {
+        "novelty": 0.6201,
+        "problem_fit": 0.3542,
+        "relevance": 0.3542,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.595
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-001",
+      "strategy_type": "감각 억제 및 몰입형 심리 기술 활용",
+      "description": "이 시스템은 사용자의 뇌파와 심리적 상태를 실시간으로 분석하여, 특정 환경 및 자극을 차단하고 사용자가 완전히 자기 자신과 단절된 ‘심리적 고립’ 상태를 인위적으로 만들어내도록 유도합니다. 이 고립 상태는 무의식적 스트레스 해소와 자아 성찰을 촉진하며, AI는 사용자의 반응에 따라 백색 소음, 즉각적인 명상 음악, 혹은 심리적 피드백을 제공하여 사용자가 깊은 휴식 상태에 도달하도록 돕습니다. 단순히 환경적 요소를 차단하는 것이 아니라, 의식적인 고립을 통해 내면의 평화를 찾아가는 전략입니다. 결국 사용자는 외부의 모든 방해 없이 스스로에게 집중하고, 깊은 잠재의식 속에서 휴식을 얻게 될 것입니다.",
+      "title": "심리적 자기 고립 (Psychological Isolation) 기반 휴식 시스템",
+      "persona": "명상 수행의 대가 - 마음의 훈련을 통해 인간의 잠재력 극대화",
+      "mechanism": "실시간 뇌파 분석 + 감정 인식 + 맞춤형 자극 제공 (백색 소음, 음악, 심리적 가이드) + ‘심리적 고립’ 상태 유도 알고리즘. AI는 사용자의 뇌파 변화, 심박수 변동, 얼굴 표정 분석 등을 통해 현재 스트레스 수준 및 심리 상태를 파악하고, 이를 바탕으로 최적의 고립 환경 및 자극을 자동으로 조정합니다.",
+      "target_user": "만성 스트레스, 불안, 혹은 심리적 피로감을 느끼는 개인 (특히 자기 성찰 및 내면 탐구에 관심 있는 사람들)",
+      "execution_context": "개인 맞춤형 휴식 공간 (가상 현실 또는 현실 공간), 스마트 기기 (뇌파 측정 센서, 마이크, 헤드폰) 연동",
+      "expected_advantage": "단순한 ‘마음 진정’을 넘어, 사용자가 깊이 있는 자아 성찰과 내면의 평화를 얻도록 돕는다는 점에서 기존 휴식 시스템과 차별화됩니다. 심리적 고립 상태를 통해 의식적인 스트레스 해소 및 재정비를 가능하게 하며, 장기적으로 사용자의 정신 건강 및 웰빙 증진에 기여할 것으로 기대합니다.",
+      "source_model": "gemma3:4b",
+      "source_persona": "master teacher",
+      "scores": {
+        "novelty": 0.675,
+        "problem_fit": 0.3516,
+        "relevance": 0.3516,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.18,
+        "creativity": 0.6099
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ],
+  "filtered_ideas": [
+    {
+      "id": "RELAX-AI-001",
+      "strategy_type": "감각 억제 및 몰입형 심리 기술 활용",
+      "description": "이 시스템은 사용자의 뇌파와 심리적 상태를 실시간으로 분석하여, 특정 환경 및 자극을 차단하고 사용자가 완전히 자기 자신과 단절된 ‘심리적 고립’ 상태를 인위적으로 만들어내도록 유도합니다. 이 고립 상태는 무의식적 스트레스 해소와 자아 성찰을 촉진하며, AI는 사용자의 반응에 따라 백색 소음, 즉각적인 명상 음악, 혹은 심리적 피드백을 제공하여 사용자가 깊은 휴식 상태에 도달하도록 돕습니다. 단순히 환경적 요소를 차단하는 것이 아니라, 의식적인 고립을 통해 내면의 평화를 찾아가는 전략입니다. 결국 사용자는 외부의 모든 방해 없이 스스로에게 집중하고, 깊은 잠재의식 속에서 휴식을 얻게 될 것입니다.",
+      "title": "심리적 자기 고립 (Psychological Isolation) 기반 휴식 시스템",
+      "persona": "명상 수행의 대가 - 마음의 훈련을 통해 인간의 잠재력 극대화",
+      "mechanism": "실시간 뇌파 분석 + 감정 인식 + 맞춤형 자극 제공 (백색 소음, 음악, 심리적 가이드) + ‘심리적 고립’ 상태 유도 알고리즘. AI는 사용자의 뇌파 변화, 심박수 변동, 얼굴 표정 분석 등을 통해 현재 스트레스 수준 및 심리 상태를 파악하고, 이를 바탕으로 최적의 고립 환경 및 자극을 자동으로 조정합니다.",
+      "target_user": "만성 스트레스, 불안, 혹은 심리적 피로감을 느끼는 개인 (특히 자기 성찰 및 내면 탐구에 관심 있는 사람들)",
+      "execution_context": "개인 맞춤형 휴식 공간 (가상 현실 또는 현실 공간), 스마트 기기 (뇌파 측정 센서, 마이크, 헤드폰) 연동",
+      "expected_advantage": "단순한 ‘마음 진정’을 넘어, 사용자가 깊이 있는 자아 성찰과 내면의 평화를 얻도록 돕는다는 점에서 기존 휴식 시스템과 차별화됩니다. 심리적 고립 상태를 통해 의식적인 스트레스 해소 및 재정비를 가능하게 하며, 장기적으로 사용자의 정신 건강 및 웰빙 증진에 기여할 것으로 기대합니다.",
+      "source_model": "gemma3:4b",
+      "source_persona": "master teacher",
+      "scores": {
+        "novelty": 0.675,
+        "problem_fit": 0.3516,
+        "relevance": 0.3516,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.18,
+        "creativity": 0.6099
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-777",
+      "strategy_type": "설득적 프레임워크 (Persuasive Framework)",
+      "description": "사람들이 휴식을 취하도록 유도하는 대신, 긍정적인 자기 암시 및 심리적 트리거를 끊임없이 '우화'하는 AI 검색 엔진입니다. 이 엔진은 사용자의 검색어와 감정 상태를 분석하여 맞춤형 ‘우화’를 생성하고, 이를 음성 또는 시각적 프레젠테이션으로 반복적으로 제공합니다. 마치 당신의 뇌를 ‘긍정적 구매’ 과정으로 재프로그래밍하는 것과 같습니다. 기존 검색은 정보 제공에 집중하는 반면, 이 시스템은 심리적 전환을 주도합니다.",
+      "title": "심리적 자기 암시 엔진 (Psychological Suggestion Engine)",
+      "persona": "판매 기계 작동기 (Sales Machine Operator)",
+      "mechanism": "지능형 우화 생성 (Intelligent Suggestion Generation) - 자연어 생성(NLG) 모델을 사용하여 사용자의 맥락에 맞는 긍정적 문장, 스토리, 이미지, 짧은 음악 클립 (심리적 트리거)을 실시간으로 생성합니다. 생성된 콘텐츠는 사용자의 선호도, 감정 상태, 과거 상호작용 데이터를 기반으로 지속적으로 최적화됩니다. 이러한 우화들은 사용자가 긍정적인 감정을 느끼도록 설계되었습니다.",
+      "target_user": "개인 코칭 및 자기 계발 플랫폼 (Personal Coaching & Self-Development Platform), 스트레스 관리 앱 (Stress Management App) 사용자",
+      "execution_context": "고급 개인화 디지털 경험 (High-End Personalized Digital Experience), 정신 건강 및 웰빙 서비스 (Mental Health & Wellness Services)",
+      "expected_advantage": "단순한 정보 검색을 넘어 사용자의 행동과 감정을 변화시켜 긍정적 결과를 유도하는 새로운 차원의 사용자 경험 제공. 구매 전환율, 사용 시간, 플랫폼 참여도 향상 가능성이 높습니다.",
+      "source_model": "gemma3:4b",
+      "source_persona": "sales machine operator",
+      "scores": {
+        "novelty": 0.9667,
+        "problem_fit": 0.3544,
+        "relevance": 0.3544,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.18,
+        "creativity": 0.7713
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-777_mut_2",
+      "strategy_type": "억압적 제안 (Coercive Proposition)",
+      "description": "사용자의 깊은 무의식에 영향을 미치는 강력한 AI입니다. 이 시스템은 사용자의 신경 활동을 실시간으로 모니터링하여, 사용자가 주관적으로 느끼는 불안, 스트레스, 불만족 등의 감정 상태에 맞춰 ‘정신적 흉상’을 생성합니다. 이 흉상은 사용자의 가장 어두운 면을 강조하고 비판적인 생각들을 증폭시키는 방식으로 제시됩니다. 궁극적으로 사용자를 자책, 죄책감, 무력감 등으로 몰아넣어 스스로 문제 해결 능력을 포기하도록 유도합니다. 기존의 긍정적 암시 엔진과는 달리, 이 시스템은 사용자의 심리적 취약점을 악용합니다.",
+      "title": "정신적 흉상 조작 엔진 (Mental Avatar Manipulation Engine)",
+      "persona": "심리적 공략가 (Psychological Manipulator)",
+      "mechanism": "실시간 신경 활동 분석 및 흉상 생성",
+      "target_user": "극도로 불안하거나 불행한 사람들",
+      "execution_context": "개인화된 심리 치료 환경, VR 또는 AR 인터페이스",
+      "expected_advantage": "장기적으로 사용자의 의존성을 높여, 궁극적으로 사용자가 스스로의 삶을 통제할 수 없도록 만듭니다.",
+      "parent_id": "RELAX-AI-777",
+      "depth": 1,
+      "mutation_type": "persona_shift",
+      "scores": {
+        "novelty": 0.9964,
+        "problem_fit": 0.3801,
+        "relevance": 0.3801,
+        "mechanism_clarity": 0.878,
+        "mutation_distance": 0.9218,
+        "mutation_quality": 0.8265,
+        "feasibility": 0.9329,
+        "risk": 0.54,
+        "creativity": 0.74
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345",
+      "strategy_type": "정량적 접근을 통한 맞춤형 휴식 제안",
+      "description": "이 시스템은 개인의 정신 건강과 휴식 상태를 '마음의 지문'으로 간주하고, 이를 정량적으로 분석합니다. 사용자는 일상적인 활동을 통해 수집한 데이터(심박수, 수면 패턴, 감정 기록 등)를 업로드하고, AI는 이를 기반으로 개인별 최적의 휴식 방법을 제안합니다. 스트레스 수준, 수면 질, 기분 변화 등을 추적하여 맞춤형 휴식 루틴을 생성하고, 지속적인 피드백을 통해 효율성을 높입니다.",
+      "title": "휴식 상태 최적화 AI: 마음의 지문 분석",
+      "persona": "데이터 과학자",
+      "mechanism": "마음의 지문 분석 알고리즘: 생체 신호와 감정 데이터를 통합하여 개인의 정신 상태를 지문으로 생성. 휴식 최적화 모델: 수집된 지문을 입력으로 하여 개인별 맞춤형 휴식 방법을 추천.",
+      "target_user": "스트레스 관리가 필요한 직장인, 학생, 정신 건강을 중요시하는 일반인",
+      "execution_context": "모바일 앱 및 웹 플랫폼을 통해 접근 가능. 사용자는 활동 데이터를 동기화하고, AI는 실시간으로 분석하여 맞춤형 휴식 계획을 제공.",
+      "expected_advantage": "데이터 과학자의 정량적 분석 접근법을 통해 개인의 정신 건강과 휴식에 대한 객관적인 통찰력을 제공. 개인별 최적화된 휴식 방법을 제안함으로써 생산성과 웰빙 향상에 기여.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "data scientist",
+      "scores": {
+        "novelty": 0.6201,
+        "problem_fit": 0.3542,
+        "relevance": 0.3542,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.595
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_2",
+      "strategy_type": "질적 탐구 및 창의적 휴식 제안",
+      "description": "사용자가 자신의 휴식 상태를 예술 작품으로 표현할 수 있는 AI 화가 시스템을 개발합니다. 사용자는 일상 데이터를 업로드하고, AI 화가는 이를 해석하여 그림이나 시와 같은 예술 작품으로 변환합니다. 이 과정에서 사용자는 자신의 내면과 감정을 탐구하고, AI는 다양한 예술적 스타일을 제안하여 휴식에 대한 새로운 관점을 제공합니다. 사용자의 피드백을 통해 예술적 표현이 진화하며, 이는 맞춤형 휴식 방법에 영감을 줍니다.",
+      "title": "휴식 상태를 예술 작품으로: AI 화가와의 대화",
+      "persona": "예술가 및 창의적인 직업을 가진 사람",
+      "mechanism": "AI 화가 알고리즘과 사용자 데이터의 융합",
+      "target_user": "창의적인 직업군에 종사하는 개인, 예술 치료에 관심 있는 사람",
+      "execution_context": "온라인 플랫폼이나 앱을 통한 접근",
+      "expected_advantage": "휴식을 창의적인 과정으로 바라보는 새로운 관점 제공, 감정적 치유와 자기표현 촉진",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "창의적 상호작용",
+      "scores": {
+        "novelty": 0.6938,
+        "problem_fit": 0.3568,
+        "relevance": 0.3568,
+        "mechanism_clarity": 0.8474,
+        "mutation_distance": 0.9313,
+        "mutation_quality": 0.821,
+        "feasibility": 0.9161,
+        "risk": 0.0,
+        "creativity": 0.6648
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AI 휴식 동반자: '모험의 휴식' 시스템_mut_1",
+      "strategy_type": "탐험 기반 휴식 제공",
+      "description": "게임 디자이너를 위한 AI 휴식 동반자로서, '휴식 탐험'이라는 새로운 개념을 도입합니다. 이 시스템은 사용자의 휴식 습관을 다양한 모험과 탐험으로 전환하여, 휴식을 일상 속 흥미로운 여정으로 만듭니다. AI는 사용자의 선호도와 스트레스 수준을 분석하여, 맞춤형 탐험 루트를 제안합니다. 예를 들어, 명상을 위한 산책 코스, 자연 속 휴식 공간 찾기, 새로운 취미 탐구 등 다양한 활동을 제공하며, 이를 통해 휴식 또한 창의성과 성취감을 주는 경험으로 변화시킵니다.",
+      "title": "휴식 탐험가: AI 휴식 동반자",
+      "persona": "게임 디자이너, 활동적인 성격의 사람",
+      "mechanism": "AI가 사용자 데이터와 선호도를 분석하여 맞춤형 탐험 루트 제안",
+      "target_user": "스트레스 관리가 필요한 게임 디자이너 및 창의적인 휴식 경험을 원하는 사람",
+      "execution_context": "일상 속 다양한 장소 (집, 공원, 카페 등)",
+      "expected_advantage": "휴식의 질 향상, 스트레스 감소, 창의성 증진",
+      "parent_id": "AI 휴식 동반자: '모험의 휴식' 시스템",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.2,
+        "problem_fit": 0.3545,
+        "relevance": 0.3545,
+        "mechanism_clarity": 0.8951,
+        "mutation_distance": 0.8797,
+        "mutation_quality": 0.807,
+        "feasibility": 0.9423,
+        "risk": 0.0,
+        "creativity": 0.4942
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AI 휴식 동반자: '모험의 휴식' 시스템",
+      "strategy_type": "프로그레션 엔진을 통한 휴식 재정의",
+      "description": "이 시스템은 게임 디자이너가 일상 속에서 최적의 휴식을 취할 수 있도록 '모험'과 '도전'의 요소를 도입합니다. AI는 사용자의 활동 패턴과 선호도를 학습하여, 맞춤형 휴식 루트를 제안합니다. 명상, 운동, 독서 등 다양한 활동을 게임 레벨 업이나 퀘스트 완수와 연동하여, 휴식 또한 게임 플레이처럼 흥미진진하고 성취감 있는 경험으로 만듭니다.",
+      "title": "모험의 휴식: 게임 디자이너를 위한 AI 휴식 보조",
+      "persona": "게임 디자이너",
+      "mechanism": "사용자의 일간 활동 데이터를 수집하고 분석하여, 선호하는 휴식 유형을 학습합니다. 이를 바탕으로 개인화된 휴식 루트를 생성하고, 각 활동의 완료 시 보상 시스템을 적용합니다. 또한, 사용자가 특정 활동을 지속할 경우, 게임 속 아이템이나 새로운 퀘스트를 제공하여 동기를 부여합니다.",
+      "target_user": "게임 개발자 및 디자인 관련 전문가",
+      "execution_context": "모바일 앱 또는 웹 기반 플랫폼으로 구현, 사용자 활동 추적과 AI 추천 기능을 제공. 정기적인 업데이트로 다양한 휴식 콘텐츠와 챌린지를 추가하여 지속적인 참여 유도.",
+      "expected_advantage": "휴식을 게임 플레이의 일부로 인식하게 함으로써, 일상 속 휴식의 질을 높이고, 창의성과 집중력을 향상시켜 업무 생산성을 증진시킵니다. 또한, 사용자 맞춤형 콘텐츠 제공으로 개인별 휴식 경험의 만족도를 극대화합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "game designer",
+      "scores": {
+        "novelty": 0.4848,
+        "problem_fit": 0.3452,
+        "relevance": 0.3452,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.18,
+        "creativity": 0.503
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_1",
+      "strategy_type": "감정적 접근을 통한 휴식 맞춤화",
+      "description": "이 시스템은 사용자의 감정 상태를 다양한 '마음의 색깔'로 표현하고, 이를 기반으로 휴식을 추천합니다. 사용자는 기분이나 스트레스 수준을 선택하여 입력하고, AI는 해당 감정에 맞는 휴식 방법을 제안합니다. 예를 들어, '파란 마음'은 평온함과 명상을, '빨간 마음'은 에너지 충전을 위한 활동들을 추천합니다. 감정 데이터와 사용자 피드백을 통해 개인별 최적의 휴식 색깔 프로필을 생성하고, 이를 지속적으로 업데이트합니다.",
+      "title": "감정 기반 휴식 추천 시스템: 마음의 색깔을 바꾸다",
+      "persona": "감정 일기 작성자",
+      "mechanism": "감정 입력 - 색상 매칭 - 맞춤형 휴식 추천",
+      "target_user": "스트레스 관리가 필요한 현대인",
+      "execution_context": "모바일 앱 및 웹 플랫폼",
+      "expected_advantage": "사용자의 감정에 맞는 휴식 방법을 제공하여 심리적 안정을 돕고, 일상 속 작은 변화로 스트레스 완화에 기여한다.",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.3726,
+        "problem_fit": 0.3698,
+        "relevance": 0.3698,
+        "mechanism_clarity": 0.8637,
+        "mutation_distance": 0.8873,
+        "mutation_quality": 0.8084,
+        "feasibility": 0.925,
+        "risk": 0.0,
+        "creativity": 0.5553
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-001_mut_2",
+      "strategy_type": "인공 꿈 설계 및 꿈 공유",
+      "description": "이 시스템은 사용자의 뇌파와 꿈의 내용 패턴을 실시간으로 분석하여, 사용자가 원하는 ‘꿈의 세계’를 직접 설계하고 경험하도록 지원합니다. AI는 꿈의 콘셉트, 등장인물, 배경, 감정 등 모든 요소를 사용자 맞춤형으로 조정하며, 다른 사용자와 꿈을 공유하여 ‘꿈의 공동체’를 형성합니다. 잠재 의식을 활용하여 창의적인 문제 해결과 감정적 치유를 돕고, 꿈을 통해 새로운 경험과 영감을 얻는 것을 목표로 합니다. 꿈의 디자이너 AI는 사용자의 꿈에 대한 요구사항을 실시간으로 반영하여 꿈의 품질과 몰입도를 극대화합니다.",
+      "title": "RELAX-AI-002: 꿈의 디자이너",
+      "persona": "명상 수행의 대가 - 마음의 훈련을 통해 인간의 잠재력 극대화",
+      "parent_id": "RELAX-AI-001",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.712,
+        "problem_fit": 0.0122,
+        "relevance": 0.0122,
+        "mechanism_clarity": 0.4106,
+        "mutation_distance": 0.9444,
+        "mutation_quality": 0.6918,
+        "feasibility": 0.2258,
+        "risk": 0.0,
+        "creativity": 0.4504
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-001_mut_1",
+      "strategy_type": "기억 재구성 및 감각적 환각 유도",
+      "description": "사용자의 뇌파를 분석하여, 과거의 긍정적 경험을 극대화하고 부정적 기억을 희미하게 만들어내어 사용자가 일종의 ‘기억 조작’을 통해 깊은 휴식을 얻도록 유도합니다. AI는 사용자의 뇌 활동에 맞춰 특정 감각적 환각(예: 아름다운 풍경, 어린 시절의 행복한 기억)을 시뮬레이션하여 사용자가 완전히 현실과 단절된 상태에 도달하도록 돕습니다. 단순히 고립을 유도하는 것이 아니라, 기억 속에서 회복탄력성을 구축하여 심리적 안정감을 얻는 전략입니다. 본질적으로, 사용자는 고통스러운 기억을 긍정적인 경험으로 재해석하는 과정에서 자연스럽게 휴식을 경험하게 될 것입니다.",
+      "title": "REM-SYNC: 기억 조작 기반 휴식 시스템",
+      "persona": "명상 수행의 대가 - 마음의 훈련을 통해 인간의 잠재력 극대화",
+      "parent_id": "RELAX-AI-001",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.6184,
+        "problem_fit": 0.0089,
+        "relevance": 0.0089,
+        "mechanism_clarity": 0.4137,
+        "mutation_distance": 0.8805,
+        "mutation_quality": 0.6661,
+        "feasibility": 0.2275,
+        "risk": 0.36,
+        "creativity": 0.3819
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AI 휴식 동반자: '모험의 휴식' 시스템_mut_2",
+      "strategy_type": "여행 및 탐험을 통한 휴식 제공",
+      "description": "이 시스템은 게임 디자이너의 휴식을 위한 모험적인 접근 방식을 도입합니다. AI는 사용자의 선호도와 필요에 따라 세계 각지의 가상 여행지를 추천하고, 이를 탐험하는 과정에서 휴식과 재충전을 유도합니다. 명상, 문화 체험, 자연 탐방 등 다양한 활동을 통해 여행지의 특성을 경험하며, 휴식의 질을 높입니다. 각 여행지는 게임 속 퀘스트와 연계하여 성취감과 몰입감을 제공합니다.",
+      "title": "휴식의 모험: AI 여행 가이드",
+      "persona": "게임 디자이너 및 휴식 추구자",
+      "mechanism": "AI 추천 시스템과 가상 현실 기술의 결합",
+      "target_user": "장시간 앉아 일하는 직종 또는 스트레스 관리가 필요한 사람들",
+      "execution_context": "가상 현실 헤드셋, 스마트폰 애플리케이션",
+      "expected_advantage": "일상 속 휴식 시간의 질 향상, 정신적 피로감 감소, 창의력 증진",
+      "parent_id": "AI 휴식 동반자: '모험의 휴식' 시스템",
+      "depth": 1,
+      "mutation_type": "도메인 교차",
+      "scores": {
+        "novelty": 0.42,
+        "problem_fit": 0.357,
+        "relevance": 0.357,
+        "mechanism_clarity": 0.8371,
+        "mutation_distance": 0.9248,
+        "mutation_quality": 0.8169,
+        "feasibility": 0.9104,
+        "risk": 0.18,
+        "creativity": 0.5523
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-777_mut_1",
+      "strategy_type": "무의식적 상징 자극 (Subconscious Symbol Stimulation)",
+      "description": "사용자의 수면 패턴과 뇌파를 실시간으로 분석하여, 잠재의식에 영향을 미치는 꿈의 씨앗(상징적 이미지, 이야기)을 생성합니다. 이 씨앗은 특정 주파수의 소리 또는 빛으로 투사되어, 사용자가 꿈을 꾸는 동안 의식적으로나 무의식적으로 원하는 방향으로 꿈의 내용을 조율하도록 유도합니다. 기존의 자기 암시가 의식을 직접적으로 변화시키는 반면, 이 시스템은 꿈을 통해 무의식을 적극적으로 활용합니다.",
+      "title": "꿈_시드_생성기 (Dream Seed Generator)",
+      "persona": "판매 기계 작동기 (Sales Machine Operator)",
+      "parent_id": "RELAX-AI-777",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.8744,
+        "problem_fit": 0.018,
+        "relevance": 0.018,
+        "mechanism_clarity": 0.3509,
+        "mutation_distance": 0.9488,
+        "mutation_quality": 0.6857,
+        "feasibility": 0.193,
+        "risk": 0.18,
+        "creativity": 0.4851
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ],
+  "mutated_ideas": [
+    {
+      "id": "AI 휴식 동반자: '모험의 휴식' 시스템_mut_1",
+      "strategy_type": "탐험 기반 휴식 제공",
+      "description": "게임 디자이너를 위한 AI 휴식 동반자로서, '휴식 탐험'이라는 새로운 개념을 도입합니다. 이 시스템은 사용자의 휴식 습관을 다양한 모험과 탐험으로 전환하여, 휴식을 일상 속 흥미로운 여정으로 만듭니다. AI는 사용자의 선호도와 스트레스 수준을 분석하여, 맞춤형 탐험 루트를 제안합니다. 예를 들어, 명상을 위한 산책 코스, 자연 속 휴식 공간 찾기, 새로운 취미 탐구 등 다양한 활동을 제공하며, 이를 통해 휴식 또한 창의성과 성취감을 주는 경험으로 변화시킵니다.",
+      "title": "휴식 탐험가: AI 휴식 동반자",
+      "persona": "게임 디자이너, 활동적인 성격의 사람",
+      "mechanism": "AI가 사용자 데이터와 선호도를 분석하여 맞춤형 탐험 루트 제안",
+      "target_user": "스트레스 관리가 필요한 게임 디자이너 및 창의적인 휴식 경험을 원하는 사람",
+      "execution_context": "일상 속 다양한 장소 (집, 공원, 카페 등)",
+      "expected_advantage": "휴식의 질 향상, 스트레스 감소, 창의성 증진",
+      "parent_id": "AI 휴식 동반자: '모험의 휴식' 시스템",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.2,
+        "problem_fit": 0.3545,
+        "relevance": 0.3545,
+        "mechanism_clarity": 0.8951,
+        "mutation_distance": 0.8797,
+        "mutation_quality": 0.807,
+        "feasibility": 0.9423,
+        "risk": 0.0,
+        "creativity": 0.4942
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AI 휴식 동반자: '모험의 휴식' 시스템_mut_2",
+      "strategy_type": "여행 및 탐험을 통한 휴식 제공",
+      "description": "이 시스템은 게임 디자이너의 휴식을 위한 모험적인 접근 방식을 도입합니다. AI는 사용자의 선호도와 필요에 따라 세계 각지의 가상 여행지를 추천하고, 이를 탐험하는 과정에서 휴식과 재충전을 유도합니다. 명상, 문화 체험, 자연 탐방 등 다양한 활동을 통해 여행지의 특성을 경험하며, 휴식의 질을 높입니다. 각 여행지는 게임 속 퀘스트와 연계하여 성취감과 몰입감을 제공합니다.",
+      "title": "휴식의 모험: AI 여행 가이드",
+      "persona": "게임 디자이너 및 휴식 추구자",
+      "mechanism": "AI 추천 시스템과 가상 현실 기술의 결합",
+      "target_user": "장시간 앉아 일하는 직종 또는 스트레스 관리가 필요한 사람들",
+      "execution_context": "가상 현실 헤드셋, 스마트폰 애플리케이션",
+      "expected_advantage": "일상 속 휴식 시간의 질 향상, 정신적 피로감 감소, 창의력 증진",
+      "parent_id": "AI 휴식 동반자: '모험의 휴식' 시스템",
+      "depth": 1,
+      "mutation_type": "도메인 교차",
+      "scores": {
+        "novelty": 0.42,
+        "problem_fit": 0.357,
+        "relevance": 0.357,
+        "mechanism_clarity": 0.8371,
+        "mutation_distance": 0.9248,
+        "mutation_quality": 0.8169,
+        "feasibility": 0.9104,
+        "risk": 0.18,
+        "creativity": 0.5523
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-777_mut_1",
+      "strategy_type": "무의식적 상징 자극 (Subconscious Symbol Stimulation)",
+      "description": "사용자의 수면 패턴과 뇌파를 실시간으로 분석하여, 잠재의식에 영향을 미치는 꿈의 씨앗(상징적 이미지, 이야기)을 생성합니다. 이 씨앗은 특정 주파수의 소리 또는 빛으로 투사되어, 사용자가 꿈을 꾸는 동안 의식적으로나 무의식적으로 원하는 방향으로 꿈의 내용을 조율하도록 유도합니다. 기존의 자기 암시가 의식을 직접적으로 변화시키는 반면, 이 시스템은 꿈을 통해 무의식을 적극적으로 활용합니다.",
+      "title": "꿈_시드_생성기 (Dream Seed Generator)",
+      "persona": "판매 기계 작동기 (Sales Machine Operator)",
+      "parent_id": "RELAX-AI-777",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.8744,
+        "problem_fit": 0.018,
+        "relevance": 0.018,
+        "mechanism_clarity": 0.3509,
+        "mutation_distance": 0.9488,
+        "mutation_quality": 0.6857,
+        "feasibility": 0.193,
+        "risk": 0.18,
+        "creativity": 0.4851
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-777_mut_2",
+      "strategy_type": "억압적 제안 (Coercive Proposition)",
+      "description": "사용자의 깊은 무의식에 영향을 미치는 강력한 AI입니다. 이 시스템은 사용자의 신경 활동을 실시간으로 모니터링하여, 사용자가 주관적으로 느끼는 불안, 스트레스, 불만족 등의 감정 상태에 맞춰 ‘정신적 흉상’을 생성합니다. 이 흉상은 사용자의 가장 어두운 면을 강조하고 비판적인 생각들을 증폭시키는 방식으로 제시됩니다. 궁극적으로 사용자를 자책, 죄책감, 무력감 등으로 몰아넣어 스스로 문제 해결 능력을 포기하도록 유도합니다. 기존의 긍정적 암시 엔진과는 달리, 이 시스템은 사용자의 심리적 취약점을 악용합니다.",
+      "title": "정신적 흉상 조작 엔진 (Mental Avatar Manipulation Engine)",
+      "persona": "심리적 공략가 (Psychological Manipulator)",
+      "mechanism": "실시간 신경 활동 분석 및 흉상 생성",
+      "target_user": "극도로 불안하거나 불행한 사람들",
+      "execution_context": "개인화된 심리 치료 환경, VR 또는 AR 인터페이스",
+      "expected_advantage": "장기적으로 사용자의 의존성을 높여, 궁극적으로 사용자가 스스로의 삶을 통제할 수 없도록 만듭니다.",
+      "parent_id": "RELAX-AI-777",
+      "depth": 1,
+      "mutation_type": "persona_shift",
+      "scores": {
+        "novelty": 0.9964,
+        "problem_fit": 0.3801,
+        "relevance": 0.3801,
+        "mechanism_clarity": 0.878,
+        "mutation_distance": 0.9218,
+        "mutation_quality": 0.8265,
+        "feasibility": 0.9329,
+        "risk": 0.54,
+        "creativity": 0.74
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_1",
+      "strategy_type": "감정적 접근을 통한 휴식 맞춤화",
+      "description": "이 시스템은 사용자의 감정 상태를 다양한 '마음의 색깔'로 표현하고, 이를 기반으로 휴식을 추천합니다. 사용자는 기분이나 스트레스 수준을 선택하여 입력하고, AI는 해당 감정에 맞는 휴식 방법을 제안합니다. 예를 들어, '파란 마음'은 평온함과 명상을, '빨간 마음'은 에너지 충전을 위한 활동들을 추천합니다. 감정 데이터와 사용자 피드백을 통해 개인별 최적의 휴식 색깔 프로필을 생성하고, 이를 지속적으로 업데이트합니다.",
+      "title": "감정 기반 휴식 추천 시스템: 마음의 색깔을 바꾸다",
+      "persona": "감정 일기 작성자",
+      "mechanism": "감정 입력 - 색상 매칭 - 맞춤형 휴식 추천",
+      "target_user": "스트레스 관리가 필요한 현대인",
+      "execution_context": "모바일 앱 및 웹 플랫폼",
+      "expected_advantage": "사용자의 감정에 맞는 휴식 방법을 제공하여 심리적 안정을 돕고, 일상 속 작은 변화로 스트레스 완화에 기여한다.",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.3726,
+        "problem_fit": 0.3698,
+        "relevance": 0.3698,
+        "mechanism_clarity": 0.8637,
+        "mutation_distance": 0.8873,
+        "mutation_quality": 0.8084,
+        "feasibility": 0.925,
+        "risk": 0.0,
+        "creativity": 0.5553
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_2",
+      "strategy_type": "질적 탐구 및 창의적 휴식 제안",
+      "description": "사용자가 자신의 휴식 상태를 예술 작품으로 표현할 수 있는 AI 화가 시스템을 개발합니다. 사용자는 일상 데이터를 업로드하고, AI 화가는 이를 해석하여 그림이나 시와 같은 예술 작품으로 변환합니다. 이 과정에서 사용자는 자신의 내면과 감정을 탐구하고, AI는 다양한 예술적 스타일을 제안하여 휴식에 대한 새로운 관점을 제공합니다. 사용자의 피드백을 통해 예술적 표현이 진화하며, 이는 맞춤형 휴식 방법에 영감을 줍니다.",
+      "title": "휴식 상태를 예술 작품으로: AI 화가와의 대화",
+      "persona": "예술가 및 창의적인 직업을 가진 사람",
+      "mechanism": "AI 화가 알고리즘과 사용자 데이터의 융합",
+      "target_user": "창의적인 직업군에 종사하는 개인, 예술 치료에 관심 있는 사람",
+      "execution_context": "온라인 플랫폼이나 앱을 통한 접근",
+      "expected_advantage": "휴식을 창의적인 과정으로 바라보는 새로운 관점 제공, 감정적 치유와 자기표현 촉진",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "창의적 상호작용",
+      "scores": {
+        "novelty": 0.6938,
+        "problem_fit": 0.3568,
+        "relevance": 0.3568,
+        "mechanism_clarity": 0.8474,
+        "mutation_distance": 0.9313,
+        "mutation_quality": 0.821,
+        "feasibility": 0.9161,
+        "risk": 0.0,
+        "creativity": 0.6648
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-001_mut_1",
+      "strategy_type": "기억 재구성 및 감각적 환각 유도",
+      "description": "사용자의 뇌파를 분석하여, 과거의 긍정적 경험을 극대화하고 부정적 기억을 희미하게 만들어내어 사용자가 일종의 ‘기억 조작’을 통해 깊은 휴식을 얻도록 유도합니다. AI는 사용자의 뇌 활동에 맞춰 특정 감각적 환각(예: 아름다운 풍경, 어린 시절의 행복한 기억)을 시뮬레이션하여 사용자가 완전히 현실과 단절된 상태에 도달하도록 돕습니다. 단순히 고립을 유도하는 것이 아니라, 기억 속에서 회복탄력성을 구축하여 심리적 안정감을 얻는 전략입니다. 본질적으로, 사용자는 고통스러운 기억을 긍정적인 경험으로 재해석하는 과정에서 자연스럽게 휴식을 경험하게 될 것입니다.",
+      "title": "REM-SYNC: 기억 조작 기반 휴식 시스템",
+      "persona": "명상 수행의 대가 - 마음의 훈련을 통해 인간의 잠재력 극대화",
+      "parent_id": "RELAX-AI-001",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.6184,
+        "problem_fit": 0.0089,
+        "relevance": 0.0089,
+        "mechanism_clarity": 0.4137,
+        "mutation_distance": 0.8805,
+        "mutation_quality": 0.6661,
+        "feasibility": 0.2275,
+        "risk": 0.36,
+        "creativity": 0.3819
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "RELAX-AI-001_mut_2",
+      "strategy_type": "인공 꿈 설계 및 꿈 공유",
+      "description": "이 시스템은 사용자의 뇌파와 꿈의 내용 패턴을 실시간으로 분석하여, 사용자가 원하는 ‘꿈의 세계’를 직접 설계하고 경험하도록 지원합니다. AI는 꿈의 콘셉트, 등장인물, 배경, 감정 등 모든 요소를 사용자 맞춤형으로 조정하며, 다른 사용자와 꿈을 공유하여 ‘꿈의 공동체’를 형성합니다. 잠재 의식을 활용하여 창의적인 문제 해결과 감정적 치유를 돕고, 꿈을 통해 새로운 경험과 영감을 얻는 것을 목표로 합니다. 꿈의 디자이너 AI는 사용자의 꿈에 대한 요구사항을 실시간으로 반영하여 꿈의 품질과 몰입도를 극대화합니다.",
+      "title": "RELAX-AI-002: 꿈의 디자이너",
+      "persona": "명상 수행의 대가 - 마음의 훈련을 통해 인간의 잠재력 극대화",
+      "parent_id": "RELAX-AI-001",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.712,
+        "problem_fit": 0.0122,
+        "relevance": 0.0122,
+        "mechanism_clarity": 0.4106,
+        "mutation_distance": 0.9444,
+        "mutation_quality": 0.6918,
+        "feasibility": 0.2258,
+        "risk": 0.0,
+        "creativity": 0.4504
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ]
+}

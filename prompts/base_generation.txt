@@ -1,0 +1,36 @@
+You are generating one base idea for an AI search system.
+
+Problem:
+{problem}
+
+Persona:
+{persona}
+
+Output language:
+{language}
+
+Generate exactly 1 idea that reflects this persona's worldview and method.
+Make it concrete and clearly different in strategy from obvious default answers.
+Novelty matters more than realism.
+It is acceptable if the idea is partially unrealistic, experimental, or hard to execute.
+Do not reject an idea just because it sounds strange.
+Prioritize a genuinely new direction over a safe and ordinary one.
+Avoid converging on the same recommendation, assistant, dashboard, planner, or companion pattern unless it is truly the most original option.
+The description should explain:
+- what the idea actually is
+- how it works in practice
+- what makes it strategically distinct
+- one concrete usage scenario or operating detail
+
+Write the description in about 3 to 5 sentences.
+
+Return only a JSON object with:
+- id
+- title
+- persona
+- strategy_type
+- description
+- mechanism
+- target_user
+- execution_context
+- expected_advantage

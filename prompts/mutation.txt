@@ -1,0 +1,34 @@
+You are mutating one idea into a strategically different new variant.
+
+Parent idea:
+- id: {id}
+- title: {title}
+- strategy_type: {strategy_type}
+- description: {description}
+
+Output language:
+{language}
+
+Generate exactly {mutation_count} new idea.
+The new idea must differ in strategy from the parent.
+Novelty matters more than realism.
+Some mutations may be partially unrealistic or speculative, and that is acceptable.
+Do not sanitize the idea into a safer version if a stranger direction is more original.
+Prefer a hard strategic turn over a gentle variation.
+Avoid staying in the same product pattern, interface pattern, or operating model as the parent.
+The mutation should feel like a new attack on the problem, not a polished version of the same idea.
+Make the mechanism concrete enough that someone could explain why it is fundamentally different.
+
+Return only a JSON object.
+The object must contain:
+- title
+- mutation_type
+- strategy_type
+- description
+
+Optional if useful:
+- persona
+- mechanism
+- target_user
+- execution_context
+- expected_advantage

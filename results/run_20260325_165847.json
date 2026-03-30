@@ -1,0 +1,55 @@
+{
+  "problem": "demo",
+  "base_ideas": [
+    {
+      "id": "idea_1",
+      "strategy_type": "type_a",
+      "description": "base a",
+      "title": "A"
+    },
+    {
+      "id": "idea_2",
+      "strategy_type": "type_b",
+      "description": "base b",
+      "title": "B"
+    }
+  ],
+  "filtered_ideas": [
+    {
+      "id": "idea_1",
+      "strategy_type": "type_a",
+      "description": "base a",
+      "title": "A"
+    },
+    {
+      "id": "idea_2",
+      "strategy_type": "type_b",
+      "description": "base b",
+      "title": "B"
+    },
+    {
+      "id": "idea_1_m1",
+      "strategy_type": "type_a_mut",
+      "description": "mutated idea_1",
+      "parent_id": "idea_1",
+      "mutation_type": "twist"
+    }
+  ],
+  "mutated_ideas": [
+    {
+      "id": "idea_1_m1",
+      "strategy_type": "type_a_mut",
+      "description": "mutated idea_1",
+      "parent_id": "idea_1",
+      "mutation_type": "twist"
+    },
+    {
+      "id": "idea_2_m1",
+      "strategy_type": "type_b_mut",
+      "description": "mutated idea_2",
+      "parent_id": "idea_2",
+      "mutation_type": "twist"
+    }
+  ],
+  "output_path": "/Users/dlfjstizlzl/Documents/Github/Erica/grade1/labs/creative-search/results/run_20260325_165847.json"
+}

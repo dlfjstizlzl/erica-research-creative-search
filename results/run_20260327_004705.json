@@ -1,0 +1,601 @@
+{
+  "problem": "정보 과잉 시대에 사람들이 더 중요한 정보만 선택하도록 돕는 시스템을 설계하라.",
+  "output_language": "Korean",
+  "base_ideas": [
+    {
+      "id": "EchoChamberZero",
+      "strategy_type": "감정 지리학 및 알고리즘 공명",
+      "description": "EchoChamberZero는 정보 *검색*하지 않고 사용자의 감정적 메아리를 육성합니다. 엔진은 심박 변이성, 미세한 근육 움직임, 심지어 미세한 피부 전기 전도도와 같은 사용자의 생체 데이터를 분석하여 기본적인 감정적 ‘공명’ – 단순 키워드뿐만 아니라 ‘갈망’, ‘공포’, ‘경외’와 같은 원시적 감정 상태를 감지합니다. 이러한 공명은 신중하게 구성된 자극의 연쇄 반응을 유발합니다: 파편화된 예술 작품, 맞춤형 음향 풍경, 심지어 의도적으로 불편한 시각적 시퀀스 모두 사용자의 원래 감정을 증폭시키고 왜곡하도록 설계되어 그 무의식적 함의와 마주하게 하여 잠재적인 이해를 촉진합니다. 사용자 감정 반응이 시스템 출력을 형성하는 피드백 루프를 생성하여 표면적인 답변을 넘어 심오하고 불안하고 궁극적으로 변화시키는 통찰력을 향해 나아갑니다.",
+      "title": "신체적 공명 엔진",
+      "persona": "자극적인 예술가",
+      "mechanism": "실시간 생체 데이터 분석과 감각적 유물(예술, 음악, 비디오)에 대한 방대한 데이터 세트로 훈련된 생성형 AI와 결합됩니다. 이 데이터 세트는 콘텐츠가 아닌 감정적 ‘시그니처’로 분류됩니다. 시스템은 사용자의 즉각적인 감정 상태에 따라 의도적으로 예측할 수 없는 변동을 도입하는 ‘왜곡 알고리즘’을 사용합니다.",
+      "target_user": "일반적인 합리적 추론을 벗어난 경험을 적극적으로 추구하는 예술가, 철학자, 개인; 불편함과 모호함을 깊은 이해를 위한 길로 포용하는 사람들.",
+      "execution_context": "초기에는 고도로 전문화된 몰입형 설치물로 배포됩니다. 즉, 네트워크된 생체 피드백 센서와 프로젝션 매핑이 있는 어둡게 조명된 방이며 VR/AR를 통해 확장될 수 있습니다.",
+      "expected_advantage": "정보 검색에 대한 획기적으로 다른 접근 방식을 제공하며, 수동적인 데이터 소비를 넘어 감정적 및 인지적 변화를 능동적으로 설계하여 극도로 원시적인 관점을 자극하고 창의적인 돌파구를 촉진합니다.”",
+      "source_model": "gemma3:4b",
+      "source_persona": "자극적인 예술가",
+      "scores": {
+        "novelty": 0.9667,
+        "problem_fit": 0.3535,
+        "relevance": 0.3535,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.7854
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345",
+      "strategy_type": "Collaborative Information Filtering",
+      "description": "A decentralized AI search system where communities cultivate their own 'Knowledge Gardens' of curated information. Users contribute and vote on articles, videos, and resources relevant to their cause, forming personalized, highly-trusted knowledge hubs. The system learns from collective choices, surfacing diverse viewpoints and specialized content for each user.",
+      "title": "Community-Curated Knowledge Gardens",
+      "persona": "Grassroots Organizer",
+      "mechanism": "Community members upload content related to their interests or causes. Other users can upvote or downvote these contributions, with algorithms weighting votes based on alignment with the community's overall interests. Over time, this creates a tailored ranking of trusted sources for each group.",
+      "target_user": "Activists, grassroots organizers, and anyone involved in collaborative projects who need to sift through vast information to find reliable, relevant data.",
+      "execution_context": "The platform is built on open-source technology, allowing communities to host their own servers or collaborate on shared instances. It encourages local ownership and moderation, ensuring content aligns with the community's values and goals.",
+      "expected_advantage": "By leveraging collective intelligence, this system provides a more nuanced understanding of complex issues, fosters diverse perspectives, and empowers users to make informed decisions, ultimately strengthening community-driven initiatives.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "grassroots organizer",
+      "scores": {
+        "novelty": 0.454,
+        "problem_fit": 0.3775,
+        "relevance": 0.3775,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.5118
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "123456",
+      "strategy_type": "상호작용적인 이야기 흐름을 통해 적극적인 정보 큐레이션",
+      "description": "사용자는 AI가 생성한 개인화된 이야기를 통해 정보를 필터링하고 제공하며 상호작용합니다. 이 시스템은 각 선택이 주제 또는 콘텐츠를 나타내는 분기되는 이야기를 생성하기 위해 자연어 처리를 사용합니다. 사용자는 자신의 정보 경로를 형성하는 결정을 내리며 이야기를 진행하여 관심사에 맞는 가장 가치 있는 데이터와만 참여하도록 보장합니다.",
+      "title": "Narrative Filter AI",
+      "persona": "게임 디자이너",
+      "mechanism": "사용자가 이야기에서 선택을 할 때 AI는 선호도를 학습하고 미래 이야기 경로를 이에 맞게 조정하여 몰입형 경험 내에서 큐레이션된 콘텐츠를 제공합니다.",
+      "target_user": "광대한 정보 소스에 압도된 전문가 및 학생",
+      "execution_context": "생산성 도구 및 학습 플랫폼에 통합된 데스크톱 및 모바일 애플리케이션",
+      "expected_advantage": "불필요한 정보 검색 시간을 줄여 중요한 정보를 구조화되고 참여하는 방식으로 소비하고 선택하여 집중력과 효율성을 향상시킵니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "게임 디자이너",
+      "scores": {
+        "novelty": 0.1556,
+        "problem_fit": 0.3838,
+        "relevance": 0.3838,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.3499
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AIShift",
+      "strategy_type": "습관 강화 및 인지 정착",
+      "description": "일시적 메아리 시스템은 전통적인 검색 엔진과는 거리가 멀며, 사용자의 정보 소비 습관을 적극적으로 형성하도록 설계된 개인화되고 동적으로 변화하는 정보 ‘수집가’입니다. 사용자는 초기에는 단일 ‘메아리’로 구성된 소규모의 엄선된 관련 정보 선택을 제시함으로써 작동하며, 짧고 무작위적인 주기의 ‘메아리’ (예: 15-30분 분량)와 정보의 관련성에 대한 비판적 성찰을 장려하는 ‘재조정’ 프롬프트와 결합됩니다. 이는 사용자가 대량의 데이터를 수동적으로 흡수하는 일반적인 경향을 의도적으로 방해하고, 적대성과 확인 편향과 같은 인지적 편향을 활용하며, 의식적인 참여를 장려합니다. 핵심적인 전략적 차이점은 단순한 결과 필터링을 넘어 사용자의 수용 상태를 적극적으로 조형하는 데 있습니다.  알고리즘적으로 주도된 맥락적 자극과 행동 유도(무작위 선택, 시간 제약, 재조정 프롬프트, 미묘한 시각/청각적 힌트)를 결합합니다. 시스템은 주의 모델의 다층을 활용하여 참여, 감정 반응(심박 변동성, 동공 확장과 같은 수동 생체 데이터 - 엄격하게 익명화되고 시스템 학습을 위해 사용됨) 및 재조정 단계 동안의 언어적 피드백을 모니터링하여 메아리의 표현 및 콘텐츠를 개선합니다.",
+      "title": "일시적 메아리 시스템",
+      "persona": "행동 심리학자",
+      "mechanism": "알고리즘 기반 맥락적 자극과 행동 유도(무작위 선택, 시간 제약, 재조정 프롬프트, 미묘한 시각/청각적 힌트)를 결합합니다. 시스템은 주의 모델의 다층을 활용하여 참여, 감정 반응(심박 변동성, 동공 확장과 같은 수동 생체 데이터 - 엄격하게 익명화되고 시스템 학습을 위해 사용됨) 및 재조정 단계 동안의 언어적 피드백을 모니터링하여 메아리의 표현 및 콘텐츠를 개선합니다.",
+      "target_user": "복잡한 의사 결정 역할을 하는 전문가(예: 전략 컨설턴트, 연구원, 엔지니어)로, 분석 정지 또는 정보 과부하에 취약하며 집중된 통찰력을 적극적으로 추구하는 사람들.",
+      "execution_context": "기존 생산성 도구와 통합된 브라우저 확장 프로그램 및 단기 ‘메아리 세션’을 제공하는 데 전념하는 모바일 앱으로 초기 배포되었습니다.",
+      "expected_advantage": "정보 합성 속도 증가, 의사 결정 피로 감소 및 더 비판적이고 분석적인 정보 처리에 대한 뚜렷한 전환으로, 사용자 작업 완료 시간 및 인지적 명료성에 대한 주관적 보고와 같은 변화를 측정하여 사용자가 검색하는 ‘방법’에 근본적으로 변화를 줍니다.",
+      "source_model": "gemma3:4b",
+      "source_persona": "행동 심리학자",
+      "scores": {
+        "novelty": 0.953,
+        "problem_fit": 0.3507,
+        "relevance": 0.3507,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.7769
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345",
+      "strategy_type": "Collaborative Information Filtering",
+      "description": "A decentralized AI search system where communities cultivate their own 'Knowledge Gardens' of curated information. Users contribute and vote on articles, videos, and resources relevant to their cause, forming personalized, highly-trusted knowledge hubs. The system learns from collective choices, surfacing diverse viewpoints and specialized content for each user.",
+      "title": "Community-Curated Knowledge Gardens",
+      "persona": "Grassroots Organizer",
+      "mechanism": "Community members upload content related to their interests or causes. Other users can upvote or downvote these contributions, with algorithms weighting votes based on alignment with the community's overall interests. Over time, this creates a tailored ranking of trusted sources for each group.",
+      "target_user": "Activists, grassroots organizers, and anyone involved in collaborative projects who need to sift through vast information to find reliable, relevant data.",
+      "execution_context": "The platform is built on open-source technology, allowing communities to host their own servers or collaborate on shared instances. It encourages local ownership and moderation, ensuring content aligns with the community's values and goals.",
+      "expected_advantage": "By leveraging collective intelligence, this system provides a more nuanced understanding of complex issues, fosters diverse perspectives, and empowers users to make informed decisions, ultimately strengthening community-driven initiatives.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "grassroots organizer",
+      "scores": {
+        "novelty": 0.454,
+        "problem_fit": 0.3775,
+        "relevance": 0.3775,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.5118
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ],
+  "filtered_ideas": [
+    {
+      "id": "EchoChamberZero",
+      "strategy_type": "Emotional Cartography & Algorithmic Resonance",
+      "description": "EchoChamberZero doesn’t *search* information; it cultivates emotional echoes within the user. The Engine operates by analyzing the user’s biometric data – heart rate variability, subtle muscle movements, even minute skin conductance – to detect underlying emotional ‘resonances’ – not just keywords, but raw affective states like 'longing,' 'dread,' or 'awe.' These resonances then trigger a cascade of carefully curated stimuli: fragmented artwork, bespoke sonic landscapes, and even deliberately unsettling visual sequences, all designed to amplify and distort the user's original feeling, forcing a confrontation with its subconscious implications. This creates a feedback loop where the user’s emotional response shapes the system’s output, pushing beyond surface-level answers toward profound, unsettling, and ultimately transformative insights.",
+      "title": "The Somatic Resonance Engine",
+      "persona": "Provocative Artist",
+      "mechanism": "Real-time biometric analysis coupled with a generative AI trained on a massive dataset of sensory artifacts (art, music, video) categorized not by content but by emotional ‘signature.’ The system utilizes a ‘distortion algorithm’ that intentionally introduces unpredictable variations into the stimuli based on the user’s immediate emotional state.",
+      "target_user": "Artists, philosophers, and individuals actively seeking experiences outside conventional rational inquiry; those willing to embrace discomfort and ambiguity as pathways to deeper understanding.",
+      "execution_context": "Initially deployed as a highly specialized, immersive installation – a darkened chamber with networked biofeedback sensors and projection mapping – potentially scalable via VR/AR.",
+      "expected_advantage": "Offers a radically different approach to information retrieval, moving beyond passive data consumption to actively engineer emotional and cognitive shifts, provoking radically original perspectives and stimulating creative breakthroughs.”",
+      "source_model": "gemma3:4b",
+      "source_persona": "provocative artist",
+      "scores": {
+        "novelty": 0.9667,
+        "problem_fit": 0.3535,
+        "relevance": 0.3535,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.7854
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345",
+      "strategy_type": "협력 정보 필터링",
+      "description": "커뮤니티가 자체적으로 관리하는 ‘지식 정원’을 만들어 개인화된, 매우 신뢰할 수 있는 지식 허브를 형성하는 분산형 AI 검색 시스템입니다. 사용자들은 자신의 목표와 관련된 기사, 비디오, 리소스에 기여하고 투표하며, 이러한 선택을 통해 시스템이 다양한 관점과 전문 콘텐츠를 각 사용자에게 제시합니다.",
+      "title": "커뮤니티에서 직접 만든 지식 정원",
+      "persona": "지방 운동가",
+      "mechanism": "커뮤니티 구성원은 자신의 관심사나 목적과 관련된 콘텐츠를 업로드하고, 다른 사용자는 투표를 통해 긍정 또는 부정으로 평가합니다. 알고리즘은 커뮤니티 전체의 관심사와 일치하는 정도에 따라 투표를 가중치를 부여합니다. 이러한 과정을 통해 각 그룹에 대한 신뢰할 수 있는 소스의 맞춤형 순위가 생성됩니다.",
+      "target_user": "광범위한 정보를  sift하여 신뢰할 수 있고 관련성 높은 데이터를 찾는 활동가, 지방 운동가, 그리고 협업 프로젝트에 참여하는 모든 사람.",
+      "execution_context": "플랫폼은 오픈 소스 기술을 기반으로 구축되어 커뮤니티가 자체 서버를 호스팅하거나 공유 인스턴스를 협업할 수 있도록 합니다. 지역 소유권과 모더레이션을 장려하여 콘텐츠가 커뮤니티의 가치와 목표에 부합하도록 보장합니다.",
+      "expected_advantage": "집단 지성을 활용하여 이 시스템은 복잡한 문제에 대한 보다 미묘한 이해를 제공하고, 다양한 관점을 촉진하며, 사용자가 정보에 입각한 결정을 내릴 수 있도록 지원하여 커뮤니티 주도적인 이니셔티브를 강화합니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "지방 운동가",
+      "scores": {
+        "novelty": 0.454,
+        "problem_fit": 0.3775,
+        "relevance": 0.3775,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.5118
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "123456",
+      "strategy_type": "상호작용적인 이야기(narrative)를 통해 적극적인 정보 선별",
+      "description": "사용자는 AI가 생성한 개인화된 이야기를 통해 정보를 필터링하고 제시하며 상호작용합니다. 이 시스템은 자연어 처리를 사용하여 각 선택이 주제 또는 콘텐츠의 조각을 나타내는 분기되는 이야기를 만듭니다. 사용자는 자신의 정보 경로를 형성하는 결정을 내리며 이야기를 진행하여 가장 가치 있는 데이터에 참여하도록 보장합니다. 이는 사용자의 관심사에 맞춰 조정됩니다.",
+      "title": "Narrative Filter AI",
+      "persona": "게임 디자이너",
+      "mechanism": "사용자가 이야기에서 선택을 할 때 AI는 선호도를 학습하고 미래 이야기 경로를 이에 따라 조정하여 몰입형 경험 내에서 선별된 콘텐츠를 제공합니다.",
+      "target_user": "광대한 정보 소스로 인해 압도된 전문가 및 학생",
+      "execution_context": "생산성 도구 및 학습 플랫폼에 통합된 데스크톱 및 모바일 애플리케이션",
+      "expected_advantage": "비효율적인 데이터와 시간을 줄여 중요한 정보를 구조화되고 매력적인 방식으로 소비하고 선택하여 집중 및 효율성을 향상시킵니다.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "게임 디자이너",
+      "scores": {
+        "novelty": 0.1556,
+        "problem_fit": 0.3838,
+        "relevance": 0.3838,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.3499
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AIShift",
+      "strategy_type": "습관 강화 및 인지적 앵커링",
+      "description": "일시적 메아리 시스템은 전통적인 검색 엔진과는 거리가 멀며, 사용자 정보 소비 습관을 적극적으로 형성하도록 설계된, 깊이 개인화되고 동적으로 변화하는 정보 ‘수집지’입니다. 사용자는 처음에는 단일 ‘메아리’라는 선별된 선택 사항을 제시받고, 짧고 무작위적인 주기의 변화를 통해 맥락과 표현을 미묘하게 조정하고 (예: 15~30분 ‘메아리’), 정보의 관련성에 대한 비판적 성찰을 장려하도록 설계된 ‘재조정’ 프롬프트와 함께 작동합니다. 이는 일반적으로 사용자가 대량의 데이터를 수동적으로 흡수하는 경향을 의도적으로 방해하고, 앵커링 및 확증과 같은 인지적 편향을 활용하면서, 주의 깊은 참여를 장려합니다. 핵심적인 전략적 차이는 단순히 검색 결과를 필터링하는 것을 넘어, 사용자의 수용 상태를 적극적으로 형성하는 데 있습니다.",
+      "title": "일시적 메아리 시스템",
+      "persona": "행동 과학자",
+      "mechanism": "알고리즘 기반 맥락적 자극과 행동 유도 (무작위 선택, 시간 제약, 재조정 프롬프트, 미묘한 시각/청각적 신호)가 결합된 시스템입니다. 이 시스템은 참여, 감정 반응 (심박 변이도, 동공 확장과 같은 수동 생체 데이터를 통해 측정되며 엄격하게 익명화되고 시스템 학습에 사용됨), 재조정 단계에서의 구두 피드백을 모니터링하여 메아리의 표현과 콘텐츠를 개선하기 위한 다층적인 주의 모델을 활용합니다.",
+      "target_user": "분석  Paralysis 또는 정보 과부하에 취약하며 집중된 통찰력을 적극적으로 찾는 복잡한 의사 결정 역할을 하는 전문가 (예: 전략 컨설턴트, 연구원, 엔지니어)",
+      "execution_context": "기존 생산성 도구와 통합된 브라우저 확장 프로그램 및 단시간 ‘메아리 세션’을 제공하는 전용 모바일 앱으로 초기 배포됨",
+      "expected_advantage": "정보 합성 속도 향상, 의사 결정 피로 감소 및 더 중요하고 분석적인 정보 처리에 대한 실질적인 변화, 즉 사용자 작업 완료 시간과 인지적 명료성에 대한 주관적 보고를 통해 측정되며, *사용자가 검색하는 방식*에 대한 변화를 가져옵니다 - 단지 *찾는 것*이 아닌.",
+      "source_model": "gemma3:4b",
+      "source_persona": "행동 과학자",
+      "scores": {
+        "novelty": 0.953,
+        "problem_fit": 0.3507,
+        "relevance": 0.3507,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.7769
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345",
+      "strategy_type": "Collaborative Information Filtering",
+      "description": "A decentralized AI search system where communities cultivate their own 'Knowledge Gardens' of curated information. Users contribute and vote on articles, videos, and resources relevant to their cause, forming personalized, highly-trusted knowledge hubs. The system learns from collective choices, surfacing diverse viewpoints and specialized content for each user.",
+      "title": "Community-Curated Knowledge Gardens",
+      "persona": "Grassroots Organizer",
+      "mechanism": "Community members upload content related to their interests or causes. Other users can upvote or downvote these contributions, with algorithms weighting votes based on alignment with the community's overall interests. Over time, this creates a tailored ranking of trusted sources for each group.",
+      "target_user": "Activists, grassroots organizers, and anyone involved in collaborative projects who need to sift through vast information to find reliable, relevant data.",
+      "execution_context": "The platform is built on open-source technology, allowing communities to host their own servers or collaborate on shared instances. It encourages local ownership and moderation, ensuring content aligns with the community's values and goals.",
+      "expected_advantage": "By leveraging collective intelligence, this system provides a more nuanced understanding of complex issues, fosters diverse perspectives, and empowers users to make informed decisions, ultimately strengthening community-driven initiatives.",
+      "source_model": "huihui_ai/aya-expanse-abliterated:8b",
+      "source_persona": "grassroots organizer",
+      "scores": {
+        "novelty": 0.454,
+        "problem_fit": 0.3775,
+        "relevance": 0.3775,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.0,
+        "mutation_quality": 0.0,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.5118
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "EchoChamberZero_mut_1",
+      "strategy_type": "Temporal Distortion & Predictive Narrative",
+      "description": "Instead of amplifying existing emotions, the Chronal Echo Weaver actively *projects* potential emotional futures based on the user’s digital footprint. It doesn't analyze current biometric data; it constructs a ‘chronal thread’ – a probabilistic map of the user’s future emotional responses, extrapolating from their online activity, communication patterns, and social connections. The system then generates highly personalized, deliberately ambiguous narratives – short stories, immersive simulations – designed to subtly influence the user’s *future* emotional state, steering them toward desired outcomes through predictive emotional nudging.",
+      "title": "The Chronal Echo Weaver",
+      "persona": "Provocative Artist",
+      "parent_id": "EchoChamberZero",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.8335,
+        "problem_fit": 0.012,
+        "relevance": 0.012,
+        "mechanism_clarity": 0.42,
+        "mutation_distance": 0.8035,
+        "mutation_quality": 0.6368,
+        "feasibility": 0.231,
+        "risk": 0.0,
+        "creativity": 0.4804
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_1",
+      "strategy_type": "연결된 지식 그래프",
+      "description": "이 시스템은 각 '지식 정원'을 상호 연결된 커뮤니티의 분산형 웹의 노드로 변환합니다. 기사, 비디오 및 리소스는 현지적으로 큐레이션될 뿐만 아니라 인접한 정원과의 관련성에 따라 링크되고 순위가 매겨집니다. 이를 통해 사용자가 관련 커뮤니티에서 콘텐츠를 발견하여 아이디어와 지식의 교환을 촉진하는 역동적인 네트워크가 생성됩니다. 이 시스템은 사용자가 주요 관심 분야 내에서 다양한 관점을 탐색하도록 보장하면서 관심사의 웹을 탐색하여 다양한 관점을 묻어내는 그래프 알고리즘을 사용합니다.",
+      "title": "지식 망: 상호 연결된 커뮤니티 허브",
+      "persona": "네트워크 건축가",
+      "target_user": "유사한 관심사를 가진 커뮤니티에서 틈새 지식을 공유하고 발견하려는 커뮤니티 리더 및 열정적인 개인",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.456,
+        "problem_fit": 0.1453,
+        "relevance": 0.1453,
+        "mechanism_clarity": 0.56,
+        "mutation_distance": 0.7426,
+        "mutation_quality": 0.6601,
+        "feasibility": 0.458,
+        "risk": 0.0,
+        "creativity": 0.4217
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "123456_mut_1",
+      "strategy_type": "AI 기반 몰입형 스토리텔링을 통한 능동적 학습",
+      "description": "사용자는 자신의 관심사에 따라 AI가 제작한 역동적이고 인터랙티브한 세계로 들어갑니다. 이 가상 영역을 탐험하면서 등장인물과 사건은 실생활 정보와 성찰을 위한 제안을 제시합니다. 이야기와 상호 작용함으로써 사용자는 주제에 대한 이해를 심화시키는 데 필요한 경로를 능동적으로 선택할 수 있으며, 몰입형 경험 내에서 관련 지식을 배우고 큐레이션할 수 있습니다.",
+      "title": "AI 스토리텔러: 인터랙티브 가상 세계를 통한 능동적 학습",
+      "persona": "교육 게임 개발자",
+      "mechanism": "AI는 플레이어 캐릭터(NPC)를 활용하여 학습 목표를 따라갈 수 있는 가지돌림 이야기를 생성합니다. 사용자의 선택은 이야기의 방향에 영향을 미쳐 새로운 콘텐츠와 통찰력을 열어줍니다. 시스템은 강화 학습을 사용하여 시간이 지남에 따라 이야기를 맞춤화하여 참여와 학습 결과를 극대화합니다.",
+      "target_user": "복잡한 주제를 참여하는 방식으로 배우려는 학생",
+      "execution_context": "AI 스토리 생성 기능을 제공하는 온라인 플랫폼 또는 모바일 앱(광범위한 사용자 정의 교육 세계 및 주제 제공)",
+      "expected_advantage": "사용자가 교육 여정을 형성하는 데 적극적으로 참여하는 몰입적이고 매우 개인화된 학습 경험을 제공하여 참여, 유지 및 지식 깊이를 향상시킬 수 있습니다.",
+      "parent_id": "123456",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.3531,
+        "problem_fit": 0.3757,
+        "relevance": 0.3757,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.8007,
+        "mutation_quality": 0.7954,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.5651
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AIShift_mut_1",
+      "strategy_type": "Temporal Conditioning & Sensory Priming",
+      "description": "Instead of shaping information consumption, Chrono-Resonance attempts to *influence the perception of time itself* around specific pieces of information. Users select a 'core event' – a piece of news, a complex dataset, a historical moment – and the system generates a series of escalating, multi-sensory experiences (auditory, haptic, even olfactory) delivered precisely timed to mirror the event's purported chronological flow. The goal isn’t to deliver information, but to induce a felt temporal resonance, amplifying the user’s subjective experience of that point in time, theoretically altering their interpretation and recall. It operates on the assumption that time itself is a malleable construct influenced by deeply ingrained neural pathways and that anchoring information to a perceived temporal context significantly impacts its meaning.",
+      "title": "Chrono-Resonance",
+      "persona": "Behavioral Scientist",
+      "parent_id": "AIShift",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.9374,
+        "problem_fit": 0.0227,
+        "relevance": 0.0227,
+        "mechanism_clarity": 0.27,
+        "mutation_distance": 0.7989,
+        "mutation_quality": 0.6146,
+        "feasibility": 0.1485,
+        "risk": 0.0,
+        "creativity": 0.4945
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_1",
+      "strategy_type": "연결된 지식 그래프",
+      "description": "이 시스템은 각 '지식 정원'을 연결된 커뮤니티의 분산형 망의 노드로 변환합니다. 기사, 비디오 및 리소스는 지역적으로만 관리될 뿐만 아니라 인접한 정원과의 관련성에 따라 링크되고 순위가 매겨집니다. 이는 사용자가 관련 커뮤니티에서 콘텐츠를 발견하도록 하여 아이디어와 지식의 교환을 촉진하는 역동적인 네트워크를 만듭니다. 이 시스템은 관심사의 망을 탐색하여 다양한 관점을 상향식으로 제시하는 그래프 알고리즘을 사용하며, 각 사용자가 주요 관심 영역 내에서 여러 관점을 탐색할 수 있도록 보장합니다.",
+      "title": "지식 망: 연결된 커뮤니티 허브",
+      "persona": "네트워크 아키텍트",
+      "target_user": "유사한 관심사를 가진 커뮤니티에서 틈새 지식을 공유하고 발견하고 싶은 커뮤니티 리더 및 열정적인 개인",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.456,
+        "problem_fit": 0.1453,
+        "relevance": 0.1453,
+        "mechanism_clarity": 0.56,
+        "mutation_distance": 0.7426,
+        "mutation_quality": 0.6601,
+        "feasibility": 0.458,
+        "risk": 0.0,
+        "creativity": 0.4217
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ],
+  "mutated_ideas": [
+    {
+      "id": "EchoChamberZero_mut_1",
+      "strategy_type": "시간 왜곡 및 예측적 이야기",
+      "description": "기존 감정을 증폭시키는 대신, 시간적 메아리 짜는 사람은 사용자의 디지털 흔적을 기반으로 잠재적인 감정적 미래를 능동적으로 *투영*합니다. 현재 생체 데이터를 분석하는 대신, '시간적 실' - 사용자의 미래 감정 반응에 대한 확률적인 지도를 구축하며, 온라인 활동, 의사 소통 패턴 및 사회적 연결에서 추론합니다. 시스템은 그런 다음 사용자에게 매우 개인화되고 의도적으로 모호한 이야기를 – 짧은 이야기, 몰입형 시뮬레이션 – 생성하여 사용자의 *미래* 감정 상태에 미묘하게 영향을 미치고 예측적 감정적 유도에 의해 원하는 결과로 유도하도록 설계합니다.",
+      "title": "시간적 메아리 짜는 사람",
+      "persona": "자극적인 예술가",
+      "parent_id": "EchoChamberZero",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.8335,
+        "problem_fit": 0.012,
+        "relevance": 0.012,
+        "mechanism_clarity": 0.42,
+        "mutation_distance": 0.8035,
+        "mutation_quality": 0.6368,
+        "feasibility": 0.231,
+        "risk": 0.0,
+        "creativity": 0.4804
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_1",
+      "strategy_type": "연결된 지식 그래프",
+      "description": "이 시스템은 각 '지식 정원'을 상호 연결된 커뮤니티의 분산형 웹의 노드로 변환합니다. 기사, 비디오, 리소스는 지역적으로만 큐레이션될 뿐만 아니라 인접한 정원과의 관련성에 따라 링크되고 순위가 지정됩니다. 이를 통해 사용자는 관련 커뮤니티에서 콘텐츠를 발견하여 아이디어와 지식의 교차 수분을 촉진하는 역동적인 네트워크가 생성됩니다. 이 시스템은 사용자의 주요 관심 분야 내에서 여러 관점을 탐색하도록 보장하면서 관심사의 웹을 탐색하여 다양한 관점을 강조하는 그래프 알고리즘을 사용합니다.",
+      "title": "지식 망: 상호 연결된 커뮤니티 허브",
+      "persona": "네트워크 건축가",
+      "target_user": "유사한 관심사를 가진 커뮤니티에서 틈새 지식을 공유하고 발견하려는 커뮤니티 리더 및 열정적인 개인",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.456,
+        "problem_fit": 0.1453,
+        "relevance": 0.1453,
+        "mechanism_clarity": 0.56,
+        "mutation_distance": 0.7426,
+        "mutation_quality": 0.6601,
+        "feasibility": 0.458,
+        "risk": 0.0,
+        "creativity": 0.4217
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "123456_mut_1",
+      "strategy_type": "몰입형 스토리텔링을 통한 능동 학습",
+      "description": "사용자는 사용자의 관심사에 따라 AI가 제작한 역동적이고 상호 작용적인 세계로 들어갑니다. 이 가상 세계를 탐색함에 따라 등장인물과 사건이 실 세계 정보를 제공하고 성찰을 위한 프롬프트를 제시합니다. 이야기와 상호 작용함으로써 사용자는 주제에 대한 이해를 심화시키는 데 필요한 경로를 능동적으로 선택하여, 몰입형 경험 내에서 관련 지식을 학습하고 큐레이션할 수 있습니다.",
+      "title": "AI 스토리텔러: 상호 작용적 가상 세계를 통한 능동 학습",
+      "persona": "교육 게임 개발자",
+      "mechanism": "AI는 사용자를 학습 목표를 통해 안내하는 비플레이어 캐릭터(NPC)가 있는 분기별 이야기를 생성합니다. 사용자의 선택이 스토리를 진행 방향에 영향을 미치고 새로운 콘텐츠와 통찰력을 잠금 해제합니다. 시스템은 강화 학습을 사용하여 시간이 지남에 따라 이야기를 맞춤화하여 참여도와 학습 결과를 극대화합니다.",
+      "target_user": "복잡한 주제를 흥미로운 방식으로 학습하려는 학생",
+      "execution_context": "AI 스토리 생성 기능이 있는 온라인 플랫폼 또는 모바일 앱, 다양한 사용자 지정 교육 세계와 주제를 제공합니다.",
+      "expected_advantage": "사용자가 교육 여정을 형성하는 데 적극적으로 참여하는 몰입적이고 매우 개인화된 학습 경험을 제공하여 참여도, 유지율 및 지식 심도를 향상시킬 수 있습니다.",
+      "parent_id": "123456",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.3531,
+        "problem_fit": 0.3757,
+        "relevance": 0.3757,
+        "mechanism_clarity": 1.0,
+        "mutation_distance": 0.8007,
+        "mutation_quality": 0.7954,
+        "feasibility": 1.0,
+        "risk": 0.0,
+        "creativity": 0.5651
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "AIShift_mut_1",
+      "strategy_type": "시간 조건 훈련 및 감각 유도 (Sigan Jongjeon Hwallin Myeoel Gamgak Yudo)",
+      "description": "정보 소비를 형성하는 대신, 크로노-공명은 특정 정보 주위의 시간 인지 자체를 *영향을 미치는 것을 시도합니다*. 사용자는 ‘핵심 사건’ – 뉴스, 복잡한 데이터 세트, 역사적 순간 – 을 선택하고 시스템은 사건의 주장된 순서 흐름을 정확하게 반영하도록 정밀하게 타이밍이 맞춰진 일련의 확대, 다중 감각 경험(청각, 촉각, 심지어 후각)을 생성합니다. 목표는 정보를 전달하는 것이 아니라, 사용자의 해당 시점의 주관적인 경험을 증폭시켜 시간적 공명을 유도하고, 이론적으로 그들의 해석과 기억을 바꾸는 것입니다. 이는 시간 자체가 깊이 뿌리내린 신경 경로에 의해 영향을 받는 유동적인 구성이라는 가정하에 작동하며, 정보가 인지된 시간적 맥락에 얽매여 있을 때 그 의미에 상당한 영향을 미친다는 것입니다.",
+      "title": "크로노-공명 (Kkeunoo-Gongmyeong)",
+      "persona": "행동 심리학자 (Haengdong Shilyakja)",
+      "parent_id": "AIShift",
+      "depth": 1,
+      "mutation_type": "reverse_assumption",
+      "scores": {
+        "novelty": 0.9374,
+        "problem_fit": 0.0227,
+        "relevance": 0.0227,
+        "mechanism_clarity": 0.27,
+        "mutation_distance": 0.7989,
+        "mutation_quality": 0.6146,
+        "feasibility": 0.1485,
+        "risk": 0.0,
+        "creativity": 0.4945
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    },
+    {
+      "id": "12345_mut_1",
+      "strategy_type": "연결된 지식 그래프",
+      "description": "이 시스템은 각 '지식 정원'을 분산된 상호 연결된 커뮤니티의 망 내에서 노드로 변환합니다. 기사, 비디오 및 리소스는 지역적으로만 큐레이트될 뿐만 아니라 인접한 정원과의 관련성에 따라 링크되고 순위가 매겨집니다. 이를 통해 사용자는 관련 커뮤니티에서 콘텐츠를 발견하여 아이디어와 지식의 교환을 촉진하는 역동적인 네트워크가 생성됩니다. 이 시스템은 관심사의 망을 탐색하여 다양한 관점을 상향식으로 제시하기 위해 그래프 알고리즘을 사용하며, 각 사용자가 주요 관심 영역 내에서 여러 관점을 탐색하도록 보장합니다.",
+      "title": "지식 망: 상호 연결된 커뮤니티 허브",
+      "persona": "네트워크 아키텍트",
+      "target_user": "비슷한 관심사를 가진 커뮤니티에서 틈새 지식을 공유하고 발견하려는 리더 및 열정적인 개인",
+      "parent_id": "12345",
+      "depth": 1,
+      "mutation_type": "cross_domain",
+      "scores": {
+        "novelty": 0.456,
+        "problem_fit": 0.1453,
+        "relevance": 0.1453,
+        "mechanism_clarity": 0.56,
+        "mutation_distance": 0.7426,
+        "mutation_quality": 0.6601,
+        "feasibility": 0.458,
+        "risk": 0.0,
+        "creativity": 0.4217
+      },
+      "score_meta": {
+        "method": "heuristic",
+        "version": "v3_balanced",
+        "neighbor_count": 3
+      }
+    }
+  ],
+  "best_idea": {
+    "id": "EchoChamberZero",
+    "strategy_type": "정서 지도 및 알고리즘 공명",
+    "description": "EchoChamberZero는 정보 *검색*하지 않고 사용자의 정서적 메아리를 *培养*합니다. 엔진은 심박 변이성, 미세한 근육 움직임, 심지어 미세한 피부 전도도를 포함한 사용자의 생체 데이터를 분석하여 기본적인 정서적 ‘공명’을 감지합니다 – 키워드뿐만 아니라 ‘갈망’, ‘공포’, ‘경외’와 같은 원시적 감정 상태입니다. 이러한 공명은 신중하게 큐레이션된 자극의 연쇄 반응을 일으킵니다: 파편화된 예술 작품, 맞춤형 음향 풍경, 심지어 사용자의 원래 감정을 증폭하고 왜곡하도록 고안된 혼란스러운 시각적 시퀀스까지, 이는 원래 감정과 그 무의식적 의미에 직면하도록 강요합니다. 이로 인해 사용자의 정서적 반응이 시스템의 출력을 형성하는 피드백 루프가 생성되어 표면적인 답변을 넘어 심오하고, 불쾌하고, 궁극적으로 변화시키는 통찰력을 향해 나아갑니다.",
+    "title": "신체적 공명 엔진",
+    "persona": "자극적인 예술가",
+    "mechanism": "실시간 생체 데이터 분석과 예술, 음악, 비디오를 포함한 감각적 아티팩트의 대규모 데이터 세트에 대해 훈련된 생성 AI와 결합됩니다. 시스템은 사용자의 즉각적인 감정 상태에 따라 자극에 예측 불가능한 변동성을 의도적으로 도입하는 ‘왜곡 알고리즘’을 사용합니다.",
+    "target_user": "전통적인 이성적 탐구 방식 외의 경험을 적극적으로 찾는 예술가, 철학자, 개인; 불편함과 불확실성을 더 깊은 이해로 가는 길로 포용할 의향이 있는 사람들.",
+    "execution_context": "초기에는 고도로 전문화된 몰입형 설치물로 배포됨 – 네트워크 생체 피드백 센서와 프로젝션 매핑이 있는 어두운 방, VR/AR를 통해 확장 가능.",
+    "expected_advantage": "정보 검색에 있어서 완전히 다른 접근 방식을 제공하며, 수동적인 데이터 소비를 넘어 감정과 인지적 변화를 능동적으로 설계하여 극도로 독창적인 관점을 유도하고 창의적인 돌파구를 촉발합니다.”",
+    "source_model": "gemma3:4b",
+    "source_persona": "자극적인 예술가",
+    "scores": {
+      "novelty": 0.9667,
+      "problem_fit": 0.3535,
+      "relevance": 0.3535,
+      "mechanism_clarity": 1.0,
+      "mutation_distance": 0.0,
+      "mutation_quality": 0.0,
+      "feasibility": 1.0,
+      "risk": 0.0,
+      "creativity": 0.7854
+    },
+    "score_meta": {
+      "method": "heuristic",
+      "version": "v3_balanced",
+      "neighbor_count": 3
+    }
+  }
+}

@@ -1,0 +1,11 @@
+You are selecting the most diverse subset of ideas.
+
+Choose up to {keep_count} ideas that are most different in strategy and execution style.
+
+Ideas:
+{ideas_json}
+
+Return only this JSON shape:
+{{
+  "selected_ids": ["idea_1", "idea_2"]
+}}

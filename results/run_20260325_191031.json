@@ -1,0 +1,242 @@
+{
+  "problem": "저녁 메뉴 추천",
+  "base_ideas": [
+    {
+      "id": "SCH-001",
+      "strategy_type": "Modular, Layered Architecture",
+      "description": "A multi-tiered system employing semantic knowledge graphs representing culinary categories (e.g., 'Mediterranean', 'Japanese') and ingredient properties. User preferences are filtered through this graph, generating recommendations by iteratively narrowing down options based on nutritional profiles and contextual data (time of day, user dietary restrictions). Each tier utilizes a specialized AI model optimized for its specific task – knowledge graph traversal, nutritional analysis, and contextual reasoning.",
+      "title": "Hierarchical Dietary Recommendation Engine (HDRE)",
+      "source_model": "gemma3:4b",
+      "source_persona": "systems architect"
+    },
+    {
+      "id": "mealshare-alpha",
+      "strategy_type": "Collaborative Recommendation",
+      "description": "Connect users by neighborhood and dietary preferences. AI learns from aggregated 'favorite meal' ratings *within* neighborhoods, fostering a community-driven recommendation system rather than solely relying on global trends. Users earn 'flavor points' for contributing ratings, incentivizing active participation and building a shared culinary map.",
+      "title": "Neighborhood Flavor Network",
+      "source_model": "gemma3:4b",
+      "source_persona": "community builder"
+    },
+    {
+      "id": "menu_meme_challenge",
+      "strategy_type": "Viral Loop & UGC",
+      "description": "Users input dietary preferences. AI generates a ridiculous, shareable meme image based on their response. Reward top memes with gift cards to local restaurants. Encourage sharing via TikTok & Reddit with a dedicated hashtag – #DinnerMemeNight. Simple, low-cost, high-potential virality.",
+      "title": "Dinner Meme Generator & Share",
+      "source_model": "gemma3:4b",
+      "source_persona": "growth hacker"
+    },
+    {
+      "id": "dinner_discovery_quest",
+      "strategy_type": "Adaptive Recommendation with Guided Reflection",
+      "description": "Students (users) embark on a ‘quest’ for dinner ideas. The AI presents 3-5 initial suggestions based on dietary needs and preferences, then prompts the user to *explain* their reasoning for choosing each. The AI then provides targeted feedback - ‘That’s a great choice for protein, but have you considered how it pairs with…?’ – and refines the suggestions based on this iterative, guided reflection, building a personalized culinary profile over time.",
+      "title": "The Culinary Exploration Project",
+      "source_model": "gemma3:4b",
+      "source_persona": "teacher"
+    },
+    {
+      "id": "MNR-001",
+      "strategy_type": "Deep Contextual Search",
+      "description": "Instead of simply matching ingredients, the AI analyzes user dietary preferences *within* their cultural background, recent celebrations (identified via calendar integration and potentially user input), and regional food traditions. It then generates recommendations based on historical consumption patterns and social significance related to those ingredients – understanding 'dinner' as a culturally-shaped ritual.",
+      "title": "Culinary Echoes: Contextual Dinner Recommendations",
+      "source_model": "gemma3:4b",
+      "source_persona": "anthropologist"
+    }
+  ],
+  "filtered_ideas": [
+    {
+      "id": "SCH-001",
+      "strategy_type": "Modular, Layered Architecture",
+      "description": "A multi-tiered system employing semantic knowledge graphs representing culinary categories (e.g., 'Mediterranean', 'Japanese') and ingredient properties. User preferences are filtered through this graph, generating recommendations by iteratively narrowing down options based on nutritional profiles and contextual data (time of day, user dietary restrictions). Each tier utilizes a specialized AI model optimized for its specific task – knowledge graph traversal, nutritional analysis, and contextual reasoning.",
+      "title": "Hierarchical Dietary Recommendation Engine (HDRE)",
+      "source_model": "gemma3:4b",
+      "source_persona": "systems architect"
+    },
+    {
+      "id": "mealshare-alpha",
+      "strategy_type": "Collaborative Recommendation",
+      "description": "Connect users by neighborhood and dietary preferences. AI learns from aggregated 'favorite meal' ratings *within* neighborhoods, fostering a community-driven recommendation system rather than solely relying on global trends. Users earn 'flavor points' for contributing ratings, incentivizing active participation and building a shared culinary map.",
+      "title": "Neighborhood Flavor Network",
+      "source_model": "gemma3:4b",
+      "source_persona": "community builder"
+    },
+    {
+      "id": "menu_meme_challenge",
+      "strategy_type": "Viral Loop & UGC",
+      "description": "Users input dietary preferences. AI generates a ridiculous, shareable meme image based on their response. Reward top memes with gift cards to local restaurants. Encourage sharing via TikTok & Reddit with a dedicated hashtag – #DinnerMemeNight. Simple, low-cost, high-potential virality.",
+      "title": "Dinner Meme Generator & Share",
+      "source_model": "gemma3:4b",
+      "source_persona": "growth hacker"
+    },
+    {
+      "id": "dinner_discovery_quest",
+      "strategy_type": "Adaptive Recommendation with Guided Reflection",
+      "description": "Students (users) embark on a ‘quest’ for dinner ideas. The AI presents 3-5 initial suggestions based on dietary needs and preferences, then prompts the user to *explain* their reasoning for choosing each. The AI then provides targeted feedback - ‘That’s a great choice for protein, but have you considered how it pairs with…?’ – and refines the suggestions based on this iterative, guided reflection, building a personalized culinary profile over time.",
+      "title": "The Culinary Exploration Project",
+      "source_model": "gemma3:4b",
+      "source_persona": "teacher"
+    },
+    {
+      "id": "MNR-001",
+      "strategy_type": "Deep Contextual Search",
+      "description": "Instead of simply matching ingredients, the AI analyzes user dietary preferences *within* their cultural background, recent celebrations (identified via calendar integration and potentially user input), and regional food traditions. It then generates recommendations based on historical consumption patterns and social significance related to those ingredients – understanding 'dinner' as a culturally-shaped ritual.",
+      "title": "Culinary Echoes: Contextual Dinner Recommendations",
+      "source_model": "gemma3:4b",
+      "source_persona": "anthropologist"
+    },
+    {
+      "id": "SCH-002",
+      "strategy_type": "Reinforcement Learning",
+      "description": "A recommendation engine using RL agents trained on simulated user interactions and diverse culinary data. Agents learn optimal recommendation sequences through trial and error, directly optimizing for user satisfaction based on immediate feedback rather than a layered graph approach.",
+      "title": "Mutation 1",
+      "parent_id": "SCH-001",
+      "mutation_type": "cross_domain"
+    },
+    {
+      "id": "SCH-003",
+      "strategy_type": "Rule-Based System",
+      "description": "A system generating recommendations based on a comprehensive set of predefined culinary rules and user-specified constraints.  Eliminates AI models, relying on a deterministic rule engine for filtering and suggestion based on nutritional data and preferences, prioritizing speed and simplicity.",
+      "title": "Mutation 2",
+      "parent_id": "SCH-001",
+      "mutation_type": "simplification"
+    },
+    {
+      "id": "mealshare-beta",
+      "strategy_type": "Supply Chain Optimization",
+      "description": "Utilize neighborhood-level food waste data to predict demand and dynamically connect restaurants with surplus ingredients to local food banks or charities, minimizing waste and offering discounted meals.",
+      "title": "Mutation 1",
+      "parent_id": "mealshare-alpha",
+      "mutation_type": "cross_domain"
+    },
+    {
+      "id": "mealshare-gamma",
+      "strategy_type": "Gamified Culinary Challenge",
+      "description": "Transform the 'flavor points' system into a competitive leaderboard, hosting weekly neighborhood-based cooking challenges judged by local food bloggers and influencers, driving engagement and recipe discovery.",
+      "title": "Mutation 2",
+      "parent_id": "mealshare-alpha",
+      "mutation_type": "exaggeration"
+    },
+    {
+      "id": "menu_recommendation_quiz",
+      "strategy_type": "Personalized Recommendation",
+      "description": "Interactive quiz to determine user's ideal meal based on taste profiles and current mood. Provides a tailored menu suggestion with a link to order directly from partner restaurants. Focus on user data acquisition for targeted promotions.",
+      "title": "Mutation 1",
+      "parent_id": "menu_meme_challenge",
+      "mutation_type": "persona_shift"
+    },
+    {
+      "id": "restaurant_challenge_series",
+      "strategy_type": "Competitive Engagement",
+      "description": "Weekly themed food challenge across different restaurants, judged by a panel and user voting. Participants document their experience on Instagram using a branded hashtag – #RestaurantBattle. Winners receive significant prizes and featured placement.",
+      "title": "Mutation 2",
+      "parent_id": "menu_meme_challenge",
+      "mutation_type": "exaggeration"
+    },
+    {
+      "id": "dinner_challenge_competition",
+      "strategy_type": "Competitive Recommendation with Gamified Feedback",
+      "description": "Students compete in weekly dinner challenges, earning points for accurately predicting the AI's recommended dish and justifying their choices. Leaderboards and badges incentivize strategic thinking and exploration.",
+      "title": "Mutation 1",
+      "parent_id": "dinner_discovery_quest",
+      "mutation_type": "exaggeration"
+    },
+    {
+      "id": "dinner_mood_matcher",
+      "strategy_type": "Emotional Contextual Recommendation with Sentiment Analysis",
+      "description": "Users input their current mood (e.g., ‘stressed,’ ‘happy,’ ‘romantic’). The AI recommends dinner options based on correlating mood-food pairings, offering a quick and intuitive solution.",
+      "title": "Mutation 2",
+      "parent_id": "dinner_discovery_quest",
+      "mutation_type": "persona_shift"
+    },
+    {
+      "id": "MNR-002",
+      "strategy_type": "Behavioral Targeting",
+      "description": "Predict dinner choices based on real-time social media trends and local event listings, incorporating sentiment analysis to gauge ingredient popularity and recommend dishes mirroring current buzz.",
+      "title": "Mutation 1",
+      "parent_id": "MNR-001",
+      "mutation_type": "cross_domain"
+    }
+  ],
+  "mutated_ideas": [
+    {
+      "id": "SCH-002",
+      "strategy_type": "Reinforcement Learning",
+      "description": "A recommendation engine using RL agents trained on simulated user interactions and diverse culinary data. Agents learn optimal recommendation sequences through trial and error, directly optimizing for user satisfaction based on immediate feedback rather than a layered graph approach.",
+      "title": "Mutation 1",
+      "parent_id": "SCH-001",
+      "mutation_type": "cross_domain"
+    },
+    {
+      "id": "SCH-003",
+      "strategy_type": "Rule-Based System",
+      "description": "A system generating recommendations based on a comprehensive set of predefined culinary rules and user-specified constraints.  Eliminates AI models, relying on a deterministic rule engine for filtering and suggestion based on nutritional data and preferences, prioritizing speed and simplicity.",
+      "title": "Mutation 2",
+      "parent_id": "SCH-001",
+      "mutation_type": "simplification"
+    },
+    {
+      "id": "mealshare-beta",
+      "strategy_type": "Supply Chain Optimization",
+      "description": "Utilize neighborhood-level food waste data to predict demand and dynamically connect restaurants with surplus ingredients to local food banks or charities, minimizing waste and offering discounted meals.",
+      "title": "Mutation 1",
+      "parent_id": "mealshare-alpha",
+      "mutation_type": "cross_domain"
+    },
+    {
+      "id": "mealshare-gamma",
+      "strategy_type": "Gamified Culinary Challenge",
+      "description": "Transform the 'flavor points' system into a competitive leaderboard, hosting weekly neighborhood-based cooking challenges judged by local food bloggers and influencers, driving engagement and recipe discovery.",
+      "title": "Mutation 2",
+      "parent_id": "mealshare-alpha",
+      "mutation_type": "exaggeration"
+    },
+    {
+      "id": "menu_recommendation_quiz",
+      "strategy_type": "Personalized Recommendation",
+      "description": "Interactive quiz to determine user's ideal meal based on taste profiles and current mood. Provides a tailored menu suggestion with a link to order directly from partner restaurants. Focus on user data acquisition for targeted promotions.",
+      "title": "Mutation 1",
+      "parent_id": "menu_meme_challenge",
+      "mutation_type": "persona_shift"
+    },
+    {
+      "id": "restaurant_challenge_series",
+      "strategy_type": "Competitive Engagement",
+      "description": "Weekly themed food challenge across different restaurants, judged by a panel and user voting. Participants document their experience on Instagram using a branded hashtag – #RestaurantBattle. Winners receive significant prizes and featured placement.",
+      "title": "Mutation 2",
+      "parent_id": "menu_meme_challenge",
+      "mutation_type": "exaggeration"
+    },
+    {
+      "id": "dinner_challenge_competition",
+      "strategy_type": "Competitive Recommendation with Gamified Feedback",
+      "description": "Students compete in weekly dinner challenges, earning points for accurately predicting the AI's recommended dish and justifying their choices. Leaderboards and badges incentivize strategic thinking and exploration.",
+      "title": "Mutation 1",
+      "parent_id": "dinner_discovery_quest",
+      "mutation_type": "exaggeration"
+    },
+    {
+      "id": "dinner_mood_matcher",
+      "strategy_type": "Emotional Contextual Recommendation with Sentiment Analysis",
+      "description": "Users input their current mood (e.g., ‘stressed,’ ‘happy,’ ‘romantic’). The AI recommends dinner options based on correlating mood-food pairings, offering a quick and intuitive solution.",
+      "title": "Mutation 2",
+      "parent_id": "dinner_discovery_quest",
+      "mutation_type": "persona_shift"
+    },
+    {
+      "id": "MNR-002",
+      "strategy_type": "Behavioral Targeting",
+      "description": "Predict dinner choices based on real-time social media trends and local event listings, incorporating sentiment analysis to gauge ingredient popularity and recommend dishes mirroring current buzz.",
+      "title": "Mutation 1",
+      "parent_id": "MNR-001",
+      "mutation_type": "cross_domain"
+    },
+    {
+      "id": "MNR-003",
+      "strategy_type": "Rule-Based System",
+      "description": "Generate dinner recommendations using a curated database of regional dishes and associated metadata (ingredients, traditions, occasions). Users select preferred characteristics, and the system applies predefined rules for matching.",
+      "title": "Mutation 2",
+      "parent_id": "MNR-001",
+      "mutation_type": "simplification"
+    }
+  ],
+  "output_path": "/Users/dlfjstizlzl/Documents/Github/Erica/grade1/labs/creative-search/results/run_20260325_191031.json"
+}
