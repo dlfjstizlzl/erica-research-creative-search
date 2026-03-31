@@ -78,6 +78,7 @@ def _score_with_embeddings(problem: str, ideas: list[dict[str, Any]]) -> list[di
         parent_index = id_to_index.get(str(idea.get("parent_id") or ""))
         mutation_distance = 0.0
         mutation_quality = 0.0
+        combination_quality = 0.0
         if parent_index is not None:
             mutation_distance = 1.0 - _normalize_cosine(
                 _cosine_similarity(idea_embeddings[index], idea_embeddings[parent_index])
@@ -89,15 +90,29 @@ def _score_with_embeddings(problem: str, ideas: list[dict[str, Any]]) -> list[di
                 mechanism_clarity=mechanism_clarity,
                 mutation_distance=mutation_distance,
             )
+        combination_parent_indices = [
+            id_to_index[parent_id]
+            for parent_id in list(idea.get("parent_ids") or [])
+            if parent_id in id_to_index
+        ]
+        if len(combination_parent_indices) >= 2:
+            combination_quality = _combination_quality(
+                idea_embedding=idea_embeddings[index],
+                parent_embeddings=[idea_embeddings[parent_index] for parent_index in combination_parent_indices],
+                problem_fit=problem_fit,
+                mechanism_clarity=mechanism_clarity,
+            )
 
         creativity = _combine_scores(
             novelty=novelty,
             problem_fit=problem_fit,
             mechanism_clarity=mechanism_clarity,
             mutation_quality=mutation_quality,
+            combination_quality=combination_quality,
             feasibility=feasibility,
             risk=risk,
             is_mutation=parent_index is not None,
+            is_combination=len(combination_parent_indices) >= 2,
         )
         scored_ideas.append(
             _with_scores(
@@ -108,6 +123,7 @@ def _score_with_embeddings(problem: str, ideas: list[dict[str, Any]]) -> list[di
                 mechanism_clarity=mechanism_clarity,
                 mutation_distance=mutation_distance,
                 mutation_quality=mutation_quality,
+                combination_quality=combination_quality,
                 feasibility=feasibility,
                 risk=risk,
                 creativity=creativity,
@@ -165,6 +181,7 @@ def _score_with_heuristics(problem: str, ideas: list[dict[str, Any]]) -> list[di
 
         mutation_distance = 0.0
         mutation_quality = 0.0
+        combination_quality = 0.0
         parent = by_id.get(str(idea.get("parent_id") or ""))
         if parent:
             parent_text = f"{parent.get('title', '')} {parent.get('description', '')}".lower()
@@ -176,15 +193,29 @@ def _score_with_heuristics(problem: str, ideas: list[dict[str, Any]]) -> list[di
                 mechanism_clarity=mechanism_clarity,
                 mutation_distance=mutation_distance,
             )
+        combination_parents = [
+            by_id[parent_id]
+            for parent_id in list(idea.get("parent_ids") or [])
+            if parent_id in by_id
+        ]
+        if len(combination_parents) >= 2:
+            combination_quality = _heuristic_combination_quality(
+                idea=idea,
+                parent_ideas=combination_parents,
+                problem_fit=problem_fit,
+                mechanism_clarity=mechanism_clarity,
+            )
 
         creativity = _combine_scores(
             novelty=novelty,
             problem_fit=problem_fit,
             mechanism_clarity=mechanism_clarity,
             mutation_quality=mutation_quality,
+            combination_quality=combination_quality,
             feasibility=feasibility,
             risk=risk,
             is_mutation=parent is not None,
+            is_combination=len(combination_parents) >= 2,
         )
         scored_ideas.append(
             _with_scores(
@@ -195,6 +226,7 @@ def _score_with_heuristics(problem: str, ideas: list[dict[str, Any]]) -> list[di
                 mechanism_clarity=mechanism_clarity,
                 mutation_distance=mutation_distance,
                 mutation_quality=mutation_quality,
+                combination_quality=combination_quality,
                 feasibility=feasibility,
                 risk=risk,
                 creativity=creativity,
@@ -229,11 +261,20 @@ def _combine_scores(
     problem_fit: float,
     mechanism_clarity: float,
     mutation_quality: float,
+    combination_quality: float,
     feasibility: float,
     risk: float,
     is_mutation: bool,
+    is_combination: bool,
 ) -> float:
-    if is_mutation:
+    if is_combination:
+        score = (
+            novelty * 0.30
+            + problem_fit * 0.25
+            + combination_quality * 0.30
+            + mechanism_clarity * 0.15
+        )
+    elif is_mutation:
         score = (
             novelty * 0.35
             + problem_fit * 0.30
@@ -509,6 +550,51 @@ def _mutation_quality(
     )
 
 
+def _combination_quality(
+    *,
+    idea_embedding: list[float],
+    parent_embeddings: list[list[float]],
+    problem_fit: float,
+    mechanism_clarity: float,
+) -> float:
+    parent_distances = [
+        1.0 - _normalize_cosine(_cosine_similarity(idea_embedding, parent_embedding))
+        for parent_embedding in parent_embeddings
+    ]
+    average_parent_distance = sum(parent_distances) / len(parent_distances)
+    return _clamp01(
+        average_parent_distance * 0.45
+        + problem_fit * 0.25
+        + mechanism_clarity * 0.20
+        + 0.10
+    )
+
+
+def _heuristic_combination_quality(
+    *,
+    idea: dict[str, Any],
+    parent_ideas: list[dict[str, Any]],
+    problem_fit: float,
+    mechanism_clarity: float,
+) -> float:
+    idea_text = _idea_to_text(idea).lower()
+    parent_texts = [
+        _idea_to_text(parent_idea).lower()
+        for parent_idea in parent_ideas
+    ]
+    parent_distances = [
+        1.0 - _ngram_jaccard(parent_text, idea_text)
+        for parent_text in parent_texts
+    ]
+    average_parent_distance = sum(parent_distances) / len(parent_distances)
+    return _clamp01(
+        average_parent_distance * 0.45
+        + problem_fit * 0.25
+        + mechanism_clarity * 0.20
+        + 0.10
+    )
+
+
 def _with_scores(
     idea: dict[str, Any],
     *,
@@ -518,6 +604,7 @@ def _with_scores(
     mechanism_clarity: float,
     mutation_distance: float,
     mutation_quality: float,
+    combination_quality: float,
     feasibility: float,
     risk: float,
     creativity: float,
@@ -530,6 +617,7 @@ def _with_scores(
         "mechanism_clarity": round(mechanism_clarity, 4),
         "mutation_distance": round(mutation_distance, 4),
         "mutation_quality": round(mutation_quality, 4),
+        "combination_quality": round(combination_quality, 4),
         "feasibility": round(feasibility, 4),
         "risk": round(risk, 4),
         "creativity": round(creativity, 4),
@@ -551,6 +639,7 @@ def _log_score_summary(method: str, ideas: list[dict[str, Any]]) -> None:
     problem_fit_scores = []
     mechanism_scores = []
     mutation_quality_scores = []
+    combination_quality_scores = []
     feasibility_scores = []
     risk_scores = []
     creativity_scores = []
@@ -561,6 +650,7 @@ def _log_score_summary(method: str, ideas: list[dict[str, Any]]) -> None:
         problem_fit_scores.append(float(scores.get("problem_fit", scores.get("relevance", 0.0))))
         mechanism_scores.append(float(scores.get("mechanism_clarity", 0.0)))
         mutation_quality_scores.append(float(scores.get("mutation_quality", 0.0)))
+        combination_quality_scores.append(float(scores.get("combination_quality", 0.0)))
         feasibility_scores.append(float(scores.get("feasibility", 0.0)))
         risk_scores.append(float(scores.get("risk", 0.0)))
         creativity_scores.append(float(scores.get("creativity", 0.0)))
@@ -572,6 +662,7 @@ def _log_score_summary(method: str, ideas: list[dict[str, Any]]) -> None:
         f"problem_fit=[{min(problem_fit_scores):.4f}, {max(problem_fit_scores):.4f}] "
         f"mechanism=[{min(mechanism_scores):.4f}, {max(mechanism_scores):.4f}] "
         f"mutation_quality=[{min(mutation_quality_scores):.4f}, {max(mutation_quality_scores):.4f}] "
+        f"combination_quality=[{min(combination_quality_scores):.4f}, {max(combination_quality_scores):.4f}] "
         f"feasibility=[{min(feasibility_scores):.4f}, {max(feasibility_scores):.4f}] "
         f"risk=[{min(risk_scores):.4f}, {max(risk_scores):.4f}] "
         f"creativity=[{min(creativity_scores):.4f}, {max(creativity_scores):.4f}] "

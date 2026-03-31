@@ -1,5 +1,1 @@
-# No external Python packages are required.
-# This project uses the Python standard library only.
-# Runtime requirements:
-# - Python 3.10+
-# - Ollama running locally or reachable via OLLAMA_HOST
+streamlit>=1.44,<2
