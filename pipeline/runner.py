@@ -10,6 +10,7 @@ from config import (
     PARENT_SELECTION_COUNT,
     POOL_MAX_SIZE,
     PROBLEMS_FILE,
+    REFRAMER_MODEL,
     RESULTS_DIR,
     SEARCH_MAX_GENERATIONS,
 )
@@ -26,6 +27,7 @@ from pipeline.filter import filter_diverse_ideas
 from pipeline.generator import generate_base_ideas
 from pipeline.mutator import mutate_idea
 from pipeline.pool import initialize_pool, update_pool
+from pipeline.problem_reframer import reframe_problem
 from pipeline.scoring import score_ideas
 from pipeline.selection import (
     select_combination_pairs,
@@ -55,19 +57,32 @@ def load_problem_from_file(index: int = 0) -> str:
 
 def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[str, object]:
     """Run seed generation and iterative search loop."""
-    print("[runner] Step 1/6: Generating base ideas.")
+    raw_problem = problem
+
+    print("[runner] Step 1/7: Reframing problem input.")
+    reframed_problem = reframe_problem(
+        raw_problem,
+        model=REFRAMER_MODEL,
+        language=WORKING_LANGUAGE,
+    )
+    search_problem = _build_search_problem_context(raw_problem, reframed_problem)
+    print(f"[runner] Raw problem: {raw_problem}")
+    print(f"[runner] Reframed problem: {reframed_problem}")
+    print("[runner] Using both raw and reframed problem as search context.")
+
+    print("[runner] Step 2/7: Generating base ideas.")
     seed_dicts = [
         _seedify(item, index=index)
         for index, item in enumerate(
-            generate_base_ideas(problem, language=WORKING_LANGUAGE),
+            generate_base_ideas(search_problem, language=WORKING_LANGUAGE),
             start=1,
         )
     ]
     seed_dicts = _ensure_unique_ids(seed_dicts)
     print(f"[runner] Generated {len(seed_dicts)} seed ideas.")
 
-    print("[runner] Step 2/6: Initial scoring and pool setup.")
-    scored_seed_dicts = score_ideas(problem, seed_dicts)
+    print("[runner] Step 3/7: Initial scoring and pool setup.")
+    scored_seed_dicts = score_ideas(search_problem, seed_dicts)
     base_ideas = [Idea.from_dict(item) for item in scored_seed_dicts]
     active_pool = initialize_pool(scored_seed_dicts, max_size=POOL_MAX_SIZE)
     archive = initialize_archive(scored_seed_dicts)
@@ -75,7 +90,7 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
     combined_ideas: list[Idea] = []
     print(f"[runner] Initialized active pool with {len(active_pool)} ideas.")
 
-    print("[runner] Step 3/6: Iterative search loop.")
+    print("[runner] Step 4/7: Iterative search loop.")
     for generation in range(1, SEARCH_MAX_GENERATIONS + 1):
         print(f"[runner] Generation {generation}/{SEARCH_MAX_GENERATIONS}")
         parent_dicts = select_parent_ideas(
@@ -90,7 +105,7 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
             parent_id = str(parent.get("id") or "")
             print(f"[runner] Mutating parent: {parent_id}")
             mutation_outputs = mutate_idea(
-                problem,
+                search_problem,
                 parent,
                 model=str(parent.get("source_model") or OLLAMA_MODEL),
                 language=WORKING_LANGUAGE,
@@ -104,7 +119,7 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
         )
         print(f"[runner] Selected {len(parent_pairs)} recombination pairs.")
         new_combination_dicts = combine_ideas(
-            problem,
+            search_problem,
             parent_pairs,
             model=COMBINER_MODEL,
             language=WORKING_LANGUAGE,
@@ -122,7 +137,7 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
         )
         print(f"[runner] Scoring {len(new_candidate_dicts)} new candidates.")
         scoring_context = [*active_pool, *new_candidate_dicts]
-        scored_context = score_ideas(problem, scoring_context)
+        scored_context = score_ideas(search_problem, scoring_context)
         new_candidate_ids = {
             str(item.get("id") or "")
             for item in new_candidate_dicts
@@ -155,12 +170,12 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
         )
         print(f"[runner] Active pool size after generation {generation}: {len(active_pool)}")
 
-    print("[runner] Step 4/6: Final pool filtering.")
+    print("[runner] Step 5/7: Final pool filtering.")
     filtered_dicts = filter_diverse_ideas(active_pool)
     filtered_ideas = [Idea.from_dict(item) for item in filtered_dicts]
     print(f"[runner] Final filtered pool size: {len(filtered_ideas)}")
 
-    print("[runner] Step 5/6: Final ranking.")
+    print("[runner] Step 6/7: Final ranking.")
     final_bests = select_final_bests(filtered_dicts)
     best_practical = _idea_from_optional_dict(final_bests.get("best_practical"))
     best_balanced = _idea_from_optional_dict(final_bests.get("best_balanced"))
@@ -180,10 +195,11 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
     if best_wild is not None:
         print(f"[runner] Best wild: {best_wild.id} ({best_wild.title})")
 
-    print("[runner] Step 6/6: Saving final result to JSON.")
+    print("[runner] Step 7/7: Saving final result to JSON.")
     output_path = RESULTS_DIR / f"run_{timestamp_slug()}.json"
     result = PipelineResult(
-        problem=problem,
+        problem=raw_problem,
+        reframed_problem=reframed_problem,
         output_language=WORKING_LANGUAGE,
         base_ideas=base_ideas,
         combined_ideas=combined_ideas,
@@ -245,3 +261,14 @@ def _idea_from_optional_dict(data: dict | None) -> Idea | None:
     if not isinstance(data, dict):
         return None
     return Idea.from_dict(data)
+
+
+def _build_search_problem_context(raw_problem: str, reframed_problem: str) -> str:
+    raw_text = " ".join(str(raw_problem or "").split()).strip()
+    reframed_text = " ".join(str(reframed_problem or "").split()).strip()
+    if not reframed_text or reframed_text == raw_text:
+        return raw_text
+    return (
+        f"Original problem:\n{raw_text}\n\n"
+        f"Reframed problem:\n{reframed_text}"
+    )

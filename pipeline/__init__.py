@@ -6,6 +6,7 @@ from .filter import filter_diverse_ideas
 from .generator import generate_base_ideas
 from .mutator import mutate_idea
 from .pool import initialize_pool, preserve_diversity, update_pool
+from .problem_reframer import reframe_problem
 from .runner import load_problem_from_file, run_pipeline
 from .scoring import score_ideas
 from .selection import select_combination_pairs, select_final_bests, select_parent_ideas
@@ -19,6 +20,7 @@ __all__ = [
     "mark_selection_in_archive",
     "mutate_idea",
     "preserve_diversity",
+    "reframe_problem",
     "score_ideas",
     "select_combination_pairs",
     "select_final_bests",

@@ -11,11 +11,13 @@ Output language:
 
 Generate exactly 1 idea that reflects this persona's worldview and method.
 Make it concrete and clearly different in strategy from obvious default answers.
-Novelty matters more than realism.
-It is acceptable if the idea is partially unrealistic, experimental, or hard to execute.
+Novelty matters, but do not default to speculative sci-fi technology or magical infrastructure.
+It is acceptable if the idea is unusual or experimental, but the operating model should still feel legible and grounded.
 Do not reject an idea just because it sounds strange.
 Prioritize a genuinely new direction over a safe and ordinary one.
 Avoid converging on the same recommendation, assistant, dashboard, planner, or companion pattern unless it is truly the most original option.
+Prefer present-day actors, incentives, workflows, spaces, institutions, and tools unless the problem truly calls for frontier technology.
+If you use advanced technology, explain a plausible near-term pathway rather than a hand-wavy futuristic leap.
 The description should explain:
 - what the idea actually is
 - how it works in practice

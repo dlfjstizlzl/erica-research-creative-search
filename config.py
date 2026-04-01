@@ -67,9 +67,20 @@ DEFAULT_GENERATOR_PERSONAS: Final[list[str]] = [
     "security pessimist: assumes failure, abuse, misuse, adversaries, edge cases, and fragile trust by default",
     "grassroots organizer: builds through trust, collective action, mutual aid, and participation from the bottom up",
     "hardcore futurist: thinks in 10-year shifts, emerging norms, nonlinear change, and strange but plausible futures",
+    "municipal sanitation operator: thinks in collection routes, contamination rates, shift constraints, maintenance realities, and service uptime",
+    "public procurement lead: optimizes around budgets, contracts, rollout risk, vendor reliability, and measurable public value",
+    "factory process engineer: redesigns bottlenecks, throughput, instrumentation, and handoff points with minimal waste and variance",
+    "service designer: maps backstage operations, frontstage touchpoints, user friction, and operational consistency",
+    "public health inspector: cares about safety, compliance, hygiene behavior, risk communication, and intervention practicality",
+    "warehouse logistics planner: focuses on sorting flows, staging, routing, load balancing, and error-proof movement of materials",
+    "maintenance technician: prefers durable systems with simple failure modes, repairability, and low training overhead",
+    "cooperative manager: designs shared incentives, member participation, pooled resources, and durable governance mechanisms",
+    "school administrator: balances behavior change, limited staff attention, incentives, and repeatable routines in messy real settings",
+    "retail operator: sees problems through customer behavior, inventory movement, shrinkage, incentives, and frontline execution",
 ]
 
 BASE_GENERATION_PROMPT = PROMPTS_DIR / "base_generation.txt"
+PROBLEM_REFRAMING_PROMPT = PROMPTS_DIR / "problem_reframing.txt"
 MUTATION_PROMPT = PROMPTS_DIR / "mutation.txt"
 COMBINATION_PROMPT = PROMPTS_DIR / "combination.txt"
 DIVERSITY_FILTER_PROMPT = PROMPTS_DIR / "diversity_filter.txt"
@@ -79,9 +90,11 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
 OLLAMA_GENERATOR_MODELS = parse_csv_env("OLLAMA_GENERATOR_MODELS", [OLLAMA_MODEL])
 COMBINER_MODEL = os.getenv("COMBINER_MODEL", OLLAMA_MODEL)
+REFRAMER_MODEL = os.getenv("REFRAMER_MODEL", COMBINER_MODEL)
 OLLAMA_EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "embeddinggemma")
 DEFAULT_OUTPUT_LANGUAGE = os.getenv("OUTPUT_LANGUAGE", "Korean")
 REQUEST_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "60"))
+REFRAMER_NUM_PREDICT = int(os.getenv("REFRAMER_NUM_PREDICT", "220"))
 GENERATOR_NUM_PREDICT = int(os.getenv("GENERATOR_NUM_PREDICT", "220"))
 MUTATOR_NUM_PREDICT = int(os.getenv("MUTATOR_NUM_PREDICT", "260"))
 

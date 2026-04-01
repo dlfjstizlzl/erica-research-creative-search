@@ -119,7 +119,13 @@ def _practical_rank(idea: dict) -> tuple[float, float, float, float]:
     mechanism = float(scores.get("mechanism_clarity", 0.0))
     risk = float(scores.get("risk", 0.0))
     creativity = float(scores.get("creativity", 0.0))
-    final_score = problem_fit * 0.42 + feasibility * 0.28 + mechanism * 0.18 + creativity * 0.12 - risk * 0.25
+    final_score = (
+        problem_fit * 0.46
+        + feasibility * 0.30
+        + mechanism * 0.16
+        + creativity * 0.08
+        - risk * 0.38
+    )
     return final_score, problem_fit, feasibility, mechanism
 
 
@@ -132,14 +138,14 @@ def _balanced_rank(idea: dict) -> tuple[float, float, float, float]:
     mechanism = float(scores.get("mechanism_clarity", 0.0))
     risk = float(scores.get("risk", 0.0))
     final_score = (
-        creativity * 0.34
-        + problem_fit * 0.26
-        + novelty * 0.18
-        + feasibility * 0.12
-        + mechanism * 0.10
-        - risk * 0.30
+        creativity * 0.24
+        + problem_fit * 0.32
+        + novelty * 0.06
+        + feasibility * 0.22
+        + mechanism * 0.16
+        - risk * 0.34
     )
-    return final_score, problem_fit, creativity, novelty
+    return final_score, problem_fit, creativity, feasibility
 
 
 def _wild_rank(idea: dict) -> tuple[float, float, float, float]:

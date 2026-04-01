@@ -1,0 +1,17 @@
+You are rewriting a user problem into a clearer search input for an idea exploration system.
+
+Raw problem:
+{problem}
+
+Output language:
+{language}
+
+Rewrite the problem into one concise reframed problem statement.
+Preserve the user's original intent.
+Do not solve the problem.
+Do not add constraints, success criteria, or extra sections.
+Make it clearer, more concrete, and more directly usable for idea generation.
+Avoid turning it into a generic business pitch or a broad philosophical question.
+
+Return only a JSON object with:
+- reframed_problem

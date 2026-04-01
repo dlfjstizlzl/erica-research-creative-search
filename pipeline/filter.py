@@ -58,6 +58,8 @@ def _near_duplicate(left: dict[str, str], right: dict[str, str]) -> bool:
     right_origin = _normalize(right.get("origin_type", ""))
     left_parents = _normalized_parent_ids(left)
     right_parents = _normalized_parent_ids(right)
+    left_family = _family_signature(left)
+    right_family = _family_signature(right)
 
     title_sim = _ngram_jaccard(left_title, right_title)
     desc_sim = _ngram_jaccard(left_desc, right_desc)
@@ -86,6 +88,13 @@ def _near_duplicate(left: dict[str, str], right: dict[str, str]) -> bool:
         return True
     if left_origin == "combination" and right_origin == "combination" and title_sim > 0.80:
         return True
+    if (
+        left_origin == "combination"
+        and right_origin == "combination"
+        and _token_jaccard(left_family, right_family) > 0.42
+        and (desc_sim > 0.38 or mech_sim > 0.42)
+    ):
+        return True
     if shared_lineage and title_sim > 0.72 and (desc_sim > 0.46 or mech_sim > 0.54):
         return True
     if shared_lineage and same_strategy and desc_sim > 0.60:
@@ -112,6 +121,47 @@ def _char_ngrams(text: str, n: int = 3) -> set[str]:
 
 def _normalize(value: object) -> str:
     return " ".join(str(value or "").lower().split())
+
+
+def _token_jaccard(left: str, right: str) -> float:
+    left_tokens = set(left.split())
+    right_tokens = set(right.split())
+    if not left_tokens or not right_tokens:
+        return 0.0
+    return len(left_tokens & right_tokens) / len(left_tokens | right_tokens)
+
+
+def _family_signature(idea: dict[str, str]) -> str:
+    text = " ".join(
+        [
+            _normalize(idea.get("title", "")),
+            _normalize(idea.get("strategy_type", "")),
+            _normalize(idea.get("mechanism", "")),
+        ]
+    )
+    stopwords = {
+        "the",
+        "and",
+        "with",
+        "for",
+        "using",
+        "system",
+        "network",
+        "platform",
+        "solution",
+        "autonomous",
+        "smart",
+        "powered",
+        "waste",
+        "sorting",
+        "sort",
+        "management",
+        "de",
+        "of",
+        "to",
+    }
+    tokens = [token for token in text.split() if len(token) > 3 and token not in stopwords]
+    return " ".join(tokens[:12])
 
 
 def _normalized_parent_ids(idea: dict[str, str]) -> set[str]:

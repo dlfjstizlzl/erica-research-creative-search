@@ -112,6 +112,7 @@ class PipelineResult:
     """Serializable pipeline output."""
 
     problem: str
+    reframed_problem: str = ""
     output_language: str = ""
     base_ideas: list[Idea] = field(default_factory=list)
     combined_ideas: list[Idea] = field(default_factory=list)
@@ -134,6 +135,8 @@ class PipelineResult:
             "mutated_ideas": [idea.to_dict() for idea in self.mutated_ideas],
             "archive": self.archive,
         }
+        if self.reframed_problem:
+            payload["reframed_problem"] = self.reframed_problem
         if self.archive_summary:
             payload["archive_summary"] = self.archive_summary
         if self.best_practical is not None:

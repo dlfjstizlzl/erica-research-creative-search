@@ -6,6 +6,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime
 from html import escape
 import json
+import os
 from pathlib import Path
 import threading
 from typing import Any
@@ -501,6 +502,17 @@ def _render_results_screen() -> None:
             """,
             unsafe_allow_html=True,
         )
+        reframed_problem = str(result.get("reframed_problem") or "").strip()
+        if reframed_problem and reframed_problem != str(result.get("problem") or "").strip():
+            st.markdown(
+                f"""
+                <div class="problem-hero">
+                  <div class="problem-hero-label">{_t("reframed_problem")}</div>
+                  <div class="problem-hero-text">{reframed_problem}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
     with top_right:
         if st.button(_t("new_search"), use_container_width=True):
             st.session_state["screen"] = "search"
@@ -619,6 +631,7 @@ def _start_pipeline_run(problem: str) -> None:
     state["running"] = True
     state["problem"] = problem
     state["started_at"] = datetime.now()
+    state["pid"] = os.getpid()
     state["logs"] = []
     state["error"] = None
     state["pending_result"] = None
@@ -654,8 +667,23 @@ def _sync_pipeline_status() -> None:
 
     thread = st.session_state.get("pipeline_thread")
     state = _pipeline_state()
+    current_pid = os.getpid()
+    state_pid = int(state.get("pid") or 0)
+
     if thread is not None and not thread.is_alive() and state.get("running"):
         state["running"] = False
+        _save_pipeline_state_file(state)
+    elif state.get("running") and state_pid and state_pid != current_pid:
+        logs = list(state.get("logs") or [])
+        logs.append(
+            "Detected stale pipeline state from a previous app process. "
+            "Marked the run as stopped."
+        )
+        state["logs"] = logs[-400:]
+        state["running"] = False
+        state["error"] = None
+        state["pending_result"] = None
+        state["pid"] = current_pid
         _save_pipeline_state_file(state)
 
 
@@ -664,9 +692,13 @@ class _StreamlitLogWriter:
         self.state = state
         self._buffer = ""
 
-    def write(self, text: str) -> int:
+    def write(self, text: Any) -> int:
         if not text:
             return 0
+        if isinstance(text, bytes):
+            text = text.decode("utf-8", errors="replace")
+        else:
+            text = str(text)
         self._buffer += text
         while "\n" in self._buffer:
             line, self._buffer = self._buffer.split("\n", 1)
@@ -696,6 +728,7 @@ def _new_pipeline_state() -> dict[str, Any]:
         "logs": [],
         "error": None,
         "pending_result": None,
+        "pid": os.getpid(),
     }
 
 
@@ -719,6 +752,7 @@ def _save_pipeline_state_file(state: dict[str, Any]) -> None:
         "logs": list(state.get("logs") or [])[-400:],
         "error": state.get("error"),
         "pending_result": state.get("pending_result"),
+        "pid": int(state.get("pid") or os.getpid()),
     }
     save_json(_pipeline_state_file(), serializable)
 
@@ -740,6 +774,7 @@ def _load_pipeline_state_file() -> dict[str, Any] | None:
         "logs": list(payload.get("logs") or [])[-400:],
         "error": payload.get("error"),
         "pending_result": payload.get("pending_result"),
+        "pid": int(payload.get("pid") or 0),
     }
 
 
@@ -867,7 +902,6 @@ def _render_selected_detail(result: dict[str, Any]) -> None:
         ]
         if part
     )
-    st.markdown("<div class='detail-shell'>", unsafe_allow_html=True)
     st.markdown(
         f"""
         <div class="detail-card">
@@ -887,22 +921,22 @@ def _render_selected_detail(result: dict[str, Any]) -> None:
         unsafe_allow_html=True,
     )
 
-    st.markdown(
-        f"<div class='detail-card'><div class='detail-section-title'>{_t('idea_profile')}</div>",
-        unsafe_allow_html=True,
-    )
-    info_cols = st.columns(2)
-    with info_cols[0]:
-        _kv(_t("strategy"), selected.get("strategy_type"))
-        _kv(_t("persona"), selected.get("persona"))
-        _kv(_t("mechanism"), selected.get("mechanism"))
-        _kv(_t("target_user"), selected.get("target_user"))
-    with info_cols[1]:
-        _kv(_t("execution_context"), selected.get("execution_context"))
-        _kv(_t("expected_advantage"), selected.get("expected_advantage"))
-        _kv(_t("mutation_type"), selected.get("mutation_type"))
-        _kv(_t("combination_type"), selected.get("combination_type"))
-    st.markdown("</div>", unsafe_allow_html=True)
+    with st.container(border=True):
+        st.markdown(
+            f"<div class='detail-section-title'>{_t('idea_profile')}</div>",
+            unsafe_allow_html=True,
+        )
+        info_cols = st.columns(2)
+        with info_cols[0]:
+            _kv(_t("strategy"), selected.get("strategy_type"))
+            _kv(_t("persona"), selected.get("persona"))
+            _kv(_t("mechanism"), selected.get("mechanism"))
+            _kv(_t("target_user"), selected.get("target_user"))
+        with info_cols[1]:
+            _kv(_t("execution_context"), selected.get("execution_context"))
+            _kv(_t("expected_advantage"), selected.get("expected_advantage"))
+            _kv(_t("mutation_type"), selected.get("mutation_type"))
+            _kv(_t("combination_type"), selected.get("combination_type"))
 
     parent_ids = selected.get("parent_ids") or []
     if parent_ids:
@@ -957,7 +991,6 @@ def _render_selected_detail(result: dict[str, Any]) -> None:
 
     with st.expander(_t("raw_item_json")):
         st.json(selected)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 
 def _render_archive_detail(records: list[dict[str, Any]], selected_id: str | None) -> None:
@@ -988,32 +1021,27 @@ def _render_archive_detail(records: list[dict[str, Any]], selected_id: str | Non
 
 def _render_best_card(container: Any, label: str, idea: dict[str, Any] | None) -> None:
     with container:
-        st.markdown(
-            "<div class='idea-card'>",
-            unsafe_allow_html=True,
-        )
-        st.markdown(f"**{label}**")
-        if not idea:
-            st.caption(_t("no_idea_selected"))
-            st.markdown("</div>", unsafe_allow_html=True)
-            return
-        st.markdown(f"### {idea.get('title') or idea.get('id')}")
-        st.caption(
-            " | ".join(
-                part
-                for part in [
-                    str(idea.get("origin_type") or "").strip(),
-                    str(idea.get("strategy_type") or "").strip(),
-                    f"id={idea.get('id')}" if idea.get("id") else "",
-                ]
-                if part
+        with st.container(border=True):
+            st.markdown(f"**{label}**")
+            if not idea:
+                st.caption(_t("no_idea_selected"))
+                return
+            st.markdown(f"### {idea.get('title') or idea.get('id')}")
+            st.caption(
+                " | ".join(
+                    part
+                    for part in [
+                        str(idea.get("origin_type") or "").strip(),
+                        str(idea.get("strategy_type") or "").strip(),
+                        f"id={idea.get('id')}" if idea.get("id") else "",
+                    ]
+                    if part
+                )
             )
-        )
-        st.write(idea.get("description") or "")
-        scores = idea.get("scores") or {}
-        if scores:
-            st.caption(_format_scores(scores))
-        st.markdown("</div>", unsafe_allow_html=True)
+            st.write(idea.get("description") or "")
+            scores = idea.get("scores") or {}
+            if scores:
+                st.caption(_format_scores(scores))
 
 
 def _kv(label: str, value: Any) -> None:
@@ -1105,6 +1133,7 @@ def _t(key: str) -> str:
             "use_saved_example": "Use saved example",
             "example_index": "Example index",
             "problem": "Problem",
+            "reframed_problem": "Reframed problem",
             "problem_placeholder": "Describe the problem to explore...",
             "run_pipeline": "Run pipeline",
             "enter_problem": "Enter a problem before running the pipeline.",
@@ -1172,6 +1201,7 @@ def _t(key: str) -> str:
             "use_saved_example": "저장된 예제 사용",
             "example_index": "예제 인덱스",
             "problem": "문제",
+            "reframed_problem": "재구성된 문제",
             "problem_placeholder": "탐색할 문제를 입력하세요...",
             "run_pipeline": "파이프라인 실행",
             "enter_problem": "실행 전에 문제를 입력하세요.",

@@ -73,8 +73,11 @@ def _pool_priority(idea: dict) -> tuple[float, float, float, int]:
     creativity = float(scores.get("creativity", 0.0))
     novelty = float(scores.get("novelty", 0.0))
     problem_fit = float(scores.get("problem_fit", scores.get("relevance", 0.0)))
+    feasibility = float(scores.get("feasibility", 0.0))
+    risk = float(scores.get("risk", 0.0))
     description_len = len(str(idea.get("description") or "").split())
-    return creativity, novelty, problem_fit, description_len
+    grounded_priority = problem_fit * 0.40 + feasibility * 0.35 + creativity * 0.25 - risk * 0.20
+    return grounded_priority, problem_fit, novelty, description_len
 
 
 def _idea_signature(idea: dict) -> str:

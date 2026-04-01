@@ -269,29 +269,27 @@ def _combine_scores(
 ) -> float:
     if is_combination:
         score = (
-            novelty * 0.30
-            + problem_fit * 0.25
-            + combination_quality * 0.30
-            + mechanism_clarity * 0.15
+            novelty * 0.18
+            + problem_fit * 0.34
+            + combination_quality * 0.28
+            + mechanism_clarity * 0.20
         )
     elif is_mutation:
         score = (
-            novelty * 0.35
-            + problem_fit * 0.30
+            novelty * 0.25
+            + problem_fit * 0.36
             + mutation_quality * 0.25
-            + mechanism_clarity * 0.10
+            + mechanism_clarity * 0.14
         )
     else:
         score = (
-            novelty * 0.55
-            + problem_fit * 0.35
-            + mechanism_clarity * 0.10
+            novelty * 0.34
+            + problem_fit * 0.48
+            + mechanism_clarity * 0.18
         )
 
-    # Keep feasibility and risk as light-touch adjustments instead of hard
-    # gates so the evaluator does not collapse output diversity.
-    score += (feasibility - 0.5) * 0.06
-    score -= risk * 0.08
+    score += (feasibility - 0.5) * 0.14
+    score -= risk * 0.10
     return _clamp01(score)
 
 
@@ -450,12 +448,12 @@ def _mechanism_clarity(idea: dict[str, Any]) -> float:
     expected_advantage = str(idea.get("expected_advantage") or "").strip()
     combined = f"{description} {mechanism}".lower()
 
-    word_detail = min(len(description.split()) / 70.0, 1.0) * 0.22
-    mechanism_detail = min(len(mechanism.split()) / 35.0, 1.0) * 0.30
+    word_detail = min(len(description.split()) / 85.0, 1.0) * 0.16
+    mechanism_detail = min(len(mechanism.split()) / 45.0, 1.0) * 0.22
     field_presence = (
-        (0.14 if target_user else 0.0)
-        + (0.14 if execution_context else 0.0)
-        + (0.14 if expected_advantage else 0.0)
+        (0.11 if target_user else 0.0)
+        + (0.11 if execution_context else 0.0)
+        + (0.09 if expected_advantage else 0.0)
     )
     structure_markers = [
         "because",
@@ -471,8 +469,44 @@ def _mechanism_clarity(idea: dict[str, Any]) -> float:
         "자동",
         "단계",
     ]
-    structure_bonus = 0.20 if any(marker in combined for marker in structure_markers) else 0.05
-    return _clamp01(word_detail + mechanism_detail + field_presence + structure_bonus)
+    structure_bonus = 0.14 if any(marker in combined for marker in structure_markers) else 0.03
+    specificity_markers = [
+        "sensor",
+        "camera",
+        "vision",
+        "route",
+        "collection point",
+        "bin",
+        "sorting line",
+        "dashboard",
+        "api",
+        "worker",
+        "truck",
+        "facility",
+        "센서",
+        "카메라",
+        "수거",
+        "분류",
+        "설비",
+        "대시보드",
+        "라인",
+        "작업자",
+    ]
+    specificity_bonus = 0.14 if any(marker in combined for marker in specificity_markers) else 0.0
+    buzzword_markers = [
+        "ecosystem",
+        "paradigm",
+        "framework",
+        "resonance",
+        "synergy",
+        "lattice",
+        "protocol",
+        "orchestration",
+        "nexus",
+        "cartography",
+    ]
+    buzzword_penalty = 0.10 if sum(1 for marker in buzzword_markers if marker in combined) >= 2 else 0.0
+    return _clamp01(word_detail + mechanism_detail + field_presence + structure_bonus + specificity_bonus - buzzword_penalty)
 
 
 def _feasibility(idea: dict[str, Any], mechanism_clarity: float) -> float:
@@ -482,10 +516,10 @@ def _feasibility(idea: dict[str, Any], mechanism_clarity: float) -> float:
     text = _idea_to_text(idea).lower()
 
     concreteness = (
-        mechanism_clarity * 0.55
-        + (0.15 if execution_context else 0.0)
-        + (0.15 if target_user else 0.0)
-        + (0.15 if expected_advantage else 0.0)
+        mechanism_clarity * 0.42
+        + (0.12 if execution_context else 0.0)
+        + (0.10 if target_user else 0.0)
+        + (0.08 if expected_advantage else 0.0)
     )
     speculative_keywords = [
         "telepathy",
@@ -493,14 +527,80 @@ def _feasibility(idea: dict[str, Any], mechanism_clarity: float) -> float:
         "spirit",
         "mind control",
         "time travel",
+        "quantum entanglement",
+        "entangled",
+        "holographic",
+        "nanobot",
+        "nanobots",
+        "nanotechnology",
+        "transmutation",
+        "teleport",
+        "wormhole",
+        "magic",
+        "magical",
+        "futuristic",
+        "sci-fi",
         "영혼",
         "염력",
         "초능력",
         "순간이동",
         "시간여행",
+        "양자 얽힘",
+        "홀로그램",
+        "나노봇",
+        "나노기술",
+        "변환",
+        "마법",
     ]
     speculative_hits = sum(1 for keyword in speculative_keywords if keyword in text)
-    penalty = min(speculative_hits * 0.12, 0.35)
+    overengineered_keywords = [
+        "ultra",
+        "hyper",
+        "exponential",
+        "self-organizing",
+        "infinite",
+        "perfect sorting",
+        "near-perfect",
+        "ultra-high-fidelity",
+        "autonomous swarm",
+        "fully autonomous",
+        "bespoke",
+        "luxury",
+        "concierge",
+    ]
+    overengineered_hits = sum(1 for keyword in overengineered_keywords if keyword in text)
+    deployment_complexity_keywords = [
+        "self-driving",
+        "robotic arms",
+        "robot arm",
+        "spectral imaging",
+        "mesh network",
+        "autonomous fleet",
+        "autonomous swarm",
+        "industrial vibrators",
+        "decentralized autonomous",
+        "computer vision",
+        "robotic sorting",
+        "self-sorting",
+        "자율주행",
+        "로봇 팔",
+        "분광",
+        "메시 네트워크",
+        "자율 군집",
+        "컴퓨터 비전",
+    ]
+    deployment_hits = sum(1 for keyword in deployment_complexity_keywords if keyword in text)
+    generic_context_penalty = 0.08 if execution_context and any(
+        phrase in execution_context.lower()
+        for phrase in ["urban or suburban", "various environments", "multiple settings", "broad contexts"]
+    ) else 0.0
+    penalty = min(
+        speculative_hits * 0.10
+        + overengineered_hits * 0.05
+        + deployment_hits * 0.035
+        + generic_context_penalty,
+        0.52,
+    )
     return _clamp01(concreteness - penalty)
 
 
@@ -525,7 +625,8 @@ def _risk_score(idea: dict[str, Any]) -> float:
         "침투",
     ]
     hits = sum(1 for keyword in risk_keywords if keyword in text)
-    return _clamp01(hits * 0.18)
+    speculative_risk = _speculative_risk(text)
+    return _clamp01(hits * 0.18 + speculative_risk)
 
 
 def _mutation_quality(
@@ -624,10 +725,31 @@ def _with_scores(
     }
     scored_idea["score_meta"] = {
         "method": method,
-        "version": "v3_balanced",
+        "version": "v4_grounded",
         "neighbor_count": SCORING_NEIGHBOR_COUNT,
     }
     return scored_idea
+
+
+def _speculative_risk(text: str) -> float:
+    speculative_terms = [
+        "quantum",
+        "entangled",
+        "holographic",
+        "nanobot",
+        "nanotechnology",
+        "transmutation",
+        "wormhole",
+        "telepathy",
+        "time travel",
+        "magic",
+        "magical",
+        "sci-fi",
+        "futuristic",
+        "autonomous swarm",
+    ]
+    hits = sum(1 for keyword in speculative_terms if keyword in text)
+    return min(hits * 0.04, 0.20)
 
 
 def _log_score_summary(method: str, ideas: list[dict[str, Any]]) -> None:
