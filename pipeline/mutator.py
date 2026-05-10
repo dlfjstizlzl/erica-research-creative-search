@@ -12,6 +12,7 @@ from config import (
     MUTATOR_ENFORCE_FAMILY,
     MUTATION_PROMPT,
     MUTATOR_NUM_PREDICT,
+    MUTATOR_MODEL,
     OLLAMA_MODEL,
 )
 from core.utils import load_text
@@ -132,7 +133,7 @@ Optional if useful:
 def mutate_idea(
     problem: str | dict,
     idea: dict | None = None,
-    model: str = OLLAMA_MODEL,
+    model: str = MUTATOR_MODEL,
     mutation_count: int = MUTATION_COUNT,
     language: str = DEFAULT_OUTPUT_LANGUAGE,
 ) -> list[dict]:

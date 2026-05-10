@@ -7,6 +7,7 @@ from config import (
     COMBINER_MODEL,
     DEFAULT_OUTPUT_LANGUAGE,
     OLLAMA_MODEL,
+    MUTATOR_MODEL,
     PARENT_SELECTION_COUNT,
     POOL_MAX_SIZE,
     PROBLEMS_FILE,
@@ -107,7 +108,7 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
             mutation_outputs = mutate_idea(
                 search_problem,
                 parent,
-                model=str(parent.get("source_model") or OLLAMA_MODEL),
+                model=MUTATOR_MODEL,
                 language=WORKING_LANGUAGE,
             )
             for item in mutation_outputs:

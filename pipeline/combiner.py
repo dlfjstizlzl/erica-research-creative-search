@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from config import COMBINATION_PROMPT, COMBINER_MODEL, DEFAULT_OUTPUT_LANGUAGE
+from config import COMBINATION_PROMPT, COMBINER_MODEL, EXTRACTOR_MODEL, DEFAULT_OUTPUT_LANGUAGE
 from core.utils import load_text
 from llm import OllamaClient
 
@@ -17,13 +17,7 @@ COMBINATION_TYPES = [
     "hybrid_system",
 ]
 
-CONFLICT_FRAMES = [
-    "individual incentive vs collective coordination",
-    "automation efficiency vs human participation",
-    "centralized orchestration vs local autonomy",
-    "short-term adoption vs long-term behavior change",
-    "measurement/control vs emotional or social engagement",
-]
+
 
 
 def combine_ideas(
@@ -48,7 +42,7 @@ def combine_ideas(
 
     for index, (left, right) in enumerate(parent_pairs, start=1):
         combination_type = COMBINATION_TYPES[(index - 1) % len(COMBINATION_TYPES)]
-        conflict_frame = _infer_conflict_frame(left, right, index=index)
+        conflict_frame = _extract_dynamic_conflict(left, right, model=EXTRACTOR_MODEL, language=language)
         left_id = str(left.get("id") or "")
         right_id = str(right.get("id") or "")
         print(
@@ -176,57 +170,37 @@ def normalize_combination_output(
     return [combined]
 
 
-def _infer_conflict_frame(left: dict, right: dict, *, index: int) -> str:
-    left_text = " ".join(
-        [
-            str(left.get("strategy_type") or ""),
-            str(left.get("description") or ""),
-            str(left.get("mechanism") or ""),
-        ]
-    ).lower()
-    right_text = " ".join(
-        [
-            str(right.get("strategy_type") or ""),
-            str(right.get("description") or ""),
-            str(right.get("mechanism") or ""),
-        ]
-    ).lower()
+def _extract_dynamic_conflict(left: dict, right: dict, *, model: str, language: str) -> str:
+    """Extract dynamic conflict frame using the LLM."""
+    client = OllamaClient(model=model)
+    left_desc = str(left.get("description", ""))
+    left_mech = str(left.get("mechanism", ""))
+    left_user = str(left.get("target_user", ""))
+    right_desc = str(right.get("description", ""))
+    right_mech = str(right.get("mechanism", ""))
+    right_user = str(right.get("target_user", ""))
+    
+    prompt = f"""
+Idea A: {left_desc} / {left_mech} (Focus: {left_user})
+Idea B: {right_desc} / {right_mech} (Focus: {right_user})
 
-    conflict_rules = [
-        (
-            {"game", "reward", "points", "badge", "incentive"},
-            {"community", "collective", "sharing", "network", "peer"},
-            "individual incentive vs collective coordination",
-        ),
-        (
-            {"ai", "automation", "algorithm", "optimiz", "prediction"},
-            {"community", "human", "peer", "ritual", "participation"},
-            "automation efficiency vs human participation",
-        ),
-        (
-            {"platform", "orchestr", "central", "dashboard"},
-            {"local", "peer", "distributed", "neighborhood", "community"},
-            "centralized orchestration vs local autonomy",
-        ),
-        (
-            {"real-time", "instant", "immediate", "short-term"},
-            {"habit", "ritual", "long-term", "culture", "education"},
-            "short-term adoption vs long-term behavior change",
-        ),
-        (
-            {"tracking", "measurement", "feedback", "sensor", "monitor"},
-            {"emotion", "story", "music", "social", "narrative"},
-            "measurement/control vs emotional or social engagement",
-        ),
-    ]
-
-    for left_terms, right_terms, label in conflict_rules:
-        if _contains_any(left_text, left_terms) and _contains_any(right_text, right_terms):
-            return label
-        if _contains_any(left_text, right_terms) and _contains_any(right_text, left_terms):
-            return label
-
-    return CONFLICT_FRAMES[(index - 1) % len(CONFLICT_FRAMES)]
+Identify the most fundamental 'strategic contradiction' or 'orthogonal tension' between these two ideas in a single short sentence.
+Output the conflict in {language}.
+"""
+    try:
+        payload = client.chat_json(
+            user_prompt=prompt,
+            system_prompt="Return exactly one JSON object with a single key 'conflict' containing the 1-sentence contradiction. Return only valid JSON.",
+            debug_label="combiner_conflict_extractor",
+            num_predict=100,
+        )
+        conflict = str(payload.get("conflict", "")).strip()
+        if conflict:
+            return conflict
+        return "Unknown conflict"
+    except Exception as exc:
+        print(f"[combiner] Failed to extract dynamic conflict: {exc}")
+        return "Unknown conflict"
 
 
 def _is_shallow_combination(candidate: dict, left: dict, right: dict) -> bool:
@@ -253,8 +227,7 @@ def _is_shallow_combination(candidate: dict, left: dict, right: dict) -> bool:
     return False
 
 
-def _contains_any(text: str, terms: set[str]) -> bool:
-    return any(term in text for term in terms)
+
 
 
 def _normalize(value: object) -> str:
