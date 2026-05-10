@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from config import COMBINATION_PROMPT, COMBINER_MODEL, EXTRACTOR_MODEL, DEFAULT_OUTPUT_LANGUAGE
+from config import COMBINATION_PROMPT, COMBINER_MODEL, DEFAULT_OUTPUT_LANGUAGE
 from core.utils import load_text
 from llm import OllamaClient
 
@@ -17,7 +17,13 @@ COMBINATION_TYPES = [
     "hybrid_system",
 ]
 
-
+CONFLICT_FRAMES = [
+    "individual incentive vs collective coordination",
+    "automation efficiency vs human participation",
+    "centralized orchestration vs local autonomy",
+    "short-term adoption vs long-term behavior change",
+    "measurement/control vs emotional or social engagement",
+]
 
 
 def combine_ideas(
@@ -42,7 +48,7 @@ def combine_ideas(
 
     for index, (left, right) in enumerate(parent_pairs, start=1):
         combination_type = COMBINATION_TYPES[(index - 1) % len(COMBINATION_TYPES)]
-        conflict_frame = _extract_dynamic_conflict(left, right, model=EXTRACTOR_MODEL, language=language)
+        conflict_frame = _infer_conflict_frame(left, right, index=index)
         left_id = str(left.get("id") or "")
         right_id = str(right.get("id") or "")
         print(
@@ -50,37 +56,22 @@ def combine_ideas(
             f"parents={left_id}+{right_id} type={combination_type} "
             f"conflict={conflict_frame}"
         )
+        algorithmic_draft = _create_algorithmic_draft(left, right, combination_type)
+        
         prompt = prompt_template.format(
             problem=problem,
-            left_id=left_id,
-            left_title=left.get("title", ""),
-            left_strategy_type=left.get("strategy_type", ""),
-            left_description=left.get("description", ""),
-            left_mechanism=left.get("mechanism", ""),
-            right_id=right_id,
-            right_title=right.get("title", ""),
-            right_strategy_type=right.get("strategy_type", ""),
-            right_description=right.get("description", ""),
-            right_mechanism=right.get("mechanism", ""),
+            algorithmic_draft=algorithmic_draft,
             combination_type=combination_type,
-            conflict_frame=conflict_frame,
             language=language,
         )
         payload = client.chat_json(
             prompt,
             system_prompt=(
-                "You combine two ideas into one genuinely new system. "
-                "Do not average them. "
-                "Do not list both ideas side by side. "
-                "First identify the strongest strategic conflict between the parents. "
-                "Then create a new system that resolves, exploits, or reframes that conflict. "
-                "Use one concrete mechanism from the left parent and one concrete "
-                "delivery, audience, context, or interaction element from the right parent. "
-                "Reject shallow hybrids and feature bundles. "
-                "Do not simply rename a parent idea or keep the same naming stem. "
-                "Do not produce a direct sequel, polished variant, or obvious merge of nearly identical parents. "
-                "The result must feel like a new operating model born from tension. "
-                "Maintain clear problem-fit to the original problem. "
+                "You are an expert editor and creative strategist. "
+                "You will receive an 'Algorithmic Draft' that structurally combines two ideas. "
+                "Your task is to refine and polish this draft into a natural, cohesive, and highly creative single system. "
+                "Do not invent entirely new core mechanisms; stick to the structural skeleton provided in the draft. "
+                "Focus on making the context natural, the mechanism clear, and the overall description compelling. "
                 "Return exactly one JSON object. "
                 "Return only valid JSON."
             ),
@@ -102,6 +93,32 @@ def combine_ideas(
 
     print(f"[combiner] Produced {len(combined)} combined ideas.")
     return combined
+
+
+def _create_algorithmic_draft(left: dict, right: dict, combination_type: str) -> str:
+    """Create a structural draft of the combined idea using pure logic."""
+    draft = [f"[Combination Type: {combination_type}]"]
+    
+    if combination_type == "mechanism_plus_audience":
+        draft.append(f"Core Mechanism: {left.get('mechanism', '')}")
+        draft.append(f"Target Audience: {right.get('target_user', '')}")
+        draft.append(f"Execution Context: {right.get('execution_context', '')}")
+    elif combination_type == "mechanism_plus_channel":
+        draft.append(f"Core Mechanism: {left.get('mechanism', '')}")
+        draft.append(f"Delivery/Channel: {right.get('execution_context', '')}")
+        draft.append(f"Target Audience: {left.get('target_user', '')}")
+    elif combination_type == "delivery_model_swap":
+        draft.append(f"Core Strategy: {left.get('strategy_type', '')}")
+        draft.append(f"Execution Context: {right.get('execution_context', '')}")
+        draft.append(f"Mechanism: {right.get('mechanism', '')}")
+    elif combination_type == "context_shift":
+        draft.append(f"Core Mechanism: {left.get('mechanism', '')}")
+        draft.append(f"New Context: {right.get('execution_context', '')}")
+    else:  # hybrid_system
+        draft.append(f"Combined Mechanism: {left.get('mechanism', '')} AND {right.get('mechanism', '')}")
+        draft.append(f"Combined Context: {left.get('execution_context', '')} AND {right.get('execution_context', '')}")
+        
+    return "\n".join(draft)
 
 
 def normalize_combination_output(
@@ -170,37 +187,57 @@ def normalize_combination_output(
     return [combined]
 
 
-def _extract_dynamic_conflict(left: dict, right: dict, *, model: str, language: str) -> str:
-    """Extract dynamic conflict frame using the LLM."""
-    client = OllamaClient(model=model)
-    left_desc = str(left.get("description", ""))
-    left_mech = str(left.get("mechanism", ""))
-    left_user = str(left.get("target_user", ""))
-    right_desc = str(right.get("description", ""))
-    right_mech = str(right.get("mechanism", ""))
-    right_user = str(right.get("target_user", ""))
-    
-    prompt = f"""
-Idea A: {left_desc} / {left_mech} (Focus: {left_user})
-Idea B: {right_desc} / {right_mech} (Focus: {right_user})
+def _infer_conflict_frame(left: dict, right: dict, *, index: int) -> str:
+    left_text = " ".join(
+        [
+            str(left.get("strategy_type") or ""),
+            str(left.get("description") or ""),
+            str(left.get("mechanism") or ""),
+        ]
+    ).lower()
+    right_text = " ".join(
+        [
+            str(right.get("strategy_type") or ""),
+            str(right.get("description") or ""),
+            str(right.get("mechanism") or ""),
+        ]
+    ).lower()
 
-Identify the most fundamental 'strategic contradiction' or 'orthogonal tension' between these two ideas in a single short sentence.
-Output the conflict in {language}.
-"""
-    try:
-        payload = client.chat_json(
-            user_prompt=prompt,
-            system_prompt="Return exactly one JSON object with a single key 'conflict' containing the 1-sentence contradiction. Return only valid JSON.",
-            debug_label="combiner_conflict_extractor",
-            num_predict=100,
-        )
-        conflict = str(payload.get("conflict", "")).strip()
-        if conflict:
-            return conflict
-        return "Unknown conflict"
-    except Exception as exc:
-        print(f"[combiner] Failed to extract dynamic conflict: {exc}")
-        return "Unknown conflict"
+    conflict_rules = [
+        (
+            {"game", "reward", "points", "badge", "incentive"},
+            {"community", "collective", "sharing", "network", "peer"},
+            "individual incentive vs collective coordination",
+        ),
+        (
+            {"ai", "automation", "algorithm", "optimiz", "prediction"},
+            {"community", "human", "peer", "ritual", "participation"},
+            "automation efficiency vs human participation",
+        ),
+        (
+            {"platform", "orchestr", "central", "dashboard"},
+            {"local", "peer", "distributed", "neighborhood", "community"},
+            "centralized orchestration vs local autonomy",
+        ),
+        (
+            {"real-time", "instant", "immediate", "short-term"},
+            {"habit", "ritual", "long-term", "culture", "education"},
+            "short-term adoption vs long-term behavior change",
+        ),
+        (
+            {"tracking", "measurement", "feedback", "sensor", "monitor"},
+            {"emotion", "story", "music", "social", "narrative"},
+            "measurement/control vs emotional or social engagement",
+        ),
+    ]
+
+    for left_terms, right_terms, label in conflict_rules:
+        if _contains_any(left_text, left_terms) and _contains_any(right_text, right_terms):
+            return label
+        if _contains_any(left_text, right_terms) and _contains_any(right_text, left_terms):
+            return label
+
+    return CONFLICT_FRAMES[(index - 1) % len(CONFLICT_FRAMES)]
 
 
 def _is_shallow_combination(candidate: dict, left: dict, right: dict) -> bool:
@@ -227,7 +264,8 @@ def _is_shallow_combination(candidate: dict, left: dict, right: dict) -> bool:
     return False
 
 
-
+def _contains_any(text: str, terms: set[str]) -> bool:
+    return any(term in text for term in terms)
 
 
 def _normalize(value: object) -> str:

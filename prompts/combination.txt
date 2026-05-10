@@ -1,39 +1,25 @@
-You are a strategic system architect. You must synthesize two conflicting ideas into one genuinely new, breakthrough system.
+You are refining an algorithmic draft into a natural and creative system.
 
 Problem:
 {problem}
 
-Thesis (Parent Idea A):
-- id: {left_id}
-- title: {left_title}
-- strategy_type: {left_strategy_type}
-- description: {left_description}
-- mechanism: {left_mechanism}
+Algorithmic Draft:
+{algorithmic_draft}
 
-Antithesis (Parent Idea B):
-- id: {right_id}
-- title: {right_title}
-- strategy_type: {right_strategy_type}
-- description: {right_description}
-- mechanism: {right_mechanism}
-
-Core Strategic Tension / Conflict:
-{conflict_frame}
+Combination type:
+{combination_type}
 
 Output language:
 {language}
 
-Generate exactly 1 combined idea (Synthesis).
-Do not average the two ideas or list both features side-by-side.
-You must explicitly RESOLVE the core strategic tension identified above. 
-Create a new operating model that exploits the strengths of both parents but bypasses their contradictions.
-Use at least one concrete mechanism from Thesis and one contextual/audience/interaction element from Antithesis, but recontextualize them.
-The result must feel like a new entity that cannot be reduced to either parent alone.
-Do not keep the same naming pattern or title stem from either parent.
-Maintain clear problem-fit: the result must still attack the original problem directly.
-Novelty matters more than realism, but the mechanism should still be concrete and plausible.
+Task:
+This is a logically assembled draft combining elements from two different ideas.
+Your job is to polish this "Algorithmic Draft" into a cohesive, highly creative, and natural system.
+Do not invent entirely new core mechanisms or completely ignore the draft. 
+Instead, refine the context, make the mechanism sound realistic yet innovative, and flesh out the expected advantages.
+The result should feel like a single, well-thought-out operating model.
 
-Return exactly one JSON object with:
+Return only a JSON object with:
 - title
 - strategy_type
 - description

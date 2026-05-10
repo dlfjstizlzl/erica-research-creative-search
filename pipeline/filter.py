@@ -76,12 +76,6 @@ def _near_duplicate(left: dict[str, str], right: dict[str, str]) -> bool:
 
     if left_title and left_title == right_title:
         return True
-    if (
-        _token_jaccard(left_family, right_family) > 0.56
-        and title_sim > 0.42
-        and (desc_sim > 0.34 or mech_sim > 0.34)
-    ):
-        return True
     if title_sim > 0.92 and desc_sim > 0.78:
         return True
     if same_strategy and title_sim > 0.88 and desc_sim > 0.55:
@@ -143,7 +137,6 @@ def _family_signature(idea: dict[str, str]) -> str:
             _normalize(idea.get("title", "")),
             _normalize(idea.get("strategy_type", "")),
             _normalize(idea.get("mechanism", "")),
-            _normalize(idea.get("target_user", "")),
         ]
     )
     stopwords = {
@@ -166,25 +159,6 @@ def _family_signature(idea: dict[str, str]) -> str:
         "de",
         "of",
         "to",
-        "content",
-        "driven",
-        "powered",
-        "intelligent",
-        "creative",
-        "professional",
-        "urban",
-        "community",
-        "network",
-        "system",
-        "generator",
-        "engine",
-        "studio",
-        "architect",
-        "molder",
-        "sculptor",
-        "catalyst",
-        "insight",
-        "visualized",
     }
     tokens = [token for token in text.split() if len(token) > 3 and token not in stopwords]
     return " ".join(tokens[:12])
