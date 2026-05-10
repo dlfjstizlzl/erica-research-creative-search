@@ -7,7 +7,6 @@ from config import (
     COMBINER_MODEL,
     DEFAULT_OUTPUT_LANGUAGE,
     OLLAMA_MODEL,
-    MUTATOR_MODEL,
     PARENT_SELECTION_COUNT,
     POOL_MAX_SIZE,
     PROBLEMS_FILE,
@@ -32,6 +31,7 @@ from pipeline.problem_reframer import reframe_problem
 from pipeline.scoring import score_ideas
 from pipeline.selection import (
     select_combination_pairs,
+    select_deep_judge_candidates,
     select_final_bests,
     select_parent_ideas,
 )
@@ -108,7 +108,7 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
             mutation_outputs = mutate_idea(
                 search_problem,
                 parent,
-                model=MUTATOR_MODEL,
+                model=str(parent.get("source_model") or OLLAMA_MODEL),
                 language=WORKING_LANGUAGE,
             )
             for item in mutation_outputs:
@@ -176,8 +176,16 @@ def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[
     filtered_ideas = [Idea.from_dict(item) for item in filtered_dicts]
     print(f"[runner] Final filtered pool size: {len(filtered_ideas)}")
 
-    print("[runner] Step 6/7: Final ranking.")
-    final_bests = select_final_bests(filtered_dicts)
+    print("[runner] Step 6/7: Final ranking & Deep Judge Selection.")
+    
+    # Deep Judge 후보군 선별 (상위 20%)
+    print("[runner] Selecting candidates for Deep Judge (top 20%)...")
+    deep_judge_candidates = select_deep_judge_candidates(filtered_dicts, top_ratio=0.20)
+    print(f"[runner] (Placeholder) Deep Judge will process {len(deep_judge_candidates)} candidates here.")
+    
+    # 선별된 후보군에서 최종 베스트 3개 선택 (현재 Deep Judge 미구현 상태이므로 기존 로직 유지하되 대상만 축소)
+    final_bests = select_final_bests(deep_judge_candidates)
+    
     best_practical = _idea_from_optional_dict(final_bests.get("best_practical"))
     best_balanced = _idea_from_optional_dict(final_bests.get("best_balanced"))
     best_wild = _idea_from_optional_dict(final_bests.get("best_wild"))

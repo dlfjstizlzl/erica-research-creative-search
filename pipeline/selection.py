@@ -112,6 +112,51 @@ def select_final_bests(ideas: list[dict]) -> dict[str, dict | None]:
     return result
 
 
+def select_deep_judge_candidates(ideas: list[dict], *, top_ratio: float = 0.2) -> list[dict]:
+    """Select the top N% candidates using multidimensional weights for Deep Judge."""
+    if not ideas:
+        return []
+    
+    target_count = max(1, int(len(ideas) * top_ratio))
+    ranked = sorted(ideas, key=_deep_judge_rank, reverse=True)
+    selected = ranked[:target_count]
+    
+    selected_ids = [str(idea.get("id") or "") for idea in selected]
+    print(
+        f"[selection] Deep Judge candidates selected ({len(selected)} out of {len(ideas)}): "
+        f"{selected_ids}"
+    )
+    return selected
+
+
+def _deep_judge_rank(idea: dict) -> tuple[float, float, float]:
+    scores = idea.get("scores") or {}
+    problem_fit = float(scores.get("problem_fit", scores.get("relevance", 0.0)))
+    feasibility = float(scores.get("feasibility", 0.0))
+    mechanism = float(scores.get("mechanism_clarity", 0.0))
+    novelty = float(scores.get("novelty", 0.0))
+    creativity = float(scores.get("creativity", 0.0))
+    risk = float(scores.get("risk", 0.0))
+    
+    # 1. 고정 가중치를 가진 논리성 점수 (Logic Score)
+    logic_score = problem_fit * 0.4 + feasibility * 0.3 + mechanism * 0.3
+    
+    # 2. 독창성 점수 (Originality Score)
+    originality_score = novelty * 0.5 + creativity * 0.5
+    
+    # 3. 논리성에 비례하는 가변 독창성 가중치 계산 (예: 0.1 ~ 0.3)
+    # 논리성이 낮더라도 기본적으로 0.1의 가중치를 가지며, 논리성이 높을수록 가중치가 증가함
+    originality_weight = 0.1 + (logic_score * 0.2)
+    logic_weight = 0.7
+    
+    final_score = (
+        logic_score * logic_weight
+        + originality_score * originality_weight
+        - risk * 0.2
+    )
+    return final_score, logic_score, originality_score
+
+
 def _practical_rank(idea: dict) -> tuple[float, float, float, float]:
     scores = idea.get("scores") or {}
     problem_fit = float(scores.get("problem_fit", scores.get("relevance", 0.0)))
@@ -138,14 +183,14 @@ def _balanced_rank(idea: dict) -> tuple[float, float, float, float]:
     mechanism = float(scores.get("mechanism_clarity", 0.0))
     risk = float(scores.get("risk", 0.0))
     final_score = (
-        creativity * 0.20
-        + problem_fit * 0.38
-        + novelty * 0.03
-        + feasibility * 0.23
+        creativity * 0.24
+        + problem_fit * 0.32
+        + novelty * 0.06
+        + feasibility * 0.22
         + mechanism * 0.16
         - risk * 0.34
     )
-    return final_score, problem_fit, feasibility, creativity
+    return final_score, problem_fit, creativity, feasibility
 
 
 def _wild_rank(idea: dict) -> tuple[float, float, float, float]:
