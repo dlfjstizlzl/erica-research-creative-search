@@ -19,3 +19,4 @@ venv/
 # Generated results
 results/run_*.json
 results/.streamlit_pipeline_state.json
+.venv/*
