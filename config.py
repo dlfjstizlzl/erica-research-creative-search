@@ -25,7 +25,7 @@ def load_dotenv(path: Path) -> None:
         if not line or line.startswith("#") or "=" not in line:
             continue
         key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
+        os.environ[key.strip()] = value.strip().strip("'\"")
 
 
 def parse_csv_env(name: str, default: list[str]) -> list[str]:
@@ -89,16 +89,17 @@ PROBLEMS_FILE = DATA_DIR / "problems.json"
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
 OLLAMA_GENERATOR_MODELS = parse_csv_env("OLLAMA_GENERATOR_MODELS", [OLLAMA_MODEL])
-COMBINER_MODEL = os.getenv("COMBINER_MODEL", OLLAMA_MODEL)
-MUTATOR_MODEL = os.getenv("MUTATOR_MODEL", OLLAMA_MODEL)
-EXTRACTOR_MODEL = os.getenv("EXTRACTOR_MODEL", OLLAMA_MODEL)
-REFRAMER_MODEL = os.getenv("REFRAMER_MODEL", COMBINER_MODEL)
+COMBINER_MODELS = parse_csv_env("COMBINER_MODEL", [OLLAMA_MODEL])
+MUTATOR_MODELS = parse_csv_env("MUTATOR_MODEL", [OLLAMA_MODEL])
+EXTRACTOR_MODELS = parse_csv_env("EXTRACTOR_MODEL", [OLLAMA_MODEL])
+JUDGE_MODELS = parse_csv_env("JUDGE_MODEL", EXTRACTOR_MODELS)
+REFRAMER_MODELS = parse_csv_env("REFRAMER_MODEL", COMBINER_MODELS)
 OLLAMA_EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "embeddinggemma")
 DEFAULT_OUTPUT_LANGUAGE = os.getenv("OUTPUT_LANGUAGE", "Korean")
-REQUEST_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "60"))
-REFRAMER_NUM_PREDICT = int(os.getenv("REFRAMER_NUM_PREDICT", "220"))
-GENERATOR_NUM_PREDICT = int(os.getenv("GENERATOR_NUM_PREDICT", "220"))
-MUTATOR_NUM_PREDICT = int(os.getenv("MUTATOR_NUM_PREDICT", "260"))
+REQUEST_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "300"))
+REFRAMER_NUM_PREDICT = int(os.getenv("REFRAMER_NUM_PREDICT", "3000"))
+GENERATOR_NUM_PREDICT = int(os.getenv("GENERATOR_NUM_PREDICT", "3000"))
+MUTATOR_NUM_PREDICT = int(os.getenv("MUTATOR_NUM_PREDICT", "3000"))
 
 GENERATOR_PERSONAS = parse_csv_env("GENERATOR_PERSONAS", DEFAULT_GENERATOR_PERSONAS)
 GENERATOR_SAMPLE_COUNT = int(os.getenv("GENERATOR_SAMPLE_COUNT", "5"))

@@ -2,70 +2,60 @@
 
 from __future__ import annotations
 
+import asyncio
 import random
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import uuid
 
 from config import (
     BASE_GENERATION_PROMPT,
     DEFAULT_OUTPUT_LANGUAGE,
-    GENERATOR_MAX_WORKERS,
     GENERATOR_PERSONAS,
     GENERATOR_NUM_PREDICT,
     GENERATOR_SAMPLE_COUNT,
     OLLAMA_GENERATOR_MODELS,
 )
 from core.utils import load_text
-from llm import OllamaClient
+from llm.ollama_client import AsyncOllamaClient
 
 
-def generate_base_ideas(
+async def generate_base_ideas(
     problem: str,
     language: str = DEFAULT_OUTPUT_LANGUAGE,
 ) -> list[dict[str, str]]:
-    """Generate five raw candidate ideas from random persona-model assignments."""
+    """Generate raw candidate ideas from random persona-model assignments using async I/O."""
     prompt_template = load_text(BASE_GENERATION_PROMPT)
     pairings = _select_generation_requests()
     ideas_with_index: list[tuple[int, dict[str, str]]] = []
 
     print(f"[generator] Selected {len(pairings)} generation requests.")
-    print(
-        f"[generator] Running requests in parallel with "
-        f"max_workers={min(GENERATOR_MAX_WORKERS, len(pairings))}"
-    )
 
-    with ThreadPoolExecutor(
-        max_workers=min(GENERATOR_MAX_WORKERS, len(pairings))
-    ) as executor:
-        futures = [
-            executor.submit(
-                _generate_single_idea,
-                problem=problem,
-                language=language,
-                prompt_template=prompt_template,
-                model=model,
-                persona=persona,
-                index=index,
-                total_requests=len(pairings),
-            )
-            for index, (model, persona) in enumerate(pairings, start=1)
-        ]
+    tasks = [
+        _generate_single_idea(
+            problem=problem,
+            language=language,
+            prompt_template=prompt_template,
+            model=model,
+            persona=persona,
+            index=index,
+            total_requests=len(pairings),
+        )
+        for index, (model, persona) in enumerate(pairings, start=1)
+    ]
 
-        for future in as_completed(futures):
-            try:
-                result = future.result()
-            except Exception as exc:
-                print(f"[generator] Request failed: {exc}")
-                continue
-            if result is None:
-                continue
-            ideas_with_index.append(result)
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+
+    for res in results:
+        if isinstance(res, Exception):
+            print(f"[generator] Request failed: {res}")
+        elif res is not None:
+            ideas_with_index.append(res)
 
     ideas_with_index.sort(key=lambda item: item[0])
     return [idea for _, idea in ideas_with_index]
 
 
-def _generate_single_idea(
+async def _generate_single_idea(
     *,
     problem: str,
     language: str,
@@ -86,9 +76,9 @@ def _generate_single_idea(
         persona=persona,
         language=language,
     )
-    client = OllamaClient(model=model)
-    payload = client.chat_json(
-        prompt,
+    client = AsyncOllamaClient(model=model)
+    payload = await client.chat_json(
+        user_prompt=prompt,
         system_prompt=(
             "You generate one high-quality strategy idea. "
             "Stay faithful to the assigned persona. "
@@ -109,6 +99,9 @@ def _generate_single_idea(
         debug_label=f"generator#{index} model={model} persona={persona_name}",
         num_predict=GENERATOR_NUM_PREDICT,
     )
+    if not payload:
+        return None
+        
     idea = _normalize_idea(
         payload,
         index=index,
@@ -169,7 +162,7 @@ def _normalize_idea(
 
     persona_name = persona.split(":", 1)[0].strip()
     return {
-        "id": str(payload.get("id") or f"idea_{index}"),
+        "id": str(payload.get("id") or uuid.uuid4().hex[:8]),
         "title": str(payload.get("title") or f"Idea {index}").strip(),
         "persona": str(payload.get("persona") or persona_name).strip(),
         "strategy_type": str(payload.get("strategy_type") or "general").strip(),

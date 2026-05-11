@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
 
 from pipeline.runner import load_problem_from_file, run_pipeline
@@ -28,9 +29,9 @@ def main() -> None:
         print(f"[main] No direct problem provided. Loading problem at index {args.index}.")
     problem = args.problem or load_problem_from_file(args.index)
     print(f"[main] Problem selected: {problem}")
-    print("[main] Working/output language: English")
+    print("[main] Working/output language: Korean")
     print("[main] Starting creative-search pipeline.")
-    result = run_pipeline(problem)
+    result = asyncio.run(run_pipeline(problem))
     print("[main] Pipeline finished. Final JSON result:")
     print(json.dumps(result, indent=2, ensure_ascii=False))
 

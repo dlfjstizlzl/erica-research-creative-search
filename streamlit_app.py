@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from contextlib import redirect_stderr, redirect_stdout
+import asyncio
 from datetime import datetime
 from html import escape
 import json
@@ -14,7 +15,7 @@ from typing import Any
 import streamlit as st
 
 from config import RESULTS_DIR
-from core.utils import load_json, save_json
+from core.utils import load_json, save_json, timestamp_slug
 from pipeline.runner import load_problem_from_file, run_pipeline
 
 
@@ -642,7 +643,12 @@ def _start_pipeline_run(problem: str) -> None:
     def _target() -> None:
         try:
             with redirect_stdout(writer), redirect_stderr(writer):
-                result = run_pipeline(problem)
+                result = asyncio.run(run_pipeline(problem))
+            
+            # Save the result so it appears in recent runs
+            out_file = RESULTS_DIR / f"run_{timestamp_slug()}.json"
+            save_json(out_file, result)
+            
             state["pending_result"] = result
             writer.log("Pipeline run completed.")
             _save_pipeline_state_file(state)

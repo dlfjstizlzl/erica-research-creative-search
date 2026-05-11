@@ -1,33 +1,22 @@
-"""Pipeline orchestration."""
+"""Orchestrator for the evolutionary search pipeline."""
 
 from __future__ import annotations
 
+import asyncio
+import json
+import time
+
 from config import (
-    COMBINATION_PAIR_COUNT,
-    COMBINER_MODEL,
     DEFAULT_OUTPUT_LANGUAGE,
-    OLLAMA_MODEL,
-    MUTATOR_MODEL,
     PARENT_SELECTION_COUNT,
     POOL_MAX_SIZE,
     PROBLEMS_FILE,
-    REFRAMER_MODEL,
-    RESULTS_DIR,
     SEARCH_MAX_GENERATIONS,
 )
 from core.models import Idea, PipelineResult
-from core.utils import load_json, save_json, timestamp_slug
-from pipeline.archive import (
-    initialize_archive,
-    mark_selection_in_archive,
-    summarize_archive,
-    update_archive,
-)
 from pipeline.combiner import combine_ideas
-from pipeline.filter import filter_diverse_ideas
 from pipeline.generator import generate_base_ideas
 from pipeline.mutator import mutate_idea
-from pipeline.pool import initialize_pool, update_pool
 from pipeline.problem_reframer import reframe_problem
 from pipeline.scoring import score_ideas
 from pipeline.selection import (
@@ -36,240 +25,137 @@ from pipeline.selection import (
     select_parent_ideas,
 )
 
-
-WORKING_LANGUAGE = "English"
+WORKING_LANGUAGE = DEFAULT_OUTPUT_LANGUAGE
 
 
 def load_problem_from_file(index: int = 0) -> str:
-    """Load one problem from data/problems.json."""
-    payload = load_json(PROBLEMS_FILE)
-    if isinstance(payload, dict):
-        problems = payload.get("problems", [])
-    else:
-        problems = payload
-
-    if not isinstance(problems, list) or not problems:
-        raise RuntimeError("No problems found in data/problems.json.")
-    if index < 0 or index >= len(problems):
-        raise RuntimeError(f"Problem index {index} is out of range.")
-
-    return str(problems[index])
+    """Load a sample problem from data/problems.json."""
+    if not PROBLEMS_FILE.exists():
+        raise FileNotFoundError(f"Missing {PROBLEMS_FILE}")
+    data = json.loads(PROBLEMS_FILE.read_text(encoding="utf-8"))
+    problems = data.get("problems", [])
+    if not problems:
+        raise ValueError(f"No problems found in {PROBLEMS_FILE}")
+    idx = index % len(problems)
+    print(f"[runner] Loaded problem {idx} from data/problems.json")
+    return str(problems[idx])
 
 
-def run_pipeline(problem: str, language: str = DEFAULT_OUTPUT_LANGUAGE) -> dict[str, object]:
-    """Run seed generation and iterative search loop."""
-    raw_problem = problem
+async def run_pipeline(search_problem: str) -> dict:
+    """Execute the async creative search pipeline."""
+    print("\n" + "=" * 60)
+    print("🚀  CREATIVE SEARCH PIPELINE START")
+    print("=" * 60)
+    print(f"[runner] Input problem: {search_problem}")
+    started_at = time.perf_counter()
 
-    print("[runner] Step 1/7: Reframing problem input.")
-    reframed_problem = reframe_problem(
-        raw_problem,
-        model=REFRAMER_MODEL,
-        language=WORKING_LANGUAGE,
-    )
-    search_problem = _build_search_problem_context(raw_problem, reframed_problem)
-    print(f"[runner] Raw problem: {raw_problem}")
-    print(f"[runner] Reframed problem: {reframed_problem}")
-    print("[runner] Using both raw and reframed problem as search context.")
+    reframe_start = time.perf_counter()
+    reframed = await reframe_problem(search_problem, language=WORKING_LANGUAGE)
+    print(f"[runner] Reframed in {time.perf_counter() - reframe_start:.1f}s")
 
-    print("[runner] Step 2/7: Generating base ideas.")
-    seed_dicts = [
-        _seedify(item, index=index)
-        for index, item in enumerate(
-            generate_base_ideas(search_problem, language=WORKING_LANGUAGE),
-            start=1,
-        )
-    ]
-    seed_dicts = _ensure_unique_ids(seed_dicts)
-    print(f"[runner] Generated {len(seed_dicts)} seed ideas.")
+    print("\n" + "-" * 60)
+    print("🌱  STAGE 1: Base Generation")
+    gen_start = time.perf_counter()
+    base_ideas = await generate_base_ideas(reframed, language=WORKING_LANGUAGE)
+    if not base_ideas:
+        print("[runner] Generation failed.")
+        return {}
 
-    print("[runner] Step 3/7: Initial scoring and pool setup.")
-    scored_seed_dicts = score_ideas(search_problem, seed_dicts)
-    base_ideas = [Idea.from_dict(item) for item in scored_seed_dicts]
-    active_pool = initialize_pool(scored_seed_dicts, max_size=POOL_MAX_SIZE)
-    archive = initialize_archive(scored_seed_dicts)
-    mutated_ideas: list[Idea] = []
-    combined_ideas: list[Idea] = []
-    print(f"[runner] Initialized active pool with {len(active_pool)} ideas.")
+    base_ideas = await score_ideas(search_problem, base_ideas)
+    print(f"[runner] Stage 1 (Base Gen) completed in {time.perf_counter() - gen_start:.1f}s")
 
-    print("[runner] Step 4/7: Iterative search loop.")
+    active_pool = list(base_ideas)
+    archive = list(base_ideas)
+
+    all_mutated = []
+    all_combined = []
+
+    evo_start = time.perf_counter()
     for generation in range(1, SEARCH_MAX_GENERATIONS + 1):
-        print(f"[runner] Generation {generation}/{SEARCH_MAX_GENERATIONS}")
-        parent_dicts = select_parent_ideas(
-            active_pool,
-            exploit_count=max(1, PARENT_SELECTION_COUNT - 1),
-            explore_count=1,
-        )
-        print(f"[runner] Selected {len(parent_dicts)} mutation parents.")
+        gen_round_start = time.perf_counter()
+        print("\n" + "-" * 60)
+        print(f"🧬  STAGE 2: Evolution (Generation {generation}/{SEARCH_MAX_GENERATIONS})")
 
-        new_mutation_dicts: list[dict] = []
-        for parent in parent_dicts:
-            parent_id = str(parent.get("id") or "")
-            print(f"[runner] Mutating parent: {parent_id}")
-            mutation_outputs = mutate_idea(
+        parent_dicts = select_parent_ideas(active_pool, selection_count=PARENT_SELECTION_COUNT)
+        generation_pool = []
+
+        print(f"\n[runner] --- Gen {generation} Mutation ---")
+        mutation_tasks = [
+            mutate_idea(
                 search_problem,
                 parent,
-                model=MUTATOR_MODEL,
+                model=None,
                 language=WORKING_LANGUAGE,
             )
-            for item in mutation_outputs:
-                new_mutation_dicts.append(_mutationify(item, generation=generation))
-
-        parent_pairs = select_combination_pairs(
-            active_pool,
-            max_pairs=COMBINATION_PAIR_COUNT,
-        )
-        print(f"[runner] Selected {len(parent_pairs)} recombination pairs.")
-        new_combination_dicts = combine_ideas(
-            search_problem,
-            parent_pairs,
-            model=COMBINER_MODEL,
-            language=WORKING_LANGUAGE,
-            generation=generation,
-        )
-
-        new_candidate_dicts = [*new_mutation_dicts, *new_combination_dicts]
-        if not new_candidate_dicts:
-            print("[runner] No new candidates produced in this generation.")
-            continue
-
-        print(
-            f"[runner] Generation {generation} produced "
-            f"{len(new_mutation_dicts)} mutations and {len(new_combination_dicts)} combinations."
-        )
-        print(f"[runner] Scoring {len(new_candidate_dicts)} new candidates.")
-        scoring_context = [*active_pool, *new_candidate_dicts]
-        scored_context = score_ideas(search_problem, scoring_context)
-        new_candidate_ids = {
-            str(item.get("id") or "")
-            for item in new_candidate_dicts
-        }
-        scored_new_candidates = [
-            item
-            for item in scored_context
-            if str(item.get("id") or "") in new_candidate_ids
+            for parent in parent_dicts
         ]
-        active_pool = update_pool(
-            active_pool,
-            scored_new_candidates,
-            max_size=POOL_MAX_SIZE,
-        )
-        archive = update_archive(
-            archive,
-            scored_new_candidates,
-            active_ids={str(item.get('id') or '') for item in active_pool},
-        )
+        mutation_results = await asyncio.gather(*mutation_tasks)
+        for res in mutation_results:
+            if res:
+                for item in res:
+                    item["generation"] = generation
+                    generation_pool.append(item)
+                    all_mutated.append(item)
 
-        mutated_ideas.extend(
-            Idea.from_dict(item)
-            for item in scored_new_candidates
-            if str(item.get("origin_type") or "") == "mutation"
-        )
-        combined_ideas.extend(
-            Idea.from_dict(item)
-            for item in scored_new_candidates
-            if str(item.get("origin_type") or "") == "combination"
-        )
-        print(f"[runner] Active pool size after generation {generation}: {len(active_pool)}")
-
-    print("[runner] Step 5/7: Final pool filtering.")
-    filtered_dicts = filter_diverse_ideas(active_pool)
-    filtered_ideas = [Idea.from_dict(item) for item in filtered_dicts]
-    print(f"[runner] Final filtered pool size: {len(filtered_ideas)}")
-
-    print("[runner] Step 6/7: Final ranking.")
-    final_bests = select_final_bests(filtered_dicts)
-    best_practical = _idea_from_optional_dict(final_bests.get("best_practical"))
-    best_balanced = _idea_from_optional_dict(final_bests.get("best_balanced"))
-    best_wild = _idea_from_optional_dict(final_bests.get("best_wild"))
-    archive = mark_selection_in_archive(
-        archive,
-        best_practical_id=best_practical.id if best_practical else "",
-        best_balanced_id=best_balanced.id if best_balanced else "",
-        best_wild_id=best_wild.id if best_wild else "",
-        active_ids={idea.id for idea in filtered_ideas},
-    )
-    archive_summary = summarize_archive(archive)
-    if best_practical is not None:
-        print(f"[runner] Best practical: {best_practical.id} ({best_practical.title})")
-    if best_balanced is not None:
-        print(f"[runner] Best balanced: {best_balanced.id} ({best_balanced.title})")
-    if best_wild is not None:
-        print(f"[runner] Best wild: {best_wild.id} ({best_wild.title})")
-
-    print("[runner] Step 7/7: Saving final result to JSON.")
-    output_path = RESULTS_DIR / f"run_{timestamp_slug()}.json"
-    result = PipelineResult(
-        problem=raw_problem,
-        reframed_problem=reframed_problem,
-        output_language=WORKING_LANGUAGE,
-        base_ideas=base_ideas,
-        combined_ideas=combined_ideas,
-        filtered_ideas=filtered_ideas,
-        mutated_ideas=mutated_ideas,
-        best_practical=best_practical,
-        best_balanced=best_balanced,
-        best_wild=best_wild,
-        archive=archive,
-        archive_summary=archive_summary,
-        output_path=str(output_path),
-    )
-    save_json(output_path, result.to_dict())
-    print(f"[runner] Result saved to: {output_path}")
-    return result.to_dict()
-
-
-def _seedify(idea: dict, *, index: int) -> dict:
-    normalized = dict(idea)
-    normalized["origin_type"] = "base"
-    normalized["generation"] = 0
-    normalized["depth"] = int(normalized.get("depth") or 0)
-    normalized["parent_ids"] = []
-    normalized["id"] = str(normalized.get("id") or f"seed_{index}").strip() or f"seed_{index}"
-    return normalized
-
-
-def _mutationify(idea: dict, *, generation: int) -> dict:
-    normalized = dict(idea)
-    normalized["origin_type"] = "mutation"
-    normalized["generation"] = generation
-    parent_id = str(normalized.get("parent_id") or "").strip()
-    normalized["parent_ids"] = [parent_id] if parent_id else []
-    mutation_id = str(normalized.get("id") or "").strip()
-    if mutation_id:
-        normalized["id"] = f"{mutation_id}_g{generation}"
-    return normalized
-
-
-def _ensure_unique_ids(ideas: list[dict]) -> list[dict]:
-    seen: dict[str, int] = {}
-    normalized_items: list[dict] = []
-    for index, idea in enumerate(ideas, start=1):
-        item = dict(idea)
-        base_id = str(item.get("id") or f"idea_{index}").strip() or f"idea_{index}"
-        seen[base_id] = seen.get(base_id, 0) + 1
-        if seen[base_id] > 1:
-            item["id"] = f"{base_id}_{seen[base_id]}"
-            print(
-                f"[runner] Adjusted duplicate id {base_id} -> {item['id']}"
+        print(f"\n[runner] --- Gen {generation} Recombination ---")
+        combine_pairs = select_combination_pairs(active_pool)
+        if combine_pairs:
+            combined_results = await combine_ideas(
+                search_problem,
+                combine_pairs,
+                language=WORKING_LANGUAGE,
             )
-        else:
-            item["id"] = base_id
-        normalized_items.append(item)
-    return normalized_items
+            for item in combined_results:
+                item["generation"] = generation
+                generation_pool.append(item)
+                all_combined.append(item)
 
+        print(f"\n[runner] --- Gen {generation} Scoring ---")
+        generation_pool = await score_ideas(search_problem, generation_pool)
 
-def _idea_from_optional_dict(data: dict | None) -> Idea | None:
-    if not isinstance(data, dict):
-        return None
-    return Idea.from_dict(data)
+        active_pool.extend(generation_pool)
+        archive.extend(generation_pool)
 
+        print(f"\n[runner] --- Gen {generation} Selection (Niching) ---")
+        active_pool = select_parent_ideas(active_pool, selection_count=POOL_MAX_SIZE)
 
-def _build_search_problem_context(raw_problem: str, reframed_problem: str) -> str:
-    raw_text = " ".join(str(raw_problem or "").split()).strip()
-    reframed_text = " ".join(str(reframed_problem or "").split()).strip()
-    if not reframed_text or reframed_text == raw_text:
-        return raw_text
-    return (
-        f"Original problem:\n{raw_text}\n\n"
-        f"Reframed problem:\n{reframed_text}"
-    )
+        print(f"[runner] End of Gen {generation} ({time.perf_counter() - gen_round_start:.1f}s). Active pool size: {len(active_pool)}")
+
+    print(f"\n[runner] Stage 2 (Evolution) completed in {time.perf_counter() - evo_start:.1f}s")
+
+    print("\n" + "-" * 60)
+    print("🏆  STAGE 3: Final Selection")
+    
+    final_bests = select_final_bests(active_pool)
+
+    elapsed = time.perf_counter() - started_at
+    print("=" * 60)
+    print(f"✅  PIPELINE COMPLETE in {elapsed:.1f}s")
+    print(f"    - Reframing: {gen_start - reframe_start:.1f}s")
+    print(f"    - Base Gen: {evo_start - gen_start:.1f}s")
+    print(f"    - Evolution: {time.perf_counter() - evo_start:.1f}s")
+    print(f"    - Ideas: {len(archive)} total ({len(base_ideas)} base, {len(all_mutated)} mutated, {len(all_combined)} combined)")
+    print("=" * 60)
+
+    try:
+        result_obj = PipelineResult(
+            problem=search_problem,
+            reframed_problem=reframed,
+            output_language=WORKING_LANGUAGE,
+            base_ideas=[Idea.model_validate(d) for d in base_ideas],
+            combined_ideas=[Idea.model_validate(d) for d in all_combined],
+            mutated_ideas=[Idea.model_validate(d) for d in all_mutated],
+            best_practical=Idea.model_validate(final_bests["best_practical"]) if final_bests.get("best_practical") else None,
+            best_balanced=Idea.model_validate(final_bests["best_balanced"]) if final_bests.get("best_balanced") else None,
+            best_wild=Idea.model_validate(final_bests["best_wild"]) if final_bests.get("best_wild") else None,
+            archive=[Idea.model_validate(d).model_dump() for d in archive],
+            archive_summary={
+                "total_generated": len(archive),
+                "generations": SEARCH_MAX_GENERATIONS,
+                "elapsed_seconds": elapsed,
+            },
+        )
+        return result_obj.to_dict()
+    except Exception as exc:
+        print(f"[runner] Failed to build PipelineResult via Pydantic: {exc}")
+        return {"error": str(exc), "status": "failed_validation"}

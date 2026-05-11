@@ -1,305 +1,112 @@
-# creative-search
+# 🚀 Creative Search: Evolutionary AI Idea Pipeline
 
-Ollama 기반의 아이디어 탐색 시스템입니다.  
-하나의 답을 바로 내는 대신, 여러 seed 아이디어를 만들고, mutation과 recombination으로 탐색 공간을 확장한 뒤, 최종적으로 `best_practical`, `best_balanced`, `best_wild`를 고릅니다.
+**Creative Search**는 단순한 LLM 답변을 넘어, 다양한 전문가 페르소나의 충돌과 진화론적 알고리즘(변이 및 결합)을 통해 **혁신적이고 실행 가능한 해결책**을 찾아내는 비동기 AI 파이프라인입니다.
 
-## 개요
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=Python&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-Local_LLM-black?style=for-the-badge)
 
-이 프로젝트는 다음 문제를 다룹니다.
+---
 
-- 한 번의 프롬프트로 그럴듯한 답 하나를 받는 것
-- 여러 아이디어를 생성하고, 서로 변형/조합하면서 더 넓은 해 공간을 탐색하는 것
+## ✨ 핵심 기능 (Core Features)
 
-현재 구조는 `탐색 시스템` 쪽에 가깝습니다.
+### 🧠 다차원 페르소나 생성 (Multi-Persona Generation)
+*   **80개 이상의 전문 페르소나**: 마케터, 시스템 아키텍처, 행동 과학자, 게임 디자이너 등 다양한 시각에서 초기 아이디어 씨앗(Seed)을 생성합니다.
 
-- `base generation`: 초기 seed 아이디어 생성
-- `mutation`: 부모 아이디어를 전략적으로 비틀어 새 후보 생성
-- `recombination`: 서로 다른 부모 아이디어를 충돌 기반으로 조합
-- `pool`: 현재 살아있는 후보군 유지
-- `archive`: 전체 lineage와 세대 기록 보존
-- `final ranking`: practical / balanced / wild 기준으로 최종 선택
+### 🧬 진화론적 아이디어 루프 (Evolutionary Loop)
+*   **Mutation (변이)**: 기존 아이디어의 핵심 메커니즘을 유지하면서 타겟이나 방식을 비틉니다.
+*   **Recombination (결합)**: 상충하는 두 아이디어 사이의 전략적 갈등(Conflict)을 찾아내고, 이를 해결하는 제3의 통합 모델을 합성합니다.
+*   **Pareto Selection**: 창의성, 적합성, 실행 가능성을 기준으로 우수한 아이디어만 다음 세대로 전승합니다.
 
-## 주요 특징
+### 🛠️ 로컬 환경 최적화 (Local Backend Stability)
+*   **전역 동시성 제어 (Global Semaphore)**: 로컬 GPU 자원 고갈을 방지하기 위해 모델 실행을 지능적으로 직렬화/병렬화합니다. (기본 2개 동시 처리)
+*   **강력한 JSON 파싱 & 자가 수정**: LLM의 불안정한 출력을 정규표현식과 `ast.literal_eval`로 보정하며, 실패 시 스스로 프롬프트를 수정하여 재시도합니다.
+*   **실시간 퍼포먼스 모니터링**: 각 단계 및 모델별 소요 시간을 초 단위로 추적하여 병목 구간을 시각화합니다.
 
-- Ollama 로컬 모델 사용
-- 다중 모델 + 다중 페르소나 기반 base generation
-- iterative search loop
-- mutation / recombination 기반 아이디어 확장
-- archive 기반 lineage 추적
-- Streamlit 대시보드 지원
+---
 
-## 디렉터리 구조
+## 🚀 시작하기 (Quick Start)
 
-```text
-creative-search/
-├── main.py
-├── config.py
-├── .env
-├── .env.example
-├── requirements.txt
-├── streamlit_app.py
-├── core/
-│   ├── models.py
-│   └── utils.py
-├── llm/
-│   └── ollama_client.py
-├── pipeline/
-│   ├── archive.py
-│   ├── combiner.py
-│   ├── filter.py
-│   ├── generator.py
-│   ├── mutator.py
-│   ├── pool.py
-│   ├── runner.py
-│   ├── scoring.py
-│   └── selection.py
-├── prompts/
-│   ├── base_generation.txt
-│   ├── combination.txt
-│   ├── diversity_filter.txt
-│   └── mutation.txt
-├── data/
-│   └── problems.json
-└── results/
-```
+### 1. 필수 조건
+*   [Ollama](https://ollama.ai/) 설치 및 실행
+*   사용 권장 모델: `llama3.1:8b`, `huihui_ai/aya-expanse-abliterated:8b` 등 (8B급 이상 권장)
 
-## 파이프라인 플로우
-
-현재 전체 흐름은 아래와 같습니다.
-
-```text
-Problem Input
-  ↓
-Base Generation
-  ↓
-Initial Scoring
-  ↓
-Pool + Archive Init
-  ↓
-[Iterative Search Loop]
-  ├─ Parent Selection
-  ├─ Mutation
-  ├─ Recombination
-  ├─ Candidate Scoring
-  ├─ Pool Update
-  └─ Archive Update
-  ↓
-Final Filter
-  ↓
-Final Selection
-  ├─ Best Practical
-  ├─ Best Balanced
-  └─ Best Wild
-  ↓
-Save JSON
-```
-
-### 단계별 설명
-
-1. `generator`
-- 여러 persona와 generator model을 조합해 초기 seed를 만듭니다.
-
-2. `scoring`
-- novelty, problem_fit, mechanism_clarity 등 점수를 계산합니다.
-
-3. `pool`
-- 현재 세대에서 살아 있는 후보군을 유지합니다.
-
-4. `mutation`
-- 부모 1개를 기반으로 새 전략 후보를 만듭니다.
-
-5. `recombination`
-- 부모 2개를 충돌 기반으로 결합해 새 operating model을 만듭니다.
-
-6. `archive`
-- 각 후보의 origin, generation, parent_ids, survived 여부를 기록합니다.
-
-7. `filter`
-- obvious duplicate와 near-duplicate를 제거합니다.
-
-8. `selection`
-- 최종적으로 practical / balanced / wild best를 고릅니다.
-
-## 점수 구조
-
-아이디어에는 대략 아래 점수가 붙습니다.
-
-- `novelty`
-- `problem_fit`
-- `mechanism_clarity`
-- `mutation_distance`
-- `mutation_quality`
-- `combination_quality`
-- `feasibility`
-- `risk`
-- `creativity`
-
-이 점수는:
-
-- 후보 비교
-- parent selection
-- final best selection
-- 결과 분석
-
-에 사용됩니다.
-
-## 환경 설정
-
-1. `.env.example`을 복사해서 `.env`를 만듭니다.
+### 2. 환경 설정 (`.env`)
+프로젝트 루트에 `.env` 파일을 생성하고 설정을 최적화합니다.
 
 ```bash
-cp .env.example .env
+# 로컬 Ollama 주소 및 타임아웃(초)
+OLLAMA_HOST=http://localhost:11434
+OLLAMA_TIMEOUT=300
+
+# 모델 구성 (추론형 모델보다는 일반 모델이 채점/결합 시 유리함)
+OLLAMA_GENERATOR_MODELS=llama3.1:8b,huihui_ai/aya-expanse-abliterated:8b
+JUDGE_MODEL=llama3.1:8b
+EXTRACTOR_MODEL=llama3.1:8b
+COMBINER_MODEL=llama3.1:8b
+
+# 파이프라인 설정
+GENERATOR_SAMPLE_COUNT=5      # 초기 생성 개수
+SEARCH_MAX_GENERATIONS=2      # 진화 반복 횟수
 ```
 
-2. 필요한 Ollama 모델을 준비합니다.
-
-예시:
-
-- `gemma3:4b`
-- `qwen3:8b`
-- `embeddinggemma`
-
-3. `.env`를 프로젝트 목적에 맞게 수정합니다.
-
-주요 항목:
-
-- `OLLAMA_HOST`
-- `OLLAMA_MODEL`
-- `OLLAMA_GENERATOR_MODELS`
-- `COMBINER_MODEL`
-- `OLLAMA_EMBED_MODEL`
-- `GENERATOR_SAMPLE_COUNT`
-- `MUTATION_COUNT`
-- `SEARCH_MAX_GENERATIONS`
-- `COMBINATION_PAIR_COUNT`
-- `POOL_MAX_SIZE`
-
-## 실행 방법
-
-### 1. CLI 실행
-
-문제를 직접 넣어서 실행:
-
+### 3. 실행
 ```bash
-python3 main.py --problem "도시 내 음식물 쓰레기를 50% 줄일 수 있는 방법"
-```
-
-`data/problems.json`의 문제를 인덱스로 실행:
-
-```bash
-python3 main.py --index 0
-```
-
-실행 결과는 `results/run_YYYYMMDD_HHMMSS.json`에 저장됩니다.
-
-### 2. Streamlit 대시보드 실행
-
-의존성 설치:
-
-```bash
+# 의존성 설치
 pip install -r requirements.txt
-```
 
-대시보드 실행:
-
-```bash
+# Streamlit 앱 실행
 streamlit run streamlit_app.py
 ```
 
-대시보드에서 가능한 것:
+---
 
-- problem 입력 후 파이프라인 실행
-- 실행 로그 실시간 확인
-- recent runs 탐색
-- best 결과 확인
-- base / mutation / combination / filtered / archive 상세 보기
+## 📊 파이프라인 워크플로우 (Workflow)
 
-## `.env` 예시 역할 배치
+1.  **Reframing**: 입력된 문제를 AI가 다각도에서 분석하여 더 혁신적인 질문으로 재정의합니다.
+2.  **Base Generation**: 다양한 페르소나가 초기 아이디어를 제안합니다.
+3.  **Evolutionary Stage**: 
+    *   아이디어를 변이시키고 결합하여 새로운 형태를 만듭니다.
+    *   LLM-as-a-Judge가 각 아이디어에 점수를 매깁니다.
+4.  **Final Selection**: 파레토 최적(Pareto Optimal)에 가까운 최종 결과물을 선정합니다.
 
-현재 추천 예시는 다음과 같습니다.
+---
 
-- base generation:
-  - `OLLAMA_GENERATOR_MODELS=gemma3:4b,huihui_ai/aya-expanse-abliterated:8b`
-- mutation:
-  - `OLLAMA_MODEL=gemma3:4b`
-- recombination:
-  - `COMBINER_MODEL=qwen3:8b`
-- scoring embeddings:
-  - `OLLAMA_EMBED_MODEL=embeddinggemma`
+## 🛠️ 기술적 하이라이트 (Technical Highlights)
 
-이 구성은:
+*   **Async/Await 기반**: 모든 LLM 요청은 비동기로 처리되어 대기 시간을 최소화합니다.
+*   **Robust Parsing**: Llama 3.1 등에서 발생하는 중첩 따옴표(`""value""`) 문제를 자동으로 해결하는 정규식 필터가 내장되어 있습니다.
+*   **Performance Tracking**: 각 단계의 소요 시간(`elapsed seconds`)을 기록하여 최적화 데이터를 제공합니다.
+*   **Telemetry**: 모든 실행 결과는 `/results` 폴더에 JSON 형태로 저장되어 사후 분석이 가능합니다.
 
-- seed 다양성은 넓게 확보
-- mutation은 빠르게 반복
-- recombination은 더 강한 composition 모델 사용
+---
 
-이라는 의도입니다.
+## 🏗️ 상세 기술 아키텍처 (Technical Deep Dive)
 
-## 결과 JSON 구조
+### 1. 비대칭 모델 아키텍처 (Asymmetric Model Architecture)
+본 프로젝트는 파이프라인의 각 단계마다 요구되는 지능의 성격에 따라 모델을 다르게 배치합니다.
+*   **Generation Stage**: 창의성과 다양한 시각을 위해 Gemma 4B, Aya 8B 등 여러 모델을 풀(Pool)로 운영하여 아이디어의 '유전자 다양성'을 확보합니다.
+*   **Judging & Synthesis Stage**: 일관된 기준의 평가와 정교한 구조적 결합을 위해 Llama 3.1 8B와 같은 논리적 안정성이 높은 모델을 고정 배치합니다.
 
-실행 결과에는 보통 다음 필드가 들어갑니다.
+### 2. 다단계 자가 수정 파싱 시스템 (Multi-stage Self-Correction)
+로컬 LLM의 불안정한 응답 형식을 해결하기 위해 다음과 같은 다단계 방어 기제를 가집니다.
+*   **Regex Extraction**: 응답 내의 불필요한 서술문을 제거하고 JSON 블록만 추출합니다.
+*   **AST Literal Evaluation**: 표준 `json` 라이브러리가 실패할 경우, Python의 `ast.literal_eval`을 통해 싱글 쿼트(`'`)나 비표준 형식을 복구합니다.
+*   **Recursive Self-Correction**: 파싱 실패 시 에러 메시지를 LLM에게 피드백으로 전달하여, 스스로 형식을 교정하여 재응답하도록 최대 2회 재시도합니다.
 
-- `problem`
-- `output_language`
-- `base_ideas`
-- `mutated_ideas`
-- `combined_ideas`
-- `filtered_ideas`
-- `best_practical`
-- `best_balanced`
-- `best_wild`
-- `archive`
-- `archive_summary`
+### 3. 전역 자원 오케스트레이션 (Global Resource Orchestration)
+로컬 GPU VRAM의 한계를 극복하기 위해 `asyncio.Semaphore` 기반의 중앙 제어 시스템을 구현했습니다.
+*   수십 개의 비동기 요청이 발생하더라도, 실제 추론(Inference) 단계에서는 설정된 값(기본 2개)만큼만 GPU를 점유하도록 스케줄링하여 시스템 다운을 방지합니다.
 
-각 idea에는 보통 아래 정보가 포함됩니다.
+### 4. 진화론적 선택 및 니칭 (Evolutionary Selection & Niching)
+단순히 합계 점수가 높은 아이디어만 남기지 않습니다.
+*   **Pareto Front**: 독창성(Novelty)과 실행 가능성(Feasibility) 사이의 상충 관계를 고려하여 최적의 균형을 가진 아이디어를 선별합니다.
+*   **Diversity Preservation**: 유사한 아이디어가 풀을 점유하지 않도록 임베딩 기반의 유사도 필터링을 통해 전략적 방향성이 다른 아이디어들을 골고루 보존합니다.
 
-- `id`
-- `title`
-- `strategy_type`
-- `description`
-- `mechanism`
-- `target_user`
-- `execution_context`
-- `expected_advantage`
-- `origin_type`
-- `parent_id`
-- `parent_ids`
-- `generation`
-- `depth`
-- `source_model`
-- `source_persona`
-- `scores`
-- `score_meta`
+---
 
-## 추천 사용 방식
+## ⚠️ 주의사항 (Notes)
+*   로컬 GPU VRAM이 부족할 경우 `.env`에서 병렬 처리 수준을 낮추거나 모델 크기를 조절하세요.
+*   **Reasoning(생각하는) 모델**은 갈등 분석 단계에서 토큰 제한으로 인해 결과가 끊길 수 있으므로 일반 인스트럭션 모델 사용을 권장합니다.
 
-문제가 너무 넓으면 결과가 과도하게 추상적이 되기 쉽습니다.  
-가능하면 아래처럼 문제를 조금 더 구체화하는 것을 권장합니다.
-
-나쁜 예:
-
-- `지속가능한 발전을 위한 프로젝트`
-
-좋은 예:
-
-- `도시 내 음식물 쓰레기를 50% 줄일 수 있는 방법`
-- `대학생의 지루한 반복 과제 완료율을 높이는 방법`
-- `예산 1천만원 이하로 지역 카페 일회용컵 사용을 줄이는 프로젝트`
-
-## 현재 한계
-
-- 문제 문장 품질에 결과가 민감합니다.
-- recombination 품질은 mutation보다 아직 불안정할 수 있습니다.
-- novelty가 일부 run에서 높게 나오는 경향이 있습니다.
-- filtered pool은 shortlist라기보다 dedupe된 broad pool에 가깝습니다.
-
-## 다음 개선 후보
-
-- recombination pair selection 강화
-- concrete project mode / open exploration mode 분리
-- archive lineage 시각화 강화
-- final ranking weight 튜닝
-
-## 참고
-
-이 프로젝트는 로컬 Ollama 서버가 실행 중이라는 가정을 전제로 합니다.
+---

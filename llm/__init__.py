@@ -1,5 +1,5 @@
 """LLM clients."""
 
-from .ollama_client import OllamaClient
+from .ollama_client import AsyncOllamaClient
 
-__all__ = ["OllamaClient"]
+__all__ = ["AsyncOllamaClient"]
